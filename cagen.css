@@ -1,0 +1,131 @@
+body{
+	background-color:white;
+}
+
+#nks-board-container{
+	position:absolute;
+	top:0px;
+	left:150px;
+	border-top:1px solid black;
+	border-left:1px solid black;
+}
+
+#nks-board{
+	position:absolute;
+
+}
+
+.nks-cell{
+	position:absolute;
+	width:5px;
+	height:5px;
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+}
+
+.nks-cell-active{
+	background-color:black;
+}
+
+#nks-console-container{
+	position:absolute;
+	top:0px;
+	left:15px;
+	width:130px;
+}
+#nks-rules-preview-container{
+	position:absolute;
+	display:none;
+	top:120px;
+	left:45px;
+	width:130px;
+}
+.nks-console-preview-cell{
+	position:absolute;
+	width:10px;
+	height:10px;
+	border:1px solid black;
+}
+
+.nks-console-preview-cell-left{
+	left:0px;
+}
+.nks-console-preview-cell-middle{
+	left:10px;
+}
+.nks-console-preview-cell-right{
+	left:20px;
+}
+.nks-console-preview-digit{
+	position:absolute;
+	left:24px;
+	font-size:10px;
+}
+.nks-console-preview-cell-active{
+	background-color:black;
+}
+.nks-console-preview-triple-cell-container{
+	position:relative;
+	width:30px;
+	height:10px;
+}
+.nks-console-preview-result-cell-container{
+	position:relative;
+	width:30px;
+	height:20px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+
+.nks-input{
+	text-align:right;
+}
+
+
+#rowed-slider-container{
+	position:absolute;
+	border:1px solid black;
+	height:100px;
+}
+
+#rowed-slider{
+	position:absolute;
+	background-color:#CAFFD8;
+	height:100px;
+	cursor:ew-resize;
+}
+
+#rowed-slider-row-container{
+	position:absolute;
+	top:47px;
+	left:0px;
+	border-top:1px solid black;
+	border-left:1px solid black;
+}
+
+#rowed-editor-container{
+	position:absolute;
+	top:120px;
+	height:40px;
+}
+
+.rowed-editor-cell{
+	position:absolute;
+	width:29px;
+	height:29px;
+	border:1px solid black;
+	text-align:center;
+	font-size:small;
+	cursor:pointer;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select:none;
+	user-select:none;
+	-o-user-select:none;
+}
+
+.rowed-editor-cell-active{
+	background-color:black;
+	color:white;
+}

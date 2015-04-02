@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+
+	<link rel="stylesheet" type="text/css" href="nks.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<style>
+		#rule-list-table{
+			border-spacing: 0px;
+			
+		}
+		.rule-thumb-img{
+			width:100px;
+		}
+		.rule-thumb-td{
+			margin:0px;
+			text-align:center;
+			border:1px solid black;
+			padding:3px;
+		}
+	</style>
+	<script type="text/javascript">
+	  $(function(){
+		var rule = 0;
+		for(var i=1; i<=32; i++){
+			var row = "<tr>";
+			for(var j=1; j<=8; j++){
+				row += "<td class='rule-thumb-td'>";
+				row += "Rule "+rule+"<br/>";
+				row += "<img class='rule-thumb-img' src='captures/rule_"+rule+".png'/>";
+				
+				row += "</td>";
+				rule++;
+			}
+			row += "</tr>";
+			$('#rule-list-table').append(row);
+		}
+	 });
+	</script>
+</head>
+
+<body >
+	<table id='rule-list-table'>
+	<tr>
+		
+	</tr>
+	</table>
+</body>
+</html>
