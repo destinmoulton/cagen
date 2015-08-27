@@ -4,7 +4,7 @@ body{
 
 #nks-board-container{
 	position:absolute;
-	top:0px;
+	top:100px;
 	left:150px;
 	border-top:1px solid black;
 	border-left:1px solid black;
@@ -33,43 +33,52 @@ body{
 	left:15px;
 	width:130px;
 }
-#nks-rules-preview-container{
+
+#cagen-rules-preview-container{
 	position:absolute;
 	display:none;
-	top:120px;
-	left:45px;
-	width:130px;
+	top:5px;
+	left:150px;
+	height:50px;
+	width:1000px;
 }
-.nks-console-preview-cell{
+
+.cagen-console-preview-cell{
 	position:absolute;
 	width:10px;
 	height:10px;
 	border:1px solid black;
 }
 
-.nks-console-preview-cell-left{
+.cagen-console-preview-cell-left{
 	left:0px;
 }
-.nks-console-preview-cell-middle{
+.cagen-console-preview-cell-middle{
 	left:10px;
 }
-.nks-console-preview-cell-right{
+.cagen-console-preview-cell-right{
 	left:20px;
 }
-.nks-console-preview-digit{
+.cagen-console-preview-digit{
 	position:absolute;
 	left:24px;
 	font-size:10px;
 }
-.nks-console-preview-cell-active{
+.cagen-console-preview-cell-active{
 	background-color:black;
 }
-.nks-console-preview-triple-cell-container{
+.cagen-console-preview-box{
+	position:absolute;
+	width:40px;
+	height:30px;
+	
+}
+.cagen-console-preview-triple-cell-container{
 	position:relative;
 	width:30px;
 	height:10px;
 }
-.nks-console-preview-result-cell-container{
+.cagen-console-preview-result-cell-container{
 	position:relative;
 	width:30px;
 	height:20px;
@@ -108,6 +117,12 @@ body{
 	position:absolute;
 	top:120px;
 	height:40px;
+}
+
+#rowed-button-returntodashboard{
+    position:absolute;
+    top:162px;
+    left:320px;
 }
 
 .rowed-editor-cell{

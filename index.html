@@ -8,6 +8,7 @@
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="mustache/mustache.js"></script>
 	<script src="cagen.js"></script>
 
 	<!--[if IE]>
@@ -17,144 +18,94 @@
 </head>
 
 <body >
-<div id='nks-console-container'>
-	<div id='nks-console-table-container' >
-    <table cellpadding=4 cellspacing=0>
-		<tr>
-		<td>
-			Rule
-		</td>
-		<td>
-			<select id='nks-console-select'></select>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			Columns
-		</td>
-		<td>
-			<input type='text'
-				   id='nks-width-input'
-				   class='nks-input'
-				   size='3'
-				   value='151'>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			Rows
-		</td>
-		<td>
-			<input type='text'
-				   id='nks-height-input'
-				   class='nks-input'
-				   size='3'
-				   value='75'>
-		</td>
-		</tr>
-		<tr>
-		<td colspan='2' style='text-align:right;'>
-			<button id='nks-console-button'>Generate</button>
-		</td>
-		</tr>
-	</table>
-	</div>
-	<div id='nks-rules-preview-container' >
-		RULES
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right nks-console-preview-cell-active'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-0'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-0'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-1'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-1'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right nks-console-preview-cell-active'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-2'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-2'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-3'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-3'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right nks-console-preview-cell-active'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-4'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-4'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle nks-console-preview-cell-active'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-5'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-5'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right nks-console-preview-cell-active'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-6'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-6'
-				 class='nks-console-preview-digit'></div>
-		</div>
-		<div class='nks-console-preview-triple-cell-container'>
-			<div class='nks-console-preview-cell nks-console-preview-cell-left'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div class='nks-console-preview-cell nks-console-preview-cell-right'></div>
-		</div>
-		<div class='nks-console-preview-result-cell-container'>
-			<div id='nks-console-preview-7'
-				 class='nks-console-preview-cell nks-console-preview-cell-middle'></div>
-			<div id='nks-console-preview-digit-7'
-				 class='nks-console-preview-digit'></div>
-		</div>
-	</div>
+<div id='cagen-container'>
+
 </div>
-<div id='nks-board-container'>
-	<div id='nks-board'></div>
-</div>  
-<script id='tmpl-paused' type='text/template'>
+</body>
+<script type='text/template' id='tmpl-cagen-dashboard'>
+	<div id='nks-console-container'>
+		<div id='nks-console-table-container' >
+		<table cellpadding=4 cellspacing=0>
+			<tr>
+			<td>
+				Rule
+			</td>
+			<td>
+				<select id='nks-console-select'></select>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				Columns
+			</td>
+			<td>
+				<input type='text'
+					   id='nks-width-input'
+					   class='nks-input'
+					   size='3'
+					   value='151'>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				Rows
+			</td>
+			<td>
+				<input type='text'
+					   id='nks-height-input'
+					   class='nks-input'
+					   size='3'
+					   value='75'>
+			</td>
+			</tr>
+			<tr>
+			<td colspan='2' style='text-align:right;'>
+				<button id='nks-console-button'>Generate</button>
+				<button id='cagen-rootrow-button'>Edit Root Row</button>
+			</td>
+			</tr>
+		</table>
+		</div>
+	
+	</div>
+	<div id="cagen-rules-preview-container"></div>
+	<div id='nks-board-container'>
+		<div id='nks-board'></div>
+	</div>  
+</script>
+<script type='text/template' id='tmpl-cagen-dash-preview-cell'>
+	<div class="cagen-console-preview-box" style="left:{{left}}px;">
+		<div class='cagen-console-preview-triple-cell-container'>
+			<div class='cagen-console-preview-cell cagen-console-preview-cell-left {{#leftBitActive}}cagen-console-preview-cell-active{{/leftBitActive}}'></div>
+			<div class='cagen-console-preview-cell cagen-console-preview-cell-middle {{#middleBitActive}}cagen-console-preview-cell-active{{/middleBitActive}}'></div>
+			<div class='cagen-console-preview-cell cagen-console-preview-cell-right {{#rightBitActive}}cagen-console-preview-cell-active{{/rightBitActive}}'></div>
+		</div>
+		<div class='cagen-console-preview-result-cell-container'>
+			<div id='cagen-console-preview-{{previewIndex}}'
+				 class='cagen-console-preview-cell cagen-console-preview-cell-middle'></div>
+			<div id='cagen-console-preview-digit-{{previewIndex}}'
+				 class='cagen-console-preview-digit'></div>
+		</div>
+	</div>
 </script>
 
+<!-- Root Row Editor - The main container for the editor -->
+<script type='text/template' id='tmpl-cagen-rootroweditor'>
+    <div id="rowed-slider-container">
+		<div id="rowed-slider"></div>
+		<div id="rowed-slider-row-container"></div>
+	</div>
+	<div id="rowed-editor-container"></div>
+    <button id='rowed-button-returntodashboard'>Return to Dashboard</button>
+</script>
+
+<!-- Root Row Editor - Cells that compose the lower, numbered, row -->
+<script type='text/template'  id='tmpl-rowed-editor-cell'>
+  <div id='{{ id }}' class='rowed-editor-cell' style='left:{{ left }}px;'></div>
+</script>
+
+<!-- Root Row Editor - Cells that compose the upper small preview row -->
+<script type='text/template'  id='tmpl-rowed-slider-cell'>
+  <div id='{{ id }}' style='left:{{ left }}px;' class='nks-cell {{ activeClass }}'></div>
+</script>
 </html>

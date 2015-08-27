@@ -1,21 +1,29 @@
+###
 
+rootroweditor.coffee
+
+@author Destin Moulton
+
+Edit the root/top row of the board.
+
+###
 class RootRowEditor
 
     constructor: ()->
-        rowContainerId = "#rowed-slider-row-container"
-        sliderContainerId = "#rowed-slider-container"
-        sliderId = "#rowed-slider"
-        editorContainerId = "#rowed-editor-container"
-
+        @_rowContainerId = "#rowed-slider-row-container"
+        @_sliderContainerId = "#rowed-slider-container"
+        @_sliderId = "#rowed-slider"
+        @_editorContainerId = "#rowed-editor-container"
+        @_returnButtonId = "#rowed-button-returntodashboard"
+        
+        cagenContainerId = "#cagen-container"
+        rootroweditorTemplateId = "#tmpl-cagen-rootroweditor"
+        @_jCagenContainer = $(cagenContainerId)
+        @_jRootRowEditorTemplate = $(rootroweditorTemplateId)
+        
         @_editorCellActiveClass = 'rowed-editor-cell-active'
         @_sliderCellActiveClass = 'nks-cell-active'
 
-        @_jSliderContainer = $(sliderContainerId)
-        @_jSlider = $(sliderId)
-
-        @_jRowContainer = $(rowContainerId)
-
-        @_jEditorContainer = $(editorContainerId)
         @_jEditorCells = []
 
         @_aRowBinary = []
@@ -26,17 +34,29 @@ class RootRowEditor
         @_sliderCols = 26
         @_sliderPxToMid = (@_sliderCols/2)*@_colWidth
         @_editorCellWidth = 29
+        @_totalWidth = @_colWidth*@_noColumns
 
         @_generateInitialBinary()
 
-    run: ()->
+    run: (fDashboardCallback)->
+        # Populate the main container with the template
+        dashboardHTML = @_jRootRowEditorTemplate.html()
+        Mustache.parse(dashboardHTML)
+        @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
-        @_totalWidth = @_colWidth*@_noColumns
+        @_jSliderContainer = $(@_sliderContainerId)
+        @_jSlider = $(@_sliderId)
+        @_jRowContainer = $(@_rowContainerId)
+        @_jEditorContainer = $(@_editorContainerId)
+        @_jReturnButton = $(@_returnButtonId)
+    
         @_jRowContainer.height(@_rowHeight)
         @_jRowContainer.width(@_totalWidth)
         @_jSliderContainer.width(@_totalWidth)
         @_jSlider.width(@_colWidth*@_sliderCols)
         @_jSliderContainer.mousemove(@_moveSlider)
+
+        @_fDashboardCallback = fDashboardCallback
 
         # Get the initial slider position
         @_sliderInitialOffset = @_jSlider.offset()
@@ -45,18 +65,30 @@ class RootRowEditor
         @_buildEditorCells()
         @_updateEditorCells(1)
 
+        # The "Return To Dashboard" Event
+        @_jReturnButton.click((event)=>@_returnToDashboardClicked(event))
+
+    getRowBinary:()->
+        @_aRowBinary
+
+    _returnToDashboardClicked: (event)->
+        @_fDashboardCallback()
+
     _moveSlider: (ev)=>
         xMousePos = ev.clientX
         closestEdgePx = xMousePos - (xMousePos%@_colWidth)
         leftPos = closestEdgePx-@_sliderPxToMid
         rightPos = closestEdgePx+@_sliderPxToMid+@_colWidth
+        fullWidth = @_totalWidth+@_sliderInitialOffset.left+(2*@_colWidth)
         
-        if leftPos >= @_sliderInitialOffset.left && rightPos <=  (@_totalWidth+@_sliderInitialOffset.left)
+        
+        if leftPos >= @_sliderInitialOffset.left && rightPos <=  fullWidth
             @_jSlider.offset({top:@_sliderInitialOffset.top, left:leftPos})
 
             leftCellNo = (leftPos/@_colWidth) - 1
 
             @_updateEditorCells(leftCellNo)
+
 
     _updateEditorCells: (beginCell)->
         
