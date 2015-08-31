@@ -1,13 +1,13 @@
 ###
 
-rootroweditor.coffee
+toproweditor.coffee
 
 @author Destin Moulton
 
-Edit the root/top row of the board.
+Edit the top row of the board.
 
 ###
-class RootRowEditor
+class TopRowEditor
 
     constructor: ()->
         @_rowContainerId = "#rowed-slider-row-container"
@@ -17,9 +17,9 @@ class RootRowEditor
         @_returnButtonId = "#rowed-button-returntodashboard"
         
         cagenContainerId = "#cagen-container"
-        rootroweditorTemplateId = "#tmpl-cagen-rootroweditor"
+        toproweditorTemplateId = "#tmpl-cagen-toproweditor"
         @_jCagenContainer = $(cagenContainerId)
-        @_jRootRowEditorTemplate = $(rootroweditorTemplateId)
+        @_jTopRowEditorTemplate = $(toproweditorTemplateId)
         
         @_editorCellActiveClass = 'rowed-editor-cell-active'
         @_sliderCellActiveClass = 'nks-cell-active'
@@ -40,7 +40,7 @@ class RootRowEditor
 
     run: (fDashboardCallback)->
         # Populate the main container with the template
-        dashboardHTML = @_jRootRowEditorTemplate.html()
+        dashboardHTML = @_jTopRowEditorTemplate.html()
         Mustache.parse(dashboardHTML)
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 

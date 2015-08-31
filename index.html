@@ -35,33 +35,9 @@
 			</td>
 			</tr>
 			<tr>
-			<td>
-				Columns
-			</td>
-			<td>
-				<input type='text'
-					   id='nks-width-input'
-					   class='nks-input'
-					   size='3'
-					   value='151'>
-			</td>
-			</tr>
-			<tr>
-			<td>
-				Rows
-			</td>
-			<td>
-				<input type='text'
-					   id='nks-height-input'
-					   class='nks-input'
-					   size='3'
-					   value='75'>
-			</td>
-			</tr>
-			<tr>
 			<td colspan='2' style='text-align:right;'>
 				<button id='nks-console-button'>Generate</button>
-				<button id='cagen-rootrow-button'>Edit Root Row</button>
+				<button id='cagen-toprow-button'>Edit Top Row</button>
 			</td>
 			</tr>
 		</table>
@@ -89,8 +65,8 @@
 	</div>
 </script>
 
-<!-- Root Row Editor - The main container for the editor -->
-<script type='text/template' id='tmpl-cagen-rootroweditor'>
+<!-- Top Row Editor - The main container for the editor -->
+<script type='text/template' id='tmpl-cagen-toproweditor'>
     <div id="rowed-slider-container">
 		<div id="rowed-slider"></div>
 		<div id="rowed-slider-row-container"></div>
@@ -99,12 +75,12 @@
     <button id='rowed-button-returntodashboard'>Return to Dashboard</button>
 </script>
 
-<!-- Root Row Editor - Cells that compose the lower, numbered, row -->
+<!-- Top Row Editor - Cells that compose the lower, numbered, row -->
 <script type='text/template'  id='tmpl-rowed-editor-cell'>
   <div id='{{ id }}' class='rowed-editor-cell' style='left:{{ left }}px;'></div>
 </script>
 
-<!-- Root Row Editor - Cells that compose the upper small preview row -->
+<!-- Top Row Editor - Cells that compose the upper small preview row -->
 <script type='text/template'  id='tmpl-rowed-slider-cell'>
   <div id='{{ id }}' style='left:{{ left }}px;' class='nks-cell {{ activeClass }}'></div>
 </script>

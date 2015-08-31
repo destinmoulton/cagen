@@ -9,7 +9,7 @@ Generate an NKS cellular automata board based on a passed rule.
  */
 
 (function() {
-  var Board, Dashboard, RootRowEditor, RuleMatcher,
+  var Board, Dashboard, RuleMatcher, TopRowEditor,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Board = (function() {
@@ -122,13 +122,16 @@ Generate an NKS cellular automata board based on a passed rule.
 
   Dashboard = (function() {
     function Dashboard() {
-      this._returnFromRootRowEditorCallback = bind(this._returnFromRootRowEditorCallback, this);
+      this._returnFromTopRowEditorCallback = bind(this._returnFromTopRowEditorCallback, this);
       this._jCagenContainer = $("#cagen-container");
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
-      this._previewCellPrefixID = "#nks-console-preview-";
-      this._previewDigitPrefixID = "#nks-console-preview-digit-";
+      this._previewCellPrefixID = "#cagen-console-preview-";
+      this._previewDigitPrefixID = "#cagen-console-preview-digit-";
+      this._currentRule = 0;
       this._previewBoxWidth = 40;
-      this._RootRowEditor = new RootRowEditor();
+      this._noBoardColumns = 151;
+      this._noBoardRows = 75;
+      this._TopRowEditor = new TopRowEditor();
     }
 
     Dashboard.prototype.run = function() {
@@ -138,41 +141,49 @@ Generate an NKS cellular automata board based on a passed rule.
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
       this._jInputSelectRule = $("#nks-console-select");
       this._jButtonGenerate = $("#nks-console-button");
-      this._jButtonRootRow = $("#cagen-rootrow-button");
-      this._jInputColumns = $("#nks-width-input");
-      this._jInputRows = $("#nks-height-input");
+      this._jButtonTopRow = $("#cagen-toprow-button");
       this._jRulesContainer = $('#cagen-rules-preview-container');
       this._Board = new Board();
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
         this._jInputSelectRule.append(tmpOption);
       }
+      this._jInputSelectRule.val(this._currentRule);
+      this._jInputSelectRule.change((function(_this) {
+        return function(event) {
+          return _this._changeRuleEvent(event);
+        };
+      })(this));
       this._jButtonGenerate.click((function(_this) {
         return function(event) {
           return _this._generateButtonClicked(event);
         };
       })(this));
-      return this._jButtonRootRow.click((function(_this) {
+      return this._jButtonTopRow.click((function(_this) {
         return function(event) {
-          return _this._rootRowButtonClicked(event);
+          return _this._topRowButtonClicked(event);
         };
       })(this));
     };
 
     Dashboard.prototype._generateButtonClicked = function(event) {
-      var rootRowBinary;
+      var topRowBinary;
       this._jRulesContainer.fadeOut();
-      rootRowBinary = this._RootRowEditor.getRowBinary();
-      this._Board.build_board(rootRowBinary, this._jInputSelectRule.val(), this._jInputColumns.val(), this._jInputRows.val());
+      topRowBinary = this._TopRowEditor.getRowBinary();
+      this._Board.build_board(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
       this._buildRulePreview();
       return false;
     };
 
-    Dashboard.prototype._rootRowButtonClicked = function(event) {
-      return this._RootRowEditor.run(this._returnFromRootRowEditorCallback);
+    Dashboard.prototype._topRowButtonClicked = function(event) {
+      return this._TopRowEditor.run(this._returnFromTopRowEditorCallback);
     };
 
-    Dashboard.prototype._returnFromRootRowEditorCallback = function() {
+    Dashboard.prototype._changeRuleEvent = function(event) {
+      return this._currentRule = this._jInputSelectRule.val();
+    };
+
+    Dashboard.prototype._returnFromTopRowEditorCallback = function() {
       return this.run();
     };
 
@@ -235,188 +246,6 @@ Generate an NKS cellular automata board based on a passed rule.
 
 
   /*
-  
-  rootroweditor.coffee
-  
-  @author Destin Moulton
-  
-  Edit the root/top row of the board.
-   */
-
-  RootRowEditor = (function() {
-    function RootRowEditor() {
-      this._toggleEditorCell = bind(this._toggleEditorCell, this);
-      this._moveSlider = bind(this._moveSlider, this);
-      var cagenContainerId, rootroweditorTemplateId;
-      this._rowContainerId = "#rowed-slider-row-container";
-      this._sliderContainerId = "#rowed-slider-container";
-      this._sliderId = "#rowed-slider";
-      this._editorContainerId = "#rowed-editor-container";
-      this._returnButtonId = "#rowed-button-returntodashboard";
-      cagenContainerId = "#cagen-container";
-      rootroweditorTemplateId = "#tmpl-cagen-rootroweditor";
-      this._jCagenContainer = $(cagenContainerId);
-      this._jRootRowEditorTemplate = $(rootroweditorTemplateId);
-      this._editorCellActiveClass = 'rowed-editor-cell-active';
-      this._sliderCellActiveClass = 'nks-cell-active';
-      this._jEditorCells = [];
-      this._aRowBinary = [];
-      this._noColumns = 151;
-      this._colWidth = 5;
-      this._rowHeight = 5;
-      this._sliderLeft = 0;
-      this._sliderCols = 26;
-      this._sliderPxToMid = (this._sliderCols / 2) * this._colWidth;
-      this._editorCellWidth = 29;
-      this._totalWidth = this._colWidth * this._noColumns;
-      this._generateInitialBinary();
-    }
-
-    RootRowEditor.prototype.run = function(fDashboardCallback) {
-      var dashboardHTML;
-      dashboardHTML = this._jRootRowEditorTemplate.html();
-      Mustache.parse(dashboardHTML);
-      this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-      this._jSliderContainer = $(this._sliderContainerId);
-      this._jSlider = $(this._sliderId);
-      this._jRowContainer = $(this._rowContainerId);
-      this._jEditorContainer = $(this._editorContainerId);
-      this._jReturnButton = $(this._returnButtonId);
-      this._jRowContainer.height(this._rowHeight);
-      this._jRowContainer.width(this._totalWidth);
-      this._jSliderContainer.width(this._totalWidth);
-      this._jSlider.width(this._colWidth * this._sliderCols);
-      this._jSliderContainer.mousemove(this._moveSlider);
-      this._fDashboardCallback = fDashboardCallback;
-      this._sliderInitialOffset = this._jSlider.offset();
-      this._buildRow();
-      this._buildEditorCells();
-      this._updateEditorCells(1);
-      return this._jReturnButton.click((function(_this) {
-        return function(event) {
-          return _this._returnToDashboardClicked(event);
-        };
-      })(this));
-    };
-
-    RootRowEditor.prototype.getRowBinary = function() {
-      return this._aRowBinary;
-    };
-
-    RootRowEditor.prototype._returnToDashboardClicked = function(event) {
-      return this._fDashboardCallback();
-    };
-
-    RootRowEditor.prototype._moveSlider = function(ev) {
-      var closestEdgePx, fullWidth, leftCellNo, leftPos, rightPos, xMousePos;
-      xMousePos = ev.clientX;
-      closestEdgePx = xMousePos - (xMousePos % this._colWidth);
-      leftPos = closestEdgePx - this._sliderPxToMid;
-      rightPos = closestEdgePx + this._sliderPxToMid + this._colWidth;
-      fullWidth = this._totalWidth + this._sliderInitialOffset.left + (2 * this._colWidth);
-      if (leftPos >= this._sliderInitialOffset.left && rightPos <= fullWidth) {
-        this._jSlider.offset({
-          top: this._sliderInitialOffset.top,
-          left: leftPos
-        });
-        leftCellNo = (leftPos / this._colWidth) - 1;
-        return this._updateEditorCells(leftCellNo);
-      }
-    };
-
-    RootRowEditor.prototype._updateEditorCells = function(beginCell) {
-      var cell, cellPos, i, ref, results;
-      results = [];
-      for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
-        cellPos = cell + beginCell - 1;
-        this._jEditorCells[cell].text(cellPos);
-        this._jEditorCells[cell].data('cellIndex', cellPos);
-        if (this._aRowBinary[cellPos] === 1) {
-          results.push(this._jEditorCells[cell].addClass(this._editorCellActiveClass));
-        } else {
-          results.push(this._jEditorCells[cell].removeClass(this._editorCellActiveClass));
-        }
-      }
-      return results;
-    };
-
-    RootRowEditor.prototype._buildEditorCells = function() {
-      var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
-      cellTemplate = $('#tmpl-rowed-editor-cell').html();
-      Mustache.parse(cellTemplate);
-      this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
-      results = [];
-      for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
-        tmpId = "editor-cell-" + cell;
-        leftPos = (cell - 1) * this._editorCellWidth;
-        rendered = Mustache.render(cellTemplate, {
-          id: tmpId,
-          left: leftPos
-        });
-        this._jEditorContainer.append(rendered);
-        this._jEditorCells[cell] = $("#" + tmpId);
-        results.push(this._jEditorCells[cell].click(this._toggleEditorCell));
-      }
-      return results;
-    };
-
-    RootRowEditor.prototype._toggleEditorCell = function(event) {
-      var cellNo, jTmpCell;
-      jTmpCell = $("#" + event.target.id);
-      cellNo = jTmpCell.data('cellIndex');
-      if (this._aRowBinary[cellNo] === 1) {
-        this._aRowBinary[cellNo] = 0;
-        jTmpCell.removeClass(this._editorCellActiveClass);
-        return $('#rowed-slider-col-' + cellNo).removeClass(this._sliderCellActiveClass);
-      } else {
-        this._aRowBinary[cellNo] = 1;
-        jTmpCell.addClass(this._editorCellActiveClass);
-        return $('#rowed-slider-col-' + cellNo).addClass(this._sliderCellActiveClass);
-      }
-    };
-
-    RootRowEditor.prototype._generateInitialBinary = function() {
-      var col, i, ref, results, seed_col;
-      seed_col = Math.ceil(this._noColumns / 2);
-      results = [];
-      for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
-        if (col === seed_col) {
-          results.push(this._aRowBinary[col] = 1);
-        } else {
-          results.push(this._aRowBinary[col] = 0);
-        }
-      }
-      return results;
-    };
-
-    RootRowEditor.prototype._buildRow = function() {
-      var activeClass, col, i, leftPos, ref, rendered, results, smallCellTemplate, tmpId;
-      smallCellTemplate = $('#tmpl-rowed-slider-cell').html();
-      Mustache.parse(smallCellTemplate);
-      results = [];
-      for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
-        activeClass = "";
-        if (this._aRowBinary[col] === 1) {
-          activeClass = this._sliderCellActiveClass;
-        }
-        leftPos = (col - 1) * this._colWidth;
-        tmpId = "rowed-slider-col-" + col;
-        rendered = Mustache.render(smallCellTemplate, {
-          id: tmpId,
-          left: leftPos,
-          activeClass: activeClass
-        });
-        results.push(this._jRowContainer.append(rendered));
-      }
-      return results;
-    };
-
-    return RootRowEditor;
-
-  })();
-
-
-  /*
   rulematcher.coffee
   
   @author Destin Moulton
@@ -468,6 +297,188 @@ Generate an NKS cellular automata board based on a passed rule.
     };
 
     return RuleMatcher;
+
+  })();
+
+
+  /*
+  
+  toproweditor.coffee
+  
+  @author Destin Moulton
+  
+  Edit the top row of the board.
+   */
+
+  TopRowEditor = (function() {
+    function TopRowEditor() {
+      this._toggleEditorCell = bind(this._toggleEditorCell, this);
+      this._moveSlider = bind(this._moveSlider, this);
+      var cagenContainerId, toproweditorTemplateId;
+      this._rowContainerId = "#rowed-slider-row-container";
+      this._sliderContainerId = "#rowed-slider-container";
+      this._sliderId = "#rowed-slider";
+      this._editorContainerId = "#rowed-editor-container";
+      this._returnButtonId = "#rowed-button-returntodashboard";
+      cagenContainerId = "#cagen-container";
+      toproweditorTemplateId = "#tmpl-cagen-toproweditor";
+      this._jCagenContainer = $(cagenContainerId);
+      this._jTopRowEditorTemplate = $(toproweditorTemplateId);
+      this._editorCellActiveClass = 'rowed-editor-cell-active';
+      this._sliderCellActiveClass = 'nks-cell-active';
+      this._jEditorCells = [];
+      this._aRowBinary = [];
+      this._noColumns = 151;
+      this._colWidth = 5;
+      this._rowHeight = 5;
+      this._sliderLeft = 0;
+      this._sliderCols = 26;
+      this._sliderPxToMid = (this._sliderCols / 2) * this._colWidth;
+      this._editorCellWidth = 29;
+      this._totalWidth = this._colWidth * this._noColumns;
+      this._generateInitialBinary();
+    }
+
+    TopRowEditor.prototype.run = function(fDashboardCallback) {
+      var dashboardHTML;
+      dashboardHTML = this._jTopRowEditorTemplate.html();
+      Mustache.parse(dashboardHTML);
+      this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
+      this._jSliderContainer = $(this._sliderContainerId);
+      this._jSlider = $(this._sliderId);
+      this._jRowContainer = $(this._rowContainerId);
+      this._jEditorContainer = $(this._editorContainerId);
+      this._jReturnButton = $(this._returnButtonId);
+      this._jRowContainer.height(this._rowHeight);
+      this._jRowContainer.width(this._totalWidth);
+      this._jSliderContainer.width(this._totalWidth);
+      this._jSlider.width(this._colWidth * this._sliderCols);
+      this._jSliderContainer.mousemove(this._moveSlider);
+      this._fDashboardCallback = fDashboardCallback;
+      this._sliderInitialOffset = this._jSlider.offset();
+      this._buildRow();
+      this._buildEditorCells();
+      this._updateEditorCells(1);
+      return this._jReturnButton.click((function(_this) {
+        return function(event) {
+          return _this._returnToDashboardClicked(event);
+        };
+      })(this));
+    };
+
+    TopRowEditor.prototype.getRowBinary = function() {
+      return this._aRowBinary;
+    };
+
+    TopRowEditor.prototype._returnToDashboardClicked = function(event) {
+      return this._fDashboardCallback();
+    };
+
+    TopRowEditor.prototype._moveSlider = function(ev) {
+      var closestEdgePx, fullWidth, leftCellNo, leftPos, rightPos, xMousePos;
+      xMousePos = ev.clientX;
+      closestEdgePx = xMousePos - (xMousePos % this._colWidth);
+      leftPos = closestEdgePx - this._sliderPxToMid;
+      rightPos = closestEdgePx + this._sliderPxToMid + this._colWidth;
+      fullWidth = this._totalWidth + this._sliderInitialOffset.left + (2 * this._colWidth);
+      if (leftPos >= this._sliderInitialOffset.left && rightPos <= fullWidth) {
+        this._jSlider.offset({
+          top: this._sliderInitialOffset.top,
+          left: leftPos
+        });
+        leftCellNo = (leftPos / this._colWidth) - 1;
+        return this._updateEditorCells(leftCellNo);
+      }
+    };
+
+    TopRowEditor.prototype._updateEditorCells = function(beginCell) {
+      var cell, cellPos, i, ref, results;
+      results = [];
+      for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
+        cellPos = cell + beginCell - 1;
+        this._jEditorCells[cell].text(cellPos);
+        this._jEditorCells[cell].data('cellIndex', cellPos);
+        if (this._aRowBinary[cellPos] === 1) {
+          results.push(this._jEditorCells[cell].addClass(this._editorCellActiveClass));
+        } else {
+          results.push(this._jEditorCells[cell].removeClass(this._editorCellActiveClass));
+        }
+      }
+      return results;
+    };
+
+    TopRowEditor.prototype._buildEditorCells = function() {
+      var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
+      cellTemplate = $('#tmpl-rowed-editor-cell').html();
+      Mustache.parse(cellTemplate);
+      this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
+      results = [];
+      for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
+        tmpId = "editor-cell-" + cell;
+        leftPos = (cell - 1) * this._editorCellWidth;
+        rendered = Mustache.render(cellTemplate, {
+          id: tmpId,
+          left: leftPos
+        });
+        this._jEditorContainer.append(rendered);
+        this._jEditorCells[cell] = $("#" + tmpId);
+        results.push(this._jEditorCells[cell].click(this._toggleEditorCell));
+      }
+      return results;
+    };
+
+    TopRowEditor.prototype._toggleEditorCell = function(event) {
+      var cellNo, jTmpCell;
+      jTmpCell = $("#" + event.target.id);
+      cellNo = jTmpCell.data('cellIndex');
+      if (this._aRowBinary[cellNo] === 1) {
+        this._aRowBinary[cellNo] = 0;
+        jTmpCell.removeClass(this._editorCellActiveClass);
+        return $('#rowed-slider-col-' + cellNo).removeClass(this._sliderCellActiveClass);
+      } else {
+        this._aRowBinary[cellNo] = 1;
+        jTmpCell.addClass(this._editorCellActiveClass);
+        return $('#rowed-slider-col-' + cellNo).addClass(this._sliderCellActiveClass);
+      }
+    };
+
+    TopRowEditor.prototype._generateInitialBinary = function() {
+      var col, i, ref, results, seed_col;
+      seed_col = Math.ceil(this._noColumns / 2);
+      results = [];
+      for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
+        if (col === seed_col) {
+          results.push(this._aRowBinary[col] = 1);
+        } else {
+          results.push(this._aRowBinary[col] = 0);
+        }
+      }
+      return results;
+    };
+
+    TopRowEditor.prototype._buildRow = function() {
+      var activeClass, col, i, leftPos, ref, rendered, results, smallCellTemplate, tmpId;
+      smallCellTemplate = $('#tmpl-rowed-slider-cell').html();
+      Mustache.parse(smallCellTemplate);
+      results = [];
+      for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
+        activeClass = "";
+        if (this._aRowBinary[col] === 1) {
+          activeClass = this._sliderCellActiveClass;
+        }
+        leftPos = (col - 1) * this._colWidth;
+        tmpId = "rowed-slider-col-" + col;
+        rendered = Mustache.render(smallCellTemplate, {
+          id: tmpId,
+          left: leftPos,
+          activeClass: activeClass
+        });
+        results.push(this._jRowContainer.append(rendered));
+      }
+      return results;
+    };
+
+    return TopRowEditor;
 
   })();
 
