@@ -322,10 +322,10 @@ Generate an NKS cellular automata board based on a passed rule.
       this._returnButtonId = "#rowed-button-returntodashboard";
       cagenContainerId = "#cagen-container";
       toproweditorTemplateId = "#tmpl-cagen-toproweditor";
-      this._jCagenContainer = $(cagenContainerId);
-      this._jTopRowEditorTemplate = $(toproweditorTemplateId);
       this._editorCellActiveClass = 'rowed-editor-cell-active';
       this._sliderCellActiveClass = 'nks-cell-active';
+      this._jCagenContainer = $(cagenContainerId);
+      this._jTopRowEditorTemplate = $(toproweditorTemplateId);
       this._jEditorCells = [];
       this._aRowBinary = [];
       this._noColumns = 151;

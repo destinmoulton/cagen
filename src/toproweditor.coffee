@@ -10,19 +10,22 @@ Edit the top row of the board.
 class TopRowEditor
 
     constructor: ()->
+        # HTML ids for the divs
         @_rowContainerId = "#rowed-slider-row-container"
         @_sliderContainerId = "#rowed-slider-container"
         @_sliderId = "#rowed-slider"
         @_editorContainerId = "#rowed-editor-container"
         @_returnButtonId = "#rowed-button-returntodashboard"
-        
         cagenContainerId = "#cagen-container"
         toproweditorTemplateId = "#tmpl-cagen-toproweditor"
-        @_jCagenContainer = $(cagenContainerId)
-        @_jTopRowEditorTemplate = $(toproweditorTemplateId)
-        
+
+        # CSS classes for te active cells
         @_editorCellActiveClass = 'rowed-editor-cell-active'
         @_sliderCellActiveClass = 'nks-cell-active'
+        
+
+        @_jCagenContainer = $(cagenContainerId)
+        @_jTopRowEditorTemplate = $(toproweditorTemplateId)
 
         @_jEditorCells = []
 
