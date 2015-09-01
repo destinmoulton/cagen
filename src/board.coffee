@@ -9,17 +9,23 @@ Generate an NKS cellular automata board based on a passed rule.
 
 class Board
     constructor: ()->
+        # Define some div IDs
+        @_boardContainerID = '#cagen-board'
+        @_generateMessageContainerID = '#cagen-generatemessage-container'
+
+        # Select local jQuery DOM objects
+        @_jBoard =$(@_boardContainerID)
+        @_jGenerateMessage = $(@_generateMessageContainerID)
         
-        @_boardContainerID = '#nks-board-container'
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
         @_boardCellWidthPx = 5
         @_boardCellHeightPx = 5
-        @_cellBaseClass = 'nks-cell'
-        @_cellActiveClass = 'nks-cell-active'
+        @_cellBaseClass = 'cagen-board-cell'
+        @_cellActiveClass = 'cagen-board-cell-active'
         @_cellIDPrefix = 'sb_'
         @_currentRow = 1
-        @_jBoard =$(@_boardContainerID)
+        
         @_rootRowBinary = []
         @_currentCells = []
         @_RuleMatcher = new RuleMatcher()
@@ -37,10 +43,19 @@ class Board
 
         # Reset the board
         @_jBoard.html("")
+        @_jBoard.hide()
         @_currentRow = 1
 
-        @_buildTopRow()
+        # Show the generating message, before generating the rows
+        @_jGenerateMessage.show(=>
+            @_generateRows()
+            @_jGenerateMessage.hide()
+            @_jBoard.show())
 
+
+    _generateRows:()->
+        @_buildTopRow()
+    
         for row in [2..@_boardNoCellsHigh]
             @_currentRow = row
             @_buildRow(row)

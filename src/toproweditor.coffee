@@ -19,9 +19,9 @@ class TopRowEditor
         cagenContainerId = "#cagen-container"
         toproweditorTemplateId = "#tmpl-cagen-toproweditor"
 
-        # CSS classes for te active cells
+        # CSS classes for the active cells
         @_editorCellActiveClass = 'rowed-editor-cell-active'
-        @_sliderCellActiveClass = 'nks-cell-active'
+        @_sliderCellActiveClass = 'cagen-board-cell-active'
         
 
         @_jCagenContainer = $(cagenContainerId)

@@ -14,23 +14,24 @@ Generate an NKS cellular automata board based on a passed rule.
 
   Board = (function() {
     function Board() {
-      this._boardContainerID = '#nks-board-container';
+      this._boardContainerID = '#cagen-board';
+      this._generateMessageContainerID = '#cagen-generatemessage-container';
+      this._jBoard = $(this._boardContainerID);
+      this._jGenerateMessage = $(this._generateMessageContainerID);
       this._boardNoCellsWide = 0;
       this._boardNoCellsHigh = 0;
       this._boardCellWidthPx = 5;
       this._boardCellHeightPx = 5;
-      this._cellBaseClass = 'nks-cell';
-      this._cellActiveClass = 'nks-cell-active';
+      this._cellBaseClass = 'cagen-board-cell';
+      this._cellActiveClass = 'cagen-board-cell-active';
       this._cellIDPrefix = 'sb_';
       this._currentRow = 1;
-      this._jBoard = $(this._boardContainerID);
       this._rootRowBinary = [];
       this._currentCells = [];
       this._RuleMatcher = new RuleMatcher();
     }
 
     Board.prototype.build_board = function(rootRowBinary, decimal_rule, sections_wide, sections_high) {
-      var i, ref, results, row;
       this._rootRowBinary = rootRowBinary;
       this._RuleMatcher.setCurrentRule(decimal_rule);
       this._boardNoCellsWide = sections_wide;
@@ -38,7 +39,19 @@ Generate an NKS cellular automata board based on a passed rule.
       this._jBoard.width(sections_wide * this._boardCellWidthPx);
       this._jBoard.height(sections_high * this._boardCellHeightPx);
       this._jBoard.html("");
+      this._jBoard.hide();
       this._currentRow = 1;
+      return this._jGenerateMessage.show((function(_this) {
+        return function() {
+          _this._generateRows();
+          _this._jGenerateMessage.hide();
+          return _this._jBoard.show();
+        };
+      })(this));
+    };
+
+    Board.prototype._generateRows = function() {
+      var i, ref, results, row;
       this._buildTopRow();
       results = [];
       for (row = i = 2, ref = this._boardNoCellsHigh; 2 <= ref ? i <= ref : i >= ref; row = 2 <= ref ? ++i : --i) {
@@ -139,8 +152,8 @@ Generate an NKS cellular automata board based on a passed rule.
       dashboardHTML = this._jCagenDashboardTemplate.html();
       Mustache.parse(dashboardHTML);
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-      this._jInputSelectRule = $("#nks-console-select");
-      this._jButtonGenerate = $("#nks-console-button");
+      this._jInputSelectRule = $("#cagen-console-select-input");
+      this._jButtonGenerate = $("#cagen-console-generate-button");
       this._jButtonTopRow = $("#cagen-toprow-button");
       this._jRulesContainer = $('#cagen-rules-preview-container');
       this._Board = new Board();
@@ -323,7 +336,7 @@ Generate an NKS cellular automata board based on a passed rule.
       cagenContainerId = "#cagen-container";
       toproweditorTemplateId = "#tmpl-cagen-toproweditor";
       this._editorCellActiveClass = 'rowed-editor-cell-active';
-      this._sliderCellActiveClass = 'nks-cell-active';
+      this._sliderCellActiveClass = 'cagen-board-cell-active';
       this._jCagenContainer = $(cagenContainerId);
       this._jTopRowEditorTemplate = $(toproweditorTemplateId);
       this._jEditorCells = [];

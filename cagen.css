@@ -2,20 +2,29 @@ body{
 	background-color:white;
 }
 
-#nks-board-container{
+#cagen-board-container{
 	position:absolute;
 	top:50px;
 	left:150px;
-	border-top:1px solid black;
-	border-left:1px solid black;
+	
 }
 
-#nks-board{
+#cagen-generatemessage-container{
+    position:absolute;
+    top:0px;
+    width:400px;
+    display:none;
+}
+
+#cagen-board{
 	position:absolute;
-
+    top:20px;
+    border-top:1px solid black;
+	border-left:1px solid black;
+    display:none;
 }
 
-.nks-cell{
+.cagen-board-cell{
 	position:absolute;
 	width:5px;
 	height:5px;
@@ -23,11 +32,11 @@ body{
 	border-bottom:1px solid black;
 }
 
-.nks-cell-active{
+.cagen-board-cell-active{
 	background-color:black;
 }
 
-#nks-console-container{
+#cagen-console-container{
 	position:absolute;
 	top:0px;
 	left:15px;
@@ -86,12 +95,6 @@ body{
 	padding-top:5px;
 	padding-bottom:5px;
 }
-
-
-.nks-input{
-	text-align:right;
-}
-
 
 #rowed-slider-container{
 	position:absolute;

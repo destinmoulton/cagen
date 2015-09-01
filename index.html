@@ -23,20 +23,20 @@
 </div>
 </body>
 <script type='text/template' id='tmpl-cagen-dashboard'>
-	<div id='nks-console-container'>
-		<div id='nks-console-table-container' >
+	<div id='cagen-console-container'>
+		<div id='cagen-console-table-container' >
 		<table cellpadding=4 cellspacing=0>
 			<tr>
 			<td>
 				Rule
 			</td>
 			<td>
-				<select id='nks-console-select'></select>
+				<select id='cagen-console-select-input'></select>
 			</td>
 			</tr>
 			<tr>
 			<td colspan='2' style='text-align:right;'>
-				<button id='nks-console-button'>Generate</button>
+				<button id='cagen-console-generate-button'>Generate</button>
 				<button id='cagen-toprow-button'>Edit Top Row</button>
 			</td>
 			</tr>
@@ -45,9 +45,10 @@
 	
 	</div>
 	<div id="cagen-rules-preview-container"></div>
-	<div id='nks-board-container'>
-		<div id='nks-board'></div>
-	</div>  
+	<div id='cagen-board-container'>
+        <div id='cagen-generatemessage-container'>Generating Cellular Automata...</div>
+		<div id='cagen-board'></div>
+	</div>
 </script>
 <script type='text/template' id='tmpl-cagen-dash-preview-cell'>
 	<div class="cagen-console-preview-box" style="left:{{left}}px;">
@@ -82,6 +83,6 @@
 
 <!-- Top Row Editor - Cells that compose the upper small preview row -->
 <script type='text/template'  id='tmpl-rowed-slider-cell'>
-  <div id='{{ id }}' style='left:{{ left }}px;' class='nks-cell {{ activeClass }}'></div>
+  <div id='{{ id }}' style='left:{{ left }}px;' class='cagen-board-cell {{ activeClass }}'></div>
 </script>
 </html>
