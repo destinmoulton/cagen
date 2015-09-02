@@ -5,8 +5,7 @@ body{
 #cagen-board-container{
 	position:absolute;
 	top:50px;
-	left:150px;
-	
+	left:0px;
 }
 
 #cagen-generatemessage-container{
@@ -43,11 +42,18 @@ body{
 	width:130px;
 }
 
+#cagen-dashboard-content{
+    position:absolute;
+    left:150px;
+    top:0px;
+    width:800px;
+    height:100%;
+}
+
 #cagen-rules-preview-container{
 	position:absolute;
 	display:none;
 	top:5px;
-	left:150px;
 	height:40px;
 	width:700px;
     border:1px solid blue;

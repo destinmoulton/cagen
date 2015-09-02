@@ -48,7 +48,7 @@ class TopRowEditor
     run: (fDashboardCallback)->
         # Populate the main container with the template
         dashboardHTML = @_jTopRowEditorTemplate.html()
-        Mustache.parse(dashboardHTML)
+
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
         @_jSliderContainer = $(@_sliderContainerId)
@@ -114,7 +114,7 @@ class TopRowEditor
 
     _buildEditorCells: ()->
         cellTemplate = $('#tmpl-rowed-editor-cell').html()
-        Mustache.parse(cellTemplate)
+
         @_jEditorContainer.width(@_sliderCols*@_editorCellWidth)
         
         for cell in [1..@_sliderCols]
@@ -159,7 +159,7 @@ class TopRowEditor
 
     _buildRow: ()->
         smallCellTemplate = $('#tmpl-rowed-slider-cell').html()
-        Mustache.parse(smallCellTemplate)
+
         # Add cells to the row
         for col in [1..@_noColumns]
             activeClass = ""

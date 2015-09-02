@@ -16,10 +16,6 @@ class Board
         # Define some div IDs
         @_boardContainerID = '#cagen-board'
         @_generateMessageContainerID = '#cagen-generatemessage-container'
-
-        # Select local jQuery DOM objects
-        @_jBoard =$(@_boardContainerID)
-        @_jGenerateMessage = $(@_generateMessageContainerID)
         
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
@@ -36,6 +32,10 @@ class Board
         
     
     buildBoard: (rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) ->
+        # Select local jQuery DOM objects
+        @_jBoard =$(@_boardContainerID)
+        @_jGenerateMessage = $(@_generateMessageContainerID)
+        
         @_rootRowBinary = rootRowBinary
         
         @_RuleMatcher.setCurrentRule(decimalRule)

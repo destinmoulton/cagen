@@ -20,8 +20,6 @@ Generate a cellular automata board based on a passed rule.
     function Board() {
       this._boardContainerID = '#cagen-board';
       this._generateMessageContainerID = '#cagen-generatemessage-container';
-      this._jBoard = $(this._boardContainerID);
-      this._jGenerateMessage = $(this._generateMessageContainerID);
       this._boardNoCellsWide = 0;
       this._boardNoCellsHigh = 0;
       this._boardCellWidthPx = 5;
@@ -36,6 +34,8 @@ Generate a cellular automata board based on a passed rule.
     }
 
     Board.prototype.buildBoard = function(rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) {
+      this._jBoard = $(this._boardContainerID);
+      this._jGenerateMessage = $(this._generateMessageContainerID);
       this._rootRowBinary = rootRowBinary;
       this._RuleMatcher.setCurrentRule(decimalRule);
       this._boardNoCellsWide = noCellsWide;
@@ -144,10 +144,17 @@ Generate a cellular automata board based on a passed rule.
   Dashboard = (function() {
     function Dashboard() {
       this._returnFromTopRowEditorCallback = bind(this._returnFromTopRowEditorCallback, this);
+      this._idCagenDashboardContent = "#cagen-dashboard-content";
+      this._idRulesPreviewContainer = "#cagen-rules-preview-container";
+      this._idRuleSelectInput = "#cagen-console-select-input";
+      this._idGenerateButton = "#cagen-console-generate-button";
+      this._idEditTopRowButton = "#cagen-toprow-button";
+      this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
       this._jCagenContainer = $("#cagen-container");
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
-      this._previewCellPrefixID = "#cagen-console-preview-";
-      this._previewDigitPrefixID = "#cagen-console-preview-digit-";
+      this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
+      this._idPreviewCellPrefix = "#cagen-console-preview-";
+      this._idPreviewDigitPrefix = "#cagen-console-preview-digit-";
       this._currentRule = 0;
       this._previewBoxWidth = 40;
       this._noBoardColumns = 151;
@@ -158,12 +165,11 @@ Generate a cellular automata board based on a passed rule.
     Dashboard.prototype.run = function() {
       var dashboardHTML, i, rule, tmpOption;
       dashboardHTML = this._jCagenDashboardTemplate.html();
-      Mustache.parse(dashboardHTML);
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-      this._jInputSelectRule = $("#cagen-console-select-input");
-      this._jButtonGenerate = $("#cagen-console-generate-button");
-      this._jButtonTopRow = $("#cagen-toprow-button");
-      this._jRulesContainer = $('#cagen-rules-preview-container');
+      this._jCagenContentContainer = $(this._idCagenDashboardContent);
+      this._jInputSelectRule = $(this._idRuleSelectInput);
+      this._jButtonGenerate = $(this._idGenerateButton);
+      this._jButtonTopRow = $(this._idEditTopRowButton);
       this._Board = new Board();
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
@@ -188,7 +194,10 @@ Generate a cellular automata board based on a passed rule.
     };
 
     Dashboard.prototype._generateButtonClicked = function(event) {
-      var topRowBinary;
+      var boardHTML, topRowBinary;
+      boardHTML = this._jCagenBoardTemplate.html();
+      this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
+      this._jRulesContainer = $(this._idRulesPreviewContainer);
       this._jRulesContainer.fadeOut();
       topRowBinary = this._TopRowEditor.getRowBinary();
       this._Board.buildBoard(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
@@ -211,8 +220,7 @@ Generate a cellular automata board based on a passed rule.
     Dashboard.prototype._buildRulePreview = function() {
       var activeClass, binary, currentRule, i, index, jTmpCell, jTmpDigit, left, leftBit, middleBit, previewCellHtml, rendered, rightBit, tmplOptions;
       currentRule = this._Board.getCurrentRule();
-      previewCellHtml = $('#tmpl-cagen-dash-preview-cell').html();
-      Mustache.parse(previewCellHtml);
+      previewCellHtml = $(this._idTmplPreviewCell).html();
       activeClass = 'cagen-console-preview-cell-active';
       for (index = i = 7; i >= 0; index = --i) {
         binary = index.toString(2);
@@ -243,8 +251,8 @@ Generate a cellular automata board based on a passed rule.
         };
         rendered = Mustache.render(previewCellHtml, tmplOptions);
         this._jRulesContainer.append(rendered);
-        jTmpCell = $(this._previewCellPrefixID + index);
-        jTmpDigit = $(this._previewDigitPrefixID + index);
+        jTmpCell = $(this._idPreviewCellPrefix + index);
+        jTmpDigit = $(this._idPreviewDigitPrefix + index);
         jTmpCell.removeClass(activeClass);
         jTmpDigit.html(0);
         if (currentRule.substr(index, 1) === "1") {
@@ -393,7 +401,6 @@ Generate a cellular automata board based on a passed rule.
     TopRowEditor.prototype.run = function(fDashboardCallback) {
       var dashboardHTML;
       dashboardHTML = this._jTopRowEditorTemplate.html();
-      Mustache.parse(dashboardHTML);
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
       this._jSliderContainer = $(this._sliderContainerId);
       this._jSlider = $(this._sliderId);
@@ -461,7 +468,6 @@ Generate a cellular automata board based on a passed rule.
     TopRowEditor.prototype._buildEditorCells = function() {
       var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
       cellTemplate = $('#tmpl-rowed-editor-cell').html();
-      Mustache.parse(cellTemplate);
       this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
       results = [];
       for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
@@ -510,7 +516,6 @@ Generate a cellular automata board based on a passed rule.
     TopRowEditor.prototype._buildRow = function() {
       var activeClass, col, i, leftPos, ref, rendered, results, smallCellTemplate, tmpId;
       smallCellTemplate = $('#tmpl-rowed-slider-cell').html();
-      Mustache.parse(smallCellTemplate);
       results = [];
       for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
         activeClass = "";

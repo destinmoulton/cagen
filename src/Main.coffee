@@ -15,3 +15,4 @@ the cagen dashboard.
 $ ->
     dashboard = new Dashboard()
     dashboard.run()
+
