@@ -31,15 +31,15 @@ class Board
         @_RuleMatcher = new RuleMatcher()
         
     
-    build_board: (rootRowBinary, decimal_rule, sections_wide, sections_high) ->
+    buildBoard: (rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) ->
         @_rootRowBinary = rootRowBinary
         
-        @_RuleMatcher.setCurrentRule(decimal_rule)
+        @_RuleMatcher.setCurrentRule(decimalRule)
 
-        @_boardNoCellsWide = sections_wide
-        @_boardNoCellsHigh = sections_high
-        @_jBoard.width(sections_wide*@_boardCellWidthPx)
-        @_jBoard.height(sections_high*@_boardCellHeightPx)
+        @_boardNoCellsWide = noCellsWide
+        @_boardNoCellsHigh = noSectionsHigh
+        @_jBoard.width(noCellsWide*@_boardCellWidthPx)
+        @_jBoard.height(noSectionsHigh*@_boardCellHeightPx)
 
         # Reset the board
         @_jBoard.html("")

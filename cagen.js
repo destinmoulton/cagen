@@ -31,13 +31,13 @@ Generate an NKS cellular automata board based on a passed rule.
       this._RuleMatcher = new RuleMatcher();
     }
 
-    Board.prototype.build_board = function(rootRowBinary, decimal_rule, sections_wide, sections_high) {
+    Board.prototype.buildBoard = function(rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) {
       this._rootRowBinary = rootRowBinary;
-      this._RuleMatcher.setCurrentRule(decimal_rule);
-      this._boardNoCellsWide = sections_wide;
-      this._boardNoCellsHigh = sections_high;
-      this._jBoard.width(sections_wide * this._boardCellWidthPx);
-      this._jBoard.height(sections_high * this._boardCellHeightPx);
+      this._RuleMatcher.setCurrentRule(decimalRule);
+      this._boardNoCellsWide = noCellsWide;
+      this._boardNoCellsHigh = noSectionsHigh;
+      this._jBoard.width(noCellsWide * this._boardCellWidthPx);
+      this._jBoard.height(noSectionsHigh * this._boardCellHeightPx);
       this._jBoard.html("");
       this._jBoard.hide();
       this._currentRow = 1;
@@ -183,7 +183,7 @@ Generate an NKS cellular automata board based on a passed rule.
       var topRowBinary;
       this._jRulesContainer.fadeOut();
       topRowBinary = this._TopRowEditor.getRowBinary();
-      this._Board.build_board(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
+      this._Board.buildBoard(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
       this._buildRulePreview();
       return false;
     };
