@@ -149,7 +149,9 @@ Generate a cellular automata board based on a passed rule.
       this._idRuleSelectInput = "#cagen-console-select-input";
       this._idGenerateButton = "#cagen-console-generate-button";
       this._idEditTopRowButton = "#cagen-toprow-button";
+      this._idRuleThumbnailsButton = "#cagen-rulethumbnails-button";
       this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
+      this._idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails";
       this._jCagenContainer = $("#cagen-container");
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
       this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
@@ -160,6 +162,7 @@ Generate a cellular automata board based on a passed rule.
       this._noBoardColumns = 151;
       this._noBoardRows = 75;
       this._TopRowEditor = new TopRowEditor();
+      this._ruleList = [];
     }
 
     Dashboard.prototype.run = function() {
@@ -170,9 +173,11 @@ Generate a cellular automata board based on a passed rule.
       this._jInputSelectRule = $(this._idRuleSelectInput);
       this._jButtonGenerate = $(this._idGenerateButton);
       this._jButtonTopRow = $(this._idEditTopRowButton);
+      this._jButtonRuleThumbnails = $(this._idRuleThumbnailsButton);
       this._Board = new Board();
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
+        this._ruleList.push(rule);
         this._jInputSelectRule.append(tmpOption);
       }
       this._jInputSelectRule.val(this._currentRule);
@@ -186,11 +191,17 @@ Generate a cellular automata board based on a passed rule.
           return _this._generateButtonClicked(event);
         };
       })(this));
-      return this._jButtonTopRow.click((function(_this) {
+      this._jButtonTopRow.click((function(_this) {
         return function(event) {
           return _this._topRowButtonClicked(event);
         };
       })(this));
+      this._jButtonRuleThumbnails.click((function(_this) {
+        return function(event) {
+          return _this._ruleThumbnailsButtonClicked(event);
+        };
+      })(this));
+      return this._buildRuleThumbnailsList();
     };
 
     Dashboard.prototype._generateButtonClicked = function(event) {
@@ -207,6 +218,19 @@ Generate a cellular automata board based on a passed rule.
 
     Dashboard.prototype._topRowButtonClicked = function(event) {
       return this._TopRowEditor.run(this._returnFromTopRowEditorCallback);
+    };
+
+    Dashboard.prototype._ruleThumbnailsButtonClicked = function(event) {
+      return this._buildRuleThumbnailsList();
+    };
+
+    Dashboard.prototype._buildRuleThumbnailsList = function(event) {
+      var rendered, thumbnailHTML;
+      thumbnailHTML = $(this._idTmplRuleThumbnails).html();
+      rendered = Mustache.render(thumbnailHTML, {
+        ruleList: this._ruleList
+      });
+      return this._jCagenContentContainer.html(rendered);
     };
 
     Dashboard.prototype._changeRuleEvent = function(event) {

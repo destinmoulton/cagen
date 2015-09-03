@@ -50,6 +50,10 @@ body{
     height:100%;
 }
 
+.cagen-rulethumb{
+    width:150px;
+}
+
 #cagen-rules-preview-container{
 	position:absolute;
 	display:none;

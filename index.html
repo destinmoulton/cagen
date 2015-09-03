@@ -37,7 +37,8 @@
 			<tr>
 			<td colspan='2' style='text-align:right;'>
 				<button id='cagen-console-generate-button'>Generate</button>
-				<button id='cagen-toprow-button'>Edit Top Row</button>
+				 <button id='cagen-toprow-button'>Edit Top Row</button>
+                 <button id='cagen-rulethumbnails-button'>Rule Thumbnails</button>
 			</td>
 			</tr>
 		</table>
@@ -48,6 +49,7 @@
 	
 </script>
 
+<!-- Preview and Board  -->
 <script type='text/template' id='tmpl-cagen-dash-board'>
   <div id="cagen-rules-preview-container"></div>
   <div id='cagen-board-container'>
@@ -55,6 +57,7 @@
 		<div id='cagen-board'></div>
   </div>
 </script>
+
 <script type='text/template' id='tmpl-cagen-dash-preview-cell'>
 	<div class="cagen-console-preview-box" style="left:{{left}}px;">
 		<div class='cagen-console-preview-triple-cell-container'>
@@ -70,6 +73,15 @@
 		</div>
 	</div>
 </script>
+
+<!-- Rule Thumbnails List  -->
+<script type='text/template' id='tmpl-cagen-rulethumbnails'>
+{{#ruleList}}
+<img src='captures/thumbs/rule_{{.}}.png'
+     class='cagen-rulethumb'/>
+{{/ruleList}}
+</script>
+
 
 <!-- Top Row Editor - The main container for the editor -->
 <script type='text/template' id='tmpl-cagen-toproweditor'>
