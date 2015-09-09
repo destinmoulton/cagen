@@ -13,8 +13,130 @@ Generate a cellular automata board based on a passed rule.
  */
 
 (function() {
-  var Board, Dashboard, RuleMatcher, TopRowEditor,
+  var Board, Dashboard, RuleMatcher, Tabs, TopRowEditor,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  Board = (function() {
+    function Board() {
+      this._boardContainerID = '#cagen-board';
+      this._generateMessageContainerID = '#cagen-generatemessage-container';
+      this._boardNoCellsWide = 0;
+      this._boardNoCellsHigh = 0;
+      this._boardCellWidthPx = 5;
+      this._boardCellHeightPx = 5;
+      this._cellBaseClass = 'cagen-board-cell';
+      this._cellActiveClass = 'cagen-board-cell-active';
+      this._cellIDPrefix = 'sb_';
+      this._currentRow = 1;
+      this._rootRowBinary = [];
+      this._currentCells = [];
+      this._RuleMatcher = new RuleMatcher();
+    }
+
+    Board.prototype.buildBoard = function(rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) {
+      this._jBoard = $(this._boardContainerID);
+      this._jGenerateMessage = $(this._generateMessageContainerID);
+      this._rootRowBinary = rootRowBinary;
+      this._RuleMatcher.setCurrentRule(decimalRule);
+      this._boardNoCellsWide = noCellsWide;
+      this._boardNoCellsHigh = noSectionsHigh;
+      this._jBoard.width(noCellsWide * this._boardCellWidthPx);
+      this._jBoard.height(noSectionsHigh * this._boardCellHeightPx);
+      this._jBoard.html("");
+      this._jBoard.hide();
+      this._currentRow = 1;
+      return this._jGenerateMessage.show((function(_this) {
+        return function() {
+          _this._generateRows();
+          _this._jGenerateMessage.hide();
+          return _this._jBoard.show();
+        };
+      })(this));
+    };
+
+    Board.prototype._generateRows = function() {
+      var i, ref, results, row;
+      this._buildTopRow();
+      results = [];
+      for (row = i = 2, ref = this._boardNoCellsHigh; 2 <= ref ? i <= ref : i >= ref; row = 2 <= ref ? ++i : --i) {
+        this._currentRow = row;
+        results.push(this._buildRow(row));
+      }
+      return results;
+    };
+
+    Board.prototype.getCurrentRule = function() {
+      return this._RuleMatcher.getCurrentRule();
+    };
+
+    Board.prototype._buildRow = function(row) {
+      var col, i, oneIndex, ref, twoIndex, zeroIndex;
+      for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
+        zeroIndex = this._currentCells[row - 1][col - 1];
+        if (zeroIndex === void 0) {
+          zeroIndex = this._currentCells[row - 1][this._boardNoCellsWide];
+        }
+        oneIndex = this._currentCells[row - 1][col];
+        twoIndex = this._currentCells[row - 1][col + 1];
+        if (twoIndex === void 0) {
+          twoIndex = this._currentCells[row - 1][1];
+        }
+        if (this._RuleMatcher.match(zeroIndex, oneIndex, twoIndex) === 0) {
+          this._addBlockToBoard(row, col, false);
+        } else {
+          this._addBlockToBoard(row, col, true);
+        }
+      }
+      return this._currentRow++;
+    };
+
+    Board.prototype._buildTopRow = function() {
+      var cell, col, i, ref;
+      for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
+        cell = this._rootRowBinary[col];
+        if (cell === 1) {
+          this._addBlockToBoard(this._currentRow, col, true);
+        } else {
+          this._addBlockToBoard(this._currentRow, col, false);
+        }
+      }
+      return this._currentRow++;
+    };
+
+    Board.prototype._addBlockToBoard = function(row, col, active) {
+      var tmpClass, tmpDiv, tmpID, tmpLeftPx, tmpStyle, tmpTopPx;
+      if (!this._currentCells[row]) {
+        this._currentCells[row] = [];
+      }
+      this._currentCells[row][col] = active ? 1 : 0;
+      tmpID = this._cellIDPrefix + this._currentRow + "_" + col;
+      tmpLeftPx = (col - 1) * this._boardCellWidthPx;
+      tmpTopPx = (row - 1) * this._boardCellHeightPx;
+      tmpStyle = " style='top:" + tmpTopPx + "px;left:" + tmpLeftPx + "px;' ";
+      tmpClass = this._cellBaseClass;
+      if (active) {
+        tmpClass = " " + tmpClass + " " + this._cellActiveClass + " ";
+      }
+      tmpDiv = "<div id='" + tmpID + "' class='" + tmpClass + "' " + tmpStyle + "></div>";
+      return this._jBoard.append(tmpDiv);
+    };
+
+    return Board;
+
+  })();
+
+
+  /*
+  Board.coffee
+  
+  @author Destin Moulton
+  @git https://github.com/destinmoulton/cagen
+  @license MIT
+  
+  Component of Cellular Automata Generator (CAGEN)
+  
+  Generate a cellular automata board based on a passed rule.
+   */
 
   Board = (function() {
     function Board() {
@@ -152,6 +274,7 @@ Generate a cellular automata board based on a passed rule.
       this._idRuleThumbnailsButton = "#cagen-rulethumbnails-button";
       this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
       this._idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails";
+      this._classRuleThumbBox = ".cagen-rulethumb-box";
       this._jCagenContainer = $("#cagen-container");
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
       this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
@@ -171,10 +294,8 @@ Generate a cellular automata board based on a passed rule.
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
       this._jCagenContentContainer = $(this._idCagenDashboardContent);
       this._jInputSelectRule = $(this._idRuleSelectInput);
-      this._jButtonGenerate = $(this._idGenerateButton);
-      this._jButtonTopRow = $(this._idEditTopRowButton);
-      this._jButtonRuleThumbnails = $(this._idRuleThumbnailsButton);
       this._Board = new Board();
+      this._ruleList = [];
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
         this._ruleList.push(rule);
@@ -186,34 +307,27 @@ Generate a cellular automata board based on a passed rule.
           return _this._changeRuleEvent(event);
         };
       })(this));
-      this._jButtonGenerate.click((function(_this) {
+      $(this._idGenerateButton).click((function(_this) {
         return function(event) {
           return _this._generateButtonClicked(event);
         };
       })(this));
-      this._jButtonTopRow.click((function(_this) {
+      $(this._idEditTopRowButton).click((function(_this) {
         return function(event) {
           return _this._topRowButtonClicked(event);
         };
       })(this));
-      this._jButtonRuleThumbnails.click((function(_this) {
+      $(this._idRuleThumbnailsButton).click((function(_this) {
         return function(event) {
           return _this._ruleThumbnailsButtonClicked(event);
         };
       })(this));
-      return this._buildRuleThumbnailsList();
+      this._buildRuleThumbnailsList();
+      return true;
     };
 
     Dashboard.prototype._generateButtonClicked = function(event) {
-      var boardHTML, topRowBinary;
-      boardHTML = this._jCagenBoardTemplate.html();
-      this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
-      this._jRulesContainer = $(this._idRulesPreviewContainer);
-      this._jRulesContainer.fadeOut();
-      topRowBinary = this._TopRowEditor.getRowBinary();
-      this._Board.buildBoard(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
-      this._buildRulePreview();
-      return false;
+      return this._buildBoard();
     };
 
     Dashboard.prototype._topRowButtonClicked = function(event) {
@@ -230,7 +344,33 @@ Generate a cellular automata board based on a passed rule.
       rendered = Mustache.render(thumbnailHTML, {
         ruleList: this._ruleList
       });
-      return this._jCagenContentContainer.html(rendered);
+      this._jCagenContentContainer.html(rendered);
+      return $(this._classRuleThumbBox).click((function(_this) {
+        return function(event) {
+          return _this._ruleThumbBoxClicked(event);
+        };
+      })(this));
+    };
+
+    Dashboard.prototype._buildBoard = function() {
+      var boardHTML, topRowBinary;
+      boardHTML = this._jCagenBoardTemplate.html();
+      this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
+      this._jRulesContainer = $(this._idRulesPreviewContainer);
+      this._jRulesContainer.fadeOut();
+      topRowBinary = this._TopRowEditor.getRowBinary();
+      this._Board.buildBoard(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
+      this._buildRulePreview();
+      return true;
+    };
+
+    Dashboard.prototype._ruleThumbBoxClicked = function(event) {
+      var jBox, rule;
+      jBox = $(event.currentTarget);
+      rule = jBox.data('rule');
+      this._currentRule = rule;
+      this._jInputSelectRule.val(rule);
+      return this._buildBoard();
     };
 
     Dashboard.prototype._changeRuleEvent = function(event) {
@@ -279,7 +419,7 @@ Generate a cellular automata board based on a passed rule.
         jTmpDigit = $(this._idPreviewDigitPrefix + index);
         jTmpCell.removeClass(activeClass);
         jTmpDigit.html(0);
-        if (currentRule.substr(index, 1) === "1") {
+        if (currentRule.substr(7 - index, 1) === "1") {
           jTmpCell.addClass(activeClass);
           jTmpDigit.html(1);
         }
@@ -377,6 +517,40 @@ Generate a cellular automata board based on a passed rule.
     };
 
     return RuleMatcher;
+
+  })();
+
+
+  /*
+  Tabs.coffee
+  
+  @author Destin Moulton
+  @git https://github.com/destinmoulton/cagen
+  @license MIT
+  
+  Component of Cellular Automata Generator (CAGEN)
+  
+  Manage the tabs for the various cagen features
+   */
+
+  Tabs = (function() {
+    function Tabs() {
+      this._classActive = "active";
+      this._tabIdPrefix = "#tab-";
+      this._tabs = ["screenshots", "toproweditor", "dashboard"];
+    }
+
+    Tabs.prototype.activate = function(tabName) {
+      var i, len, ref, tab;
+      ref = this._tabs;
+      for (i = 0, len = ref.length; i < len; i++) {
+        tab = ref[i];
+        $(this._tabIdPrefix + tab).removeClass(this._classActive);
+      }
+      return $(this._tabIdPrefix + tabName).addClass(this._classActive);
+    };
+
+    return Tabs;
 
   })();
 

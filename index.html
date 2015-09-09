@@ -3,11 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.5/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="cagen.css">
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
 	<script src="mustache/mustache.js"></script>
 	<script src="cagen.js"></script>
 
@@ -18,9 +20,16 @@
 </head>
 
 <body >
-<div id='cagen-container'>
-
-</div>
+  <ul class="nav nav-tabs">
+    <li role="presentation"
+        class="active"
+        id="tab-screenshots"><a href="#">Screenshots</a></li>
+    <li role="presentation"
+        id="tab-toproweditor"><a href="#">Top Row Editor</a></li>
+    <li role="presentation"
+        id="tab-dashboard"><a href="#">Dashboard</a></li>
+  </ul>
+  <div id='cagen-container'></div>
 </body>
 <script type='text/template' id='tmpl-cagen-dashboard'>
 	<div id='cagen-console-container'>
@@ -37,8 +46,8 @@
 			<tr>
 			<td colspan='2' style='text-align:right;'>
 				<button id='cagen-console-generate-button'>Generate</button>
-				 <button id='cagen-toprow-button'>Edit Top Row</button>
-                 <button id='cagen-rulethumbnails-button'>Rule Thumbnails</button>
+			    <button id='cagen-toprow-button'>Edit Top Row</button>
+                <button id='cagen-rulethumbnails-button'>Rule Thumbnails</button>
 			</td>
 			</tr>
 		</table>
@@ -59,26 +68,30 @@
 </script>
 
 <script type='text/template' id='tmpl-cagen-dash-preview-cell'>
-	<div class="cagen-console-preview-box" style="left:{{left}}px;">
-		<div class='cagen-console-preview-triple-cell-container'>
-			<div class='cagen-console-preview-cell cagen-console-preview-cell-left {{#leftBitActive}}cagen-console-preview-cell-active{{/leftBitActive}}'></div>
-			<div class='cagen-console-preview-cell cagen-console-preview-cell-middle {{#middleBitActive}}cagen-console-preview-cell-active{{/middleBitActive}}'></div>
-			<div class='cagen-console-preview-cell cagen-console-preview-cell-right {{#rightBitActive}}cagen-console-preview-cell-active{{/rightBitActive}}'></div>
-		</div>
-		<div class='cagen-console-preview-result-cell-container'>
-			<div id='cagen-console-preview-{{previewIndex}}'
-				 class='cagen-console-preview-cell cagen-console-preview-cell-middle'></div>
-			<div id='cagen-console-preview-digit-{{previewIndex}}'
-				 class='cagen-console-preview-digit'></div>
-		</div>
+  <div class="cagen-console-preview-box" style="left:{{left}}px;">
+	<div class='cagen-console-preview-triple-cell-container'>
+	  <div class='cagen-console-preview-cell cagen-console-preview-cell-left {{#leftBitActive}}cagen-console-preview-cell-active{{/leftBitActive}}'></div>
+	  <div class='cagen-console-preview-cell cagen-console-preview-cell-middle {{#middleBitActive}}cagen-console-preview-cell-active{{/middleBitActive}}'></div>
+	  <div class='cagen-console-preview-cell cagen-console-preview-cell-right {{#rightBitActive}}cagen-console-preview-cell-active{{/rightBitActive}}'></div>
 	</div>
+	<div class='cagen-console-preview-result-cell-container'>
+	  <div id='cagen-console-preview-{{previewIndex}}'
+		   class='cagen-console-preview-cell cagen-console-preview-cell-middle'></div>
+	  <div id='cagen-console-preview-digit-{{previewIndex}}'
+		   class='cagen-console-preview-digit'></div>
+	</div>
+  </div>
 </script>
 
 <!-- Rule Thumbnails List  -->
 <script type='text/template' id='tmpl-cagen-rulethumbnails'>
 {{#ruleList}}
-<img src='captures/thumbs/rule_{{.}}.png'
-     class='cagen-rulethumb'/>
+<div class='cagen-rulethumb-box'
+     data-rule="{{.}}">
+  <img src='captures/thumbs/rule_{{.}}.png'
+       class='cagen-rulethumb-img'/>
+  <div class='cagen-rulethumb-rulenum'>{{.}}</div>
+</div>
 {{/ruleList}}
 </script>
 
