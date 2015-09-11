@@ -13,11 +13,12 @@ Generate a cellular automata board based on a passed rule.
  */
 
 (function() {
-  var Board, Dashboard, RuleMatcher, Tabs, TopRowEditor,
+  var Board, Dashboard, RuleMatcher, RuleThumbnails, Tabs, TopRowEditor, Variables,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Board = (function() {
-    function Board() {
+    function Board(VariablesInstance) {
+      this._Vars = VariablesInstance;
       this._boardContainerID = '#cagen-board';
       this._generateMessageContainerID = '#cagen-generatemessage-container';
       this._boardNoCellsWide = 0;
@@ -33,133 +34,11 @@ Generate a cellular automata board based on a passed rule.
       this._RuleMatcher = new RuleMatcher();
     }
 
-    Board.prototype.buildBoard = function(rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) {
+    Board.prototype.buildBoard = function(rootRowBinary, noCellsWide, noSectionsHigh) {
       this._jBoard = $(this._boardContainerID);
       this._jGenerateMessage = $(this._generateMessageContainerID);
       this._rootRowBinary = rootRowBinary;
-      this._RuleMatcher.setCurrentRule(decimalRule);
-      this._boardNoCellsWide = noCellsWide;
-      this._boardNoCellsHigh = noSectionsHigh;
-      this._jBoard.width(noCellsWide * this._boardCellWidthPx);
-      this._jBoard.height(noSectionsHigh * this._boardCellHeightPx);
-      this._jBoard.html("");
-      this._jBoard.hide();
-      this._currentRow = 1;
-      return this._jGenerateMessage.show((function(_this) {
-        return function() {
-          _this._generateRows();
-          _this._jGenerateMessage.hide();
-          return _this._jBoard.show();
-        };
-      })(this));
-    };
-
-    Board.prototype._generateRows = function() {
-      var i, ref, results, row;
-      this._buildTopRow();
-      results = [];
-      for (row = i = 2, ref = this._boardNoCellsHigh; 2 <= ref ? i <= ref : i >= ref; row = 2 <= ref ? ++i : --i) {
-        this._currentRow = row;
-        results.push(this._buildRow(row));
-      }
-      return results;
-    };
-
-    Board.prototype.getCurrentRule = function() {
-      return this._RuleMatcher.getCurrentRule();
-    };
-
-    Board.prototype._buildRow = function(row) {
-      var col, i, oneIndex, ref, twoIndex, zeroIndex;
-      for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
-        zeroIndex = this._currentCells[row - 1][col - 1];
-        if (zeroIndex === void 0) {
-          zeroIndex = this._currentCells[row - 1][this._boardNoCellsWide];
-        }
-        oneIndex = this._currentCells[row - 1][col];
-        twoIndex = this._currentCells[row - 1][col + 1];
-        if (twoIndex === void 0) {
-          twoIndex = this._currentCells[row - 1][1];
-        }
-        if (this._RuleMatcher.match(zeroIndex, oneIndex, twoIndex) === 0) {
-          this._addBlockToBoard(row, col, false);
-        } else {
-          this._addBlockToBoard(row, col, true);
-        }
-      }
-      return this._currentRow++;
-    };
-
-    Board.prototype._buildTopRow = function() {
-      var cell, col, i, ref;
-      for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
-        cell = this._rootRowBinary[col];
-        if (cell === 1) {
-          this._addBlockToBoard(this._currentRow, col, true);
-        } else {
-          this._addBlockToBoard(this._currentRow, col, false);
-        }
-      }
-      return this._currentRow++;
-    };
-
-    Board.prototype._addBlockToBoard = function(row, col, active) {
-      var tmpClass, tmpDiv, tmpID, tmpLeftPx, tmpStyle, tmpTopPx;
-      if (!this._currentCells[row]) {
-        this._currentCells[row] = [];
-      }
-      this._currentCells[row][col] = active ? 1 : 0;
-      tmpID = this._cellIDPrefix + this._currentRow + "_" + col;
-      tmpLeftPx = (col - 1) * this._boardCellWidthPx;
-      tmpTopPx = (row - 1) * this._boardCellHeightPx;
-      tmpStyle = " style='top:" + tmpTopPx + "px;left:" + tmpLeftPx + "px;' ";
-      tmpClass = this._cellBaseClass;
-      if (active) {
-        tmpClass = " " + tmpClass + " " + this._cellActiveClass + " ";
-      }
-      tmpDiv = "<div id='" + tmpID + "' class='" + tmpClass + "' " + tmpStyle + "></div>";
-      return this._jBoard.append(tmpDiv);
-    };
-
-    return Board;
-
-  })();
-
-
-  /*
-  Board.coffee
-  
-  @author Destin Moulton
-  @git https://github.com/destinmoulton/cagen
-  @license MIT
-  
-  Component of Cellular Automata Generator (CAGEN)
-  
-  Generate a cellular automata board based on a passed rule.
-   */
-
-  Board = (function() {
-    function Board() {
-      this._boardContainerID = '#cagen-board';
-      this._generateMessageContainerID = '#cagen-generatemessage-container';
-      this._boardNoCellsWide = 0;
-      this._boardNoCellsHigh = 0;
-      this._boardCellWidthPx = 5;
-      this._boardCellHeightPx = 5;
-      this._cellBaseClass = 'cagen-board-cell';
-      this._cellActiveClass = 'cagen-board-cell-active';
-      this._cellIDPrefix = 'sb_';
-      this._currentRow = 1;
-      this._rootRowBinary = [];
-      this._currentCells = [];
-      this._RuleMatcher = new RuleMatcher();
-    }
-
-    Board.prototype.buildBoard = function(rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) {
-      this._jBoard = $(this._boardContainerID);
-      this._jGenerateMessage = $(this._generateMessageContainerID);
-      this._rootRowBinary = rootRowBinary;
-      this._RuleMatcher.setCurrentRule(decimalRule);
+      this._RuleMatcher.setCurrentRule(this._Vars.currentRule);
       this._boardNoCellsWide = noCellsWide;
       this._boardNoCellsHigh = noSectionsHigh;
       this._jBoard.width(noCellsWide * this._boardCellWidthPx);
@@ -264,18 +143,16 @@ Generate a cellular automata board based on a passed rule.
    */
 
   Dashboard = (function() {
-    function Dashboard() {
-      this._returnFromTopRowEditorCallback = bind(this._returnFromTopRowEditorCallback, this);
+    function Dashboard(VariablesInstance, TabsInstance) {
+      this._Vars = VariablesInstance;
+      this._Tabs = TabsInstance;
       this._idCagenDashboardContent = "#cagen-dashboard-content";
       this._idRulesPreviewContainer = "#cagen-rules-preview-container";
       this._idRuleSelectInput = "#cagen-console-select-input";
       this._idGenerateButton = "#cagen-console-generate-button";
       this._idEditTopRowButton = "#cagen-toprow-button";
-      this._idRuleThumbnailsButton = "#cagen-rulethumbnails-button";
       this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
-      this._idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails";
-      this._classRuleThumbBox = ".cagen-rulethumb-box";
-      this._jCagenContainer = $("#cagen-container");
+      this._jCagenContainer = this._Vars.jMainContainer;
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
       this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
       this._idPreviewCellPrefix = "#cagen-console-preview-";
@@ -284,7 +161,7 @@ Generate a cellular automata board based on a passed rule.
       this._previewBoxWidth = 40;
       this._noBoardColumns = 151;
       this._noBoardRows = 75;
-      this._TopRowEditor = new TopRowEditor();
+      this._Tabs = new Tabs();
       this._ruleList = [];
     }
 
@@ -294,14 +171,12 @@ Generate a cellular automata board based on a passed rule.
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
       this._jCagenContentContainer = $(this._idCagenDashboardContent);
       this._jInputSelectRule = $(this._idRuleSelectInput);
-      this._Board = new Board();
-      this._ruleList = [];
+      this._Board = new Board(this._Vars);
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
-        this._ruleList.push(rule);
         this._jInputSelectRule.append(tmpOption);
       }
-      this._jInputSelectRule.val(this._currentRule);
+      this._jInputSelectRule.val(this._Vars.currentRule);
       this._jInputSelectRule.change((function(_this) {
         return function(event) {
           return _this._changeRuleEvent(event);
@@ -317,39 +192,12 @@ Generate a cellular automata board based on a passed rule.
           return _this._topRowButtonClicked(event);
         };
       })(this));
-      $(this._idRuleThumbnailsButton).click((function(_this) {
-        return function(event) {
-          return _this._ruleThumbnailsButtonClicked(event);
-        };
-      })(this));
-      this._buildRuleThumbnailsList();
+      this._buildBoard();
       return true;
     };
 
     Dashboard.prototype._generateButtonClicked = function(event) {
       return this._buildBoard();
-    };
-
-    Dashboard.prototype._topRowButtonClicked = function(event) {
-      return this._TopRowEditor.run(this._returnFromTopRowEditorCallback);
-    };
-
-    Dashboard.prototype._ruleThumbnailsButtonClicked = function(event) {
-      return this._buildRuleThumbnailsList();
-    };
-
-    Dashboard.prototype._buildRuleThumbnailsList = function(event) {
-      var rendered, thumbnailHTML;
-      thumbnailHTML = $(this._idTmplRuleThumbnails).html();
-      rendered = Mustache.render(thumbnailHTML, {
-        ruleList: this._ruleList
-      });
-      this._jCagenContentContainer.html(rendered);
-      return $(this._classRuleThumbBox).click((function(_this) {
-        return function(event) {
-          return _this._ruleThumbBoxClicked(event);
-        };
-      })(this));
     };
 
     Dashboard.prototype._buildBoard = function() {
@@ -358,27 +206,14 @@ Generate a cellular automata board based on a passed rule.
       this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
       this._jRulesContainer = $(this._idRulesPreviewContainer);
       this._jRulesContainer.fadeOut();
-      topRowBinary = this._TopRowEditor.getRowBinary();
-      this._Board.buildBoard(topRowBinary, this._jInputSelectRule.val(), this._noBoardColumns, this._noBoardRows);
+      topRowBinary = this._Vars.getTopRowBinary();
+      this._Board.buildBoard(topRowBinary, this._noBoardColumns, this._noBoardRows);
       this._buildRulePreview();
       return true;
     };
 
-    Dashboard.prototype._ruleThumbBoxClicked = function(event) {
-      var jBox, rule;
-      jBox = $(event.currentTarget);
-      rule = jBox.data('rule');
-      this._currentRule = rule;
-      this._jInputSelectRule.val(rule);
-      return this._buildBoard();
-    };
-
     Dashboard.prototype._changeRuleEvent = function(event) {
-      return this._currentRule = this._jInputSelectRule.val();
-    };
-
-    Dashboard.prototype._returnFromTopRowEditorCallback = function() {
-      return this.run();
+      return this._Vars.setCurrentRule(this._jInputSelectRule.val());
     };
 
     Dashboard.prototype._buildRulePreview = function() {
@@ -446,9 +281,14 @@ Generate a cellular automata board based on a passed rule.
    */
 
   $(function() {
-    var dashboard;
-    dashboard = new Dashboard();
-    return dashboard.run();
+    var dashboard, ruleThumbnails, tabs, topRowEditor, vars;
+    vars = new Variables();
+    tabs = new Tabs(vars);
+    ruleThumbnails = new RuleThumbnails(vars, tabs);
+    topRowEditor = new TopRowEditor(vars, tabs);
+    dashboard = new Dashboard(vars, tabs);
+    tabs.setClassInstances(ruleThumbnails, topRowEditor, dashboard);
+    return tabs.start();
   });
 
 
@@ -522,6 +362,60 @@ Generate a cellular automata board based on a passed rule.
 
 
   /*
+  RuleThumbnails.coffee
+  
+  @author Destin Moulton
+  @git https://github.com/destinmoulton/cagen
+  @license MIT
+  
+  Component of Cellular Automata Generator (CAGEN)
+  
+  Generate the Rule Thumbnails for cagen.
+  
+  Tabs instantiates and runs the Rule Thumbnail generation.
+   */
+
+  RuleThumbnails = (function() {
+    function RuleThumbnails(VariablesInstance, TabsInstance) {
+      this._Vars = VariablesInstance;
+      this._Tabs = TabsInstance;
+      this._idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails";
+      this._classRuleThumbBox = ".cagen-rulethumb-box";
+    }
+
+    RuleThumbnails.prototype.show = function() {
+      var i, rendered, results, thumbnailHTML;
+      this._ruleList = (function() {
+        results = [];
+        for (i = 0; i <= 255; i++){ results.push(i); }
+        return results;
+      }).apply(this);
+      thumbnailHTML = $(this._idTmplRuleThumbnails).html();
+      rendered = Mustache.render(thumbnailHTML, {
+        ruleList: this._ruleList
+      });
+      this._Vars.jMainContainer.html(rendered);
+      return $(this._classRuleThumbBox).click((function(_this) {
+        return function(event) {
+          return _this._ruleThumbBoxClicked(event);
+        };
+      })(this));
+    };
+
+    RuleThumbnails.prototype._ruleThumbBoxClicked = function(event) {
+      var jBox, rule;
+      jBox = $(event.currentTarget);
+      rule = jBox.data('rule');
+      this._Vars.setCurrentRule(rule);
+      return this._Tabs.showDashboardTab();
+    };
+
+    return RuleThumbnails;
+
+  })();
+
+
+  /*
   Tabs.coffee
   
   @author Destin Moulton
@@ -534,11 +428,34 @@ Generate a cellular automata board based on a passed rule.
    */
 
   Tabs = (function() {
-    function Tabs() {
+    function Tabs(VariablesInstance) {
       this._classActive = "active";
+      this._idRuleThumbnailsTab = "#tab-rulethumbnails";
+      this._idTopRowEditorTab = "#tab-toproweditor";
+      this._idDashboardTab = "#tab-dashboard";
       this._tabIdPrefix = "#tab-";
-      this._tabs = ["screenshots", "toproweditor", "dashboard"];
+      this._tabs = ["rulethumbnails", "toproweditor", "dashboard"];
+      this._Vars = VariablesInstance;
     }
+
+    Tabs.prototype.start = function() {
+      this.showRuleThumbnailsTab();
+      $(this._idRuleThumbnailsTab).click((function(_this) {
+        return function(event) {
+          return _this.showRuleThumbnailsTab();
+        };
+      })(this));
+      $(this._idTopRowEditorTab).click((function(_this) {
+        return function(event) {
+          return _this.showTopRowEditorTab();
+        };
+      })(this));
+      return $(this._idDashboardTab).click((function(_this) {
+        return function(event) {
+          return _this.showDashboardTab();
+        };
+      })(this));
+    };
 
     Tabs.prototype.activate = function(tabName) {
       var i, len, ref, tab;
@@ -548,6 +465,27 @@ Generate a cellular automata board based on a passed rule.
         $(this._tabIdPrefix + tab).removeClass(this._classActive);
       }
       return $(this._tabIdPrefix + tabName).addClass(this._classActive);
+    };
+
+    Tabs.prototype.setClassInstances = function(RuleThumbnailsInstance, TopRowEditorInstance, DashboardInstance) {
+      this._RuleThumbnails = RuleThumbnailsInstance;
+      this._TopRowEditor = TopRowEditorInstance;
+      return this._Dashboard = DashboardInstance;
+    };
+
+    Tabs.prototype.showRuleThumbnailsTab = function() {
+      this.activate('rulethumbnails');
+      return this._RuleThumbnails.show();
+    };
+
+    Tabs.prototype.showTopRowEditorTab = function() {
+      this.activate('toproweditor');
+      return this._TopRowEditor.run();
+    };
+
+    Tabs.prototype.showDashboardTab = function() {
+      this.activate('dashboard');
+      return this._Dashboard.run();
     };
 
     return Tabs;
@@ -568,20 +506,21 @@ Generate a cellular automata board based on a passed rule.
    */
 
   TopRowEditor = (function() {
-    function TopRowEditor() {
+    function TopRowEditor(VariablesInstance, TabsInstance) {
       this._toggleEditorCell = bind(this._toggleEditorCell, this);
       this._moveSlider = bind(this._moveSlider, this);
-      var cagenContainerId, toproweditorTemplateId;
+      var toproweditorTemplateId;
+      this._Vars = VariablesInstance;
+      this._Tabs = TabsInstance;
       this._rowContainerId = "#rowed-slider-row-container";
       this._sliderContainerId = "#rowed-slider-container";
       this._sliderId = "#rowed-slider";
       this._editorContainerId = "#rowed-editor-container";
       this._returnButtonId = "#rowed-button-returntodashboard";
-      cagenContainerId = "#cagen-container";
       toproweditorTemplateId = "#tmpl-cagen-toproweditor";
       this._editorCellActiveClass = 'rowed-editor-cell-active';
       this._sliderCellActiveClass = 'cagen-board-cell-active';
-      this._jCagenContainer = $(cagenContainerId);
+      this._jCagenContainer = this._Vars.jMainContainer;
       this._jTopRowEditorTemplate = $(toproweditorTemplateId);
       this._jEditorCells = [];
       this._aRowBinary = [];
@@ -596,7 +535,7 @@ Generate a cellular automata board based on a passed rule.
       this._generateInitialBinary();
     }
 
-    TopRowEditor.prototype.run = function(fDashboardCallback) {
+    TopRowEditor.prototype.run = function() {
       var dashboardHTML;
       dashboardHTML = this._jTopRowEditorTemplate.html();
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
@@ -610,24 +549,19 @@ Generate a cellular automata board based on a passed rule.
       this._jSliderContainer.width(this._totalWidth);
       this._jSlider.width(this._colWidth * this._sliderCols);
       this._jSliderContainer.mousemove(this._moveSlider);
-      this._fDashboardCallback = fDashboardCallback;
       this._sliderInitialOffset = this._jSlider.offset();
       this._buildRow();
       this._buildEditorCells();
       this._updateEditorCells(1);
       return this._jReturnButton.click((function(_this) {
         return function(event) {
-          return _this._returnToDashboardClicked(event);
+          return _this._switchToDashboardClicked(event);
         };
       })(this));
     };
 
-    TopRowEditor.prototype.getRowBinary = function() {
-      return this._aRowBinary;
-    };
-
-    TopRowEditor.prototype._returnToDashboardClicked = function(event) {
-      return this._fDashboardCallback();
+    TopRowEditor.prototype._switchToDashboardClicked = function(event) {
+      return this._Tabs.showDashboardTab();
     };
 
     TopRowEditor.prototype._moveSlider = function(ev) {
@@ -689,26 +623,26 @@ Generate a cellular automata board based on a passed rule.
       if (this._aRowBinary[cellNo] === 1) {
         this._aRowBinary[cellNo] = 0;
         jTmpCell.removeClass(this._editorCellActiveClass);
-        return $('#rowed-slider-col-' + cellNo).removeClass(this._sliderCellActiveClass);
+        $('#rowed-slider-col-' + cellNo).removeClass(this._sliderCellActiveClass);
       } else {
         this._aRowBinary[cellNo] = 1;
         jTmpCell.addClass(this._editorCellActiveClass);
-        return $('#rowed-slider-col-' + cellNo).addClass(this._sliderCellActiveClass);
+        $('#rowed-slider-col-' + cellNo).addClass(this._sliderCellActiveClass);
       }
+      return this._Vars.setTopRowBinary(this._aRowBinary);
     };
 
     TopRowEditor.prototype._generateInitialBinary = function() {
-      var col, i, ref, results, seed_col;
+      var col, i, ref, seed_col;
       seed_col = Math.ceil(this._noColumns / 2);
-      results = [];
       for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
         if (col === seed_col) {
-          results.push(this._aRowBinary[col] = 1);
+          this._aRowBinary[col] = 1;
         } else {
-          results.push(this._aRowBinary[col] = 0);
+          this._aRowBinary[col] = 0;
         }
       }
-      return results;
+      return this._Vars.setTopRowBinary(this._aRowBinary);
     };
 
     TopRowEditor.prototype._buildRow = function() {
@@ -733,6 +667,42 @@ Generate a cellular automata board based on a passed rule.
     };
 
     return TopRowEditor;
+
+  })();
+
+
+  /*
+  Variables.coffee
+  
+  @author Destin Moulton
+  @git https://github.com/destinmoulton/cagen
+  @license MIT
+  
+  Component of Cellular Automata Generator (CAGEN)
+  
+  Manage variables for the cagen components.
+   */
+
+  Variables = (function() {
+    function Variables() {
+      this.jMainContainer = $("#cagen-container");
+      this.currentRule = 0;
+      this.topRowBinaryArray = [];
+    }
+
+    Variables.prototype.setCurrentRule = function(newRule) {
+      return this.currentRule = newRule;
+    };
+
+    Variables.prototype.setTopRowBinary = function(newBinary) {
+      return this.topRowBinaryArray = newBinary;
+    };
+
+    Variables.prototype.getTopRowBinary = function() {
+      return this.topRowBinaryArray;
+    };
+
+    return Variables;
 
   })();
 

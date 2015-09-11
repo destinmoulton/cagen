@@ -15,11 +15,11 @@ Tabs instantiates and runs the Rule Thumbnail generation.
 
 class RuleThumbnails
 
-    constructor: ()->
+    constructor: (VariablesInstance, TabsInstance)->
+        @_Vars = VariablesInstance
+        @_Tabs = TabsInstance
         @_idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails"
         @_classRuleThumbBox = ".cagen-rulethumb-box"
-
-        @_jCagenContainer = $("#cagen-container")
 
     show: ()->
         # Setup the list of rules
@@ -27,7 +27,7 @@ class RuleThumbnails
         
         thumbnailHTML = $(@_idTmplRuleThumbnails).html()
         rendered = Mustache.render(thumbnailHTML, {ruleList:@_ruleList})
-        @_jCagenContainer.html(rendered)
+        @_Vars.jMainContainer.html(rendered)
 
         # Setup events for when the rule thumbnails are clicked
         $(@_classRuleThumbBox).click((event)=>@_ruleThumbBoxClicked(event))    
@@ -37,7 +37,9 @@ class RuleThumbnails
         jBox = $(event.currentTarget)
 
         rule = jBox.data('rule')
-        @_currentRule = rule
-        @_jInputSelectRule.val(rule)
 
-        @_buildBoard()
+        # Change the current rule
+        @_Vars.setCurrentRule(rule)
+
+        # Switch to the dashboard
+        @_Tabs.showDashboardTab()

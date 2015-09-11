@@ -11,8 +11,11 @@ Generate a cellular automata board based on a passed rule.
 
 ###
 
+
 class Board
-    constructor: ()->
+    constructor: (VariablesInstance)->
+        @_Vars = VariablesInstance
+        
         # Define some div IDs
         @_boardContainerID = '#cagen-board'
         @_generateMessageContainerID = '#cagen-generatemessage-container'
@@ -31,14 +34,14 @@ class Board
         @_RuleMatcher = new RuleMatcher()
         
     
-    buildBoard: (rootRowBinary, decimalRule, noCellsWide, noSectionsHigh) ->
+    buildBoard: (rootRowBinary, noCellsWide, noSectionsHigh) ->
         # Select local jQuery DOM objects
         @_jBoard =$(@_boardContainerID)
         @_jGenerateMessage = $(@_generateMessageContainerID)
         
         @_rootRowBinary = rootRowBinary
         
-        @_RuleMatcher.setCurrentRule(decimalRule)
+        @_RuleMatcher.setCurrentRule(@_Vars.currentRule)
 
         @_boardNoCellsWide = noCellsWide
         @_boardNoCellsHigh = noSectionsHigh

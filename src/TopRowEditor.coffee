@@ -13,22 +13,24 @@ Edit the top row of the cagen board.
 
 class TopRowEditor
 
-    constructor: ()->
+    constructor: (VariablesInstance, TabsInstance)->
+        @_Vars = VariablesInstance
+        @_Tabs = TabsInstance
+        
         # HTML ids for the divs
         @_rowContainerId = "#rowed-slider-row-container"
         @_sliderContainerId = "#rowed-slider-container"
         @_sliderId = "#rowed-slider"
         @_editorContainerId = "#rowed-editor-container"
         @_returnButtonId = "#rowed-button-returntodashboard"
-        cagenContainerId = "#cagen-container"
+
         toproweditorTemplateId = "#tmpl-cagen-toproweditor"
 
         # CSS classes for the active cells
         @_editorCellActiveClass = 'rowed-editor-cell-active'
         @_sliderCellActiveClass = 'cagen-board-cell-active'
-        
 
-        @_jCagenContainer = $(cagenContainerId)
+        @_jCagenContainer = @_Vars.jMainContainer
         @_jTopRowEditorTemplate = $(toproweditorTemplateId)
 
         @_jEditorCells = []
@@ -45,7 +47,7 @@ class TopRowEditor
 
         @_generateInitialBinary()
 
-    run: (fDashboardCallback)->
+    run: ()->
         # Populate the main container with the template
         dashboardHTML = @_jTopRowEditorTemplate.html()
 
@@ -63,8 +65,6 @@ class TopRowEditor
         @_jSlider.width(@_colWidth*@_sliderCols)
         @_jSliderContainer.mousemove(@_moveSlider)
 
-        @_fDashboardCallback = fDashboardCallback
-
         # Get the initial slider position
         @_sliderInitialOffset = @_jSlider.offset()
         @_buildRow()
@@ -72,14 +72,11 @@ class TopRowEditor
         @_buildEditorCells()
         @_updateEditorCells(1)
 
-        # The "Return To Dashboard" Event
-        @_jReturnButton.click((event)=>@_returnToDashboardClicked(event))
+        # The Switch to Dashboard
+        @_jReturnButton.click((event)=>@_switchToDashboardClicked(event))
 
-    getRowBinary:()->
-        @_aRowBinary
-
-    _returnToDashboardClicked: (event)->
-        @_fDashboardCallback()
+    _switchToDashboardClicked: (event)->
+        @_Tabs.showDashboardTab()
 
     _moveSlider: (ev)=>
         xMousePos = ev.clientX
@@ -142,7 +139,7 @@ class TopRowEditor
             jTmpCell.addClass(@_editorCellActiveClass)
             $('#rowed-slider-col-'+cellNo).addClass(@_sliderCellActiveClass)
 
-        
+        @_Vars.setTopRowBinary(@_aRowBinary)
         
 
     # Setup the initial binary representation of the row
@@ -154,7 +151,8 @@ class TopRowEditor
                 @_aRowBinary[col] = 1
             else
                 @_aRowBinary[col] = 0
-                
+
+        @_Vars.setTopRowBinary(@_aRowBinary)
         
 
     _buildRow: ()->
