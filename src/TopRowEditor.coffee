@@ -18,21 +18,28 @@ class TopRowEditor
         @_Tabs = TabsInstance
         
         # HTML ids for the divs
-        @_rowContainerId = "#rowed-slider-row-container"
-        @_sliderContainerId = "#rowed-slider-container"
-        @_sliderId = "#rowed-slider"
-        @_editorContainerId = "#rowed-editor-container"
-        @_returnButtonId = "#rowed-button-returntodashboard"
-
-        toproweditorTemplateId = "#tmpl-cagen-toproweditor"
+        @_idRowContainer = "#rowed-slider-row-container"
+        @_idSliderContainer = "#rowed-slider-container"
+        @_idSlider = "#rowed-slider"
+        @_idSliderArrowLeft = "#rowed-slider-arrow-left"
+        @_idSliderArrowRight = "#rowed-slider-arrow-right"
+        @_idEditorContainer = "#rowed-editor-container"
+        @_idReturnButton = "#rowed-button-returntodashboard"
+        @_idResetRowButton = "#rowed-button-resetrow"
+        @_idTmplEditorCell = '#tmpl-rowed-editor-cell'
+        @_idTmplSliderCell = '#tmpl-rowed-slider-cell'
 
         # CSS classes for the active cells
-        @_editorCellActiveClass = 'rowed-editor-cell-active'
-        @_sliderCellActiveClass = 'cagen-board-cell-active'
+        @_classEditorCellActive = 'rowed-editor-cell-active'
+        @_classSlicerCellActive = 'cagen-board-cell-active'
 
+        # Dom element prefixes
+        @_prefixSliderCol = 'rowed-slider-col-'
+
+        # local jQuery objects so we don't have to do repeated dom lookups
         @_jCagenContainer = @_Vars.jMainContainer
-        @_jTopRowEditorTemplate = $(toproweditorTemplateId)
-
+        @_jTopRowEditorTemplate = $("#tmpl-cagen-toproweditor")
+        
         @_jEditorCells = []
 
         @_aRowBinary = []
@@ -53,27 +60,55 @@ class TopRowEditor
 
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
-        @_jSliderContainer = $(@_sliderContainerId)
-        @_jSlider = $(@_sliderId)
-        @_jRowContainer = $(@_rowContainerId)
-        @_jEditorContainer = $(@_editorContainerId)
-        @_jReturnButton = $(@_returnButtonId)
+        @_jSliderContainer = $(@_idSliderContainer)
+        @_jSlider = $(@_idSlider)
+        @_jRowContainer = $(@_idRowContainer)
+        @_jEditorContainer = $(@_idEditorContainer)
     
         @_jRowContainer.height(@_rowHeight)
         @_jRowContainer.width(@_totalWidth)
         @_jSliderContainer.width(@_totalWidth)
         @_jSlider.width(@_colWidth*@_sliderCols)
-        @_jSliderContainer.mousemove(@_moveSlider)
+
+        #
+        @_jSliderLeftArrow = $(@_idSliderArrowLeft)
+        @_jSliderRightArrow = $(@_idSliderArrowRight)
+        @_sliderIsDragging = false
+
+        @_jSlider.click( =>
+            if @_sliderIsDragging
+                @_sliderIsDragging = false
+                @_jSliderLeftArrow.fadeOut()
+                @_jSliderRightArrow.fadeOut()
+            else
+                @_sliderIsDragging = true
+                @_jSliderLeftArrow.fadeIn()
+                @_jSliderRightArrow.fadeIn()
+        )
+
+        @_jSlider.mousemove( (event) =>
+            if @_sliderIsDragging 
+                @_moveSlider(event)
+        )
 
         # Get the initial slider position
         @_sliderInitialOffset = @_jSlider.offset()
+
         @_buildRow()
 
         @_buildEditorCells()
         @_updateEditorCells(1)
 
         # The Switch to Dashboard
-        @_jReturnButton.click((event)=>@_switchToDashboardClicked(event))
+        $(@_idReturnButton).click((event)=>@_switchToDashboardClicked(event))
+
+        # Reset button clicked
+        $(@_idResetRowButton).click((event)=>@_resetRow(event))
+
+    # Reset the initial row
+    _resetRow: (event)->
+        @_generateInitialBinary()
+        @run()
 
     _switchToDashboardClicked: (event)->
         @_Tabs.showDashboardTab()
@@ -83,13 +118,15 @@ class TopRowEditor
         closestEdgePx = xMousePos - (xMousePos%@_colWidth)
         leftPos = closestEdgePx-@_sliderPxToMid
         rightPos = closestEdgePx+@_sliderPxToMid+@_colWidth
-        fullWidth = @_totalWidth+@_sliderInitialOffset.left+(2*@_colWidth)
-        
-        
-        if leftPos >= @_sliderInitialOffset.left && rightPos <=  fullWidth
-            @_jSlider.offset({top:@_sliderInitialOffset.top, left:leftPos})
+        fullWidth = @_totalWidth + @_colWidth
 
-            leftCellNo = (leftPos/@_colWidth) - 1
+        adjustedLeft = leftPos+@_sliderInitialOffset.left
+
+        if adjustedLeft >= @_sliderInitialOffset.left && rightPos <=  fullWidth
+            
+            @_jSlider.offset({top:@_sliderInitialOffset.top, left:adjustedLeft})
+
+            leftCellNo = (leftPos/@_colWidth)+1
 
             @_updateEditorCells(leftCellNo)
 
@@ -103,14 +140,14 @@ class TopRowEditor
             @_jEditorCells[cell].data('cellIndex',cellPos)
 
             if @_aRowBinary[cellPos] is 1
-                @_jEditorCells[cell].addClass(@_editorCellActiveClass)
+                @_jEditorCells[cell].addClass(@_classEditorCellActive)
             else
-                @_jEditorCells[cell].removeClass(@_editorCellActiveClass)
+                @_jEditorCells[cell].removeClass(@_classEditorCellActive)
             
             
 
     _buildEditorCells: ()->
-        cellTemplate = $('#tmpl-rowed-editor-cell').html()
+        cellTemplate = $(@_idTmplEditorCell).html()
 
         @_jEditorContainer.width(@_sliderCols*@_editorCellWidth)
         
@@ -132,12 +169,12 @@ class TopRowEditor
         cellNo = jTmpCell.data('cellIndex')
         if @_aRowBinary[cellNo] is 1
             @_aRowBinary[cellNo] = 0
-            jTmpCell.removeClass(@_editorCellActiveClass)
-            $('#rowed-slider-col-'+cellNo).removeClass(@_sliderCellActiveClass)
+            jTmpCell.removeClass(@_classEditorCellActive)
+            $('#'+@_prefixSliderCol+cellNo).removeClass(@_classSlicerCellActive)
         else
             @_aRowBinary[cellNo] = 1
-            jTmpCell.addClass(@_editorCellActiveClass)
-            $('#rowed-slider-col-'+cellNo).addClass(@_sliderCellActiveClass)
+            jTmpCell.addClass(@_classEditorCellActive)
+            $('#'+@_prefixSliderCol+cellNo).addClass(@_classSlicerCellActive)
 
         @_Vars.setTopRowBinary(@_aRowBinary)
         
@@ -156,15 +193,15 @@ class TopRowEditor
         
 
     _buildRow: ()->
-        smallCellTemplate = $('#tmpl-rowed-slider-cell').html()
+        smallCellTemplate = $(@_idTmplSliderCell).html()
 
         # Add cells to the row
         for col in [1..@_noColumns]
             activeClass = ""
             if @_aRowBinary[col] is 1
-                activeClass = @_sliderCellActiveClass
+                activeClass = @_classSlicerCellActive
 
             leftPos = ((col-1)*@_colWidth)
-            tmpId = "rowed-slider-col-"+col
+            tmpId = @_prefixSliderCol+col
             rendered = Mustache.render(smallCellTemplate, {id:tmpId, left:leftPos, activeClass:activeClass})
             @_jRowContainer.append(rendered)

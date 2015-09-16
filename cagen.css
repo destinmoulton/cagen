@@ -7,22 +7,21 @@ body{
     top:55px;
 }
 
-#cagen-board-container{
-	position:absolute;
-	top:50px;
-	left:0px;
+#cagen-generatemessage-container{
+    position:position:relative;
+    float:left;
+    top:0px;
+    width:700px;
+    display:none;
 }
 
-#cagen-generatemessage-container{
-    position:absolute;
-    top:0px;
-    width:400px;
-    display:none;
+#cagen-board-container{
+	position:relative;
+    float:left;
 }
 
 #cagen-board{
 	position:absolute;
-    top:20px;
     border-top:1px solid black;
 	border-left:1px solid black;
     display:none;
@@ -40,26 +39,86 @@ body{
 	background-color:black;
 }
 
-#cagen-console-container{
-	position:absolute;
+#cagen-dash-container{
+	position:relative;
+    float:left;
 	top:0px;
 	left:15px;
-	width:130px;
+	width:755px;
+    margin-bottom:5px;
+}
+
+.cagen-dash-box{
+    position:relative;
+    float:left;
+    padding:5px;
 }
 
 #cagen-dashboard-content{
-    position:absolute;
-    left:150px;
+    position:relative;
+    float:left;
+    left:15px;
     top:0px;
     width:800px;
     height:100%;
+}
+
+#cagen-rules-preview-container{
+	position:relative;
+	float:right;
+	height:40px;
+    padding:5px;
+}
+
+.cagen-dash-preview-cell{
+	position:absolute;
+	width:10px;
+	height:10px;
+	border:1px solid black;
+}
+
+.cagen-dash-preview-cell-left{
+	left:0px;
+}
+.cagen-dash-preview-cell-middle{
+	left:10px;
+}
+.cagen-dash-preview-cell-right{
+	left:20px;
+}
+.cagen-dash-preview-digit{
+	position:absolute;
+	left:24px;
+	font-size:10px;
+}
+.cagen-dash-preview-cell-active{
+	background-color:black;
+}
+.cagen-dash-preview-box{
+	position:relative;
+    float:left;
+	width:40px;
+	height:30px;
+	
+}
+.cagen-dash-preview-triple-cell-container{
+	position:relative;
+	width:30px;
+	height:10px;
+}
+.cagen-dash-preview-result-cell-container{
+	position:relative;
+	width:30px;
+	height:20px;
+	padding-top:5px;
+	padding-bottom:5px;
 }
 
 
 .cagen-rulethumb-box{
     position:relative;
     float:left;
-    padding:0px 5px 0px 0px;
+    padding:0px 5px 5px 0px;
     margin:0 0;
     cursor:pointer;
 }
@@ -72,68 +131,21 @@ body{
 
 .cagen-rulethumb-rulenum{
     position:absolute;
-    right:0px;
+    /*right:0px;
     bottom:0px;
-    width:30px;
-    height:16px;
-    background-color:white;
-    margin:0px 10px 9px 0px;
+    */
+    width:28px;
+    left:5px;
+    top:5px;
+    height:20px;
+    background-color:#fdf9f3;
+    margin:0px 10px 10px 0px;
     padding-top:2px;
+    padding-bottom:2px;
     text-align:center;
     font-family:sans-serif;
-    font-size:14px;
-}
-
-#cagen-rules-preview-container{
-	position:absolute;
-	display:none;
-	top:5px;
-	height:40px;
-	width:700px;
-    border:1px solid blue;
-}
-
-.cagen-console-preview-cell{
-	position:absolute;
-	width:10px;
-	height:10px;
-	border:1px solid black;
-}
-
-.cagen-console-preview-cell-left{
-	left:0px;
-}
-.cagen-console-preview-cell-middle{
-	left:10px;
-}
-.cagen-console-preview-cell-right{
-	left:20px;
-}
-.cagen-console-preview-digit{
-	position:absolute;
-	left:24px;
-	font-size:10px;
-}
-.cagen-console-preview-cell-active{
-	background-color:black;
-}
-.cagen-console-preview-box{
-	position:absolute;
-	width:40px;
-	height:30px;
-	
-}
-.cagen-console-preview-triple-cell-container{
-	position:relative;
-	width:30px;
-	height:10px;
-}
-.cagen-console-preview-result-cell-container{
-	position:relative;
-	width:30px;
-	height:20px;
-	padding-top:5px;
-	padding-bottom:5px;
+    font-size:12px;
+    border-radius:6px;
 }
 
 #rowed-slider-container{
@@ -144,9 +156,30 @@ body{
 
 #rowed-slider{
 	position:absolute;
-	background-color:#CAFFD8;
-	height:100px;
-	cursor:ew-resize;
+	background-color:#f7fde1;
+	height:98px;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    font-size:24px;
+    cursor:pointer;
+}
+
+#rowed-slider-arrow-left{
+    display:none;
+    position:relative;
+    float:left;
+    top:62px;
+    left:15px;
+    color:gray;
+}
+
+#rowed-slider-arrow-right{
+    display:none;
+    position:relative;
+    float:right;
+    top:62px;
+    right:15px;
+    color:gray;
 }
 
 #rowed-slider-row-container{
@@ -163,10 +196,12 @@ body{
 	height:40px;
 }
 
-#rowed-button-returntodashboard{
+#rowed-button-container{
     position:absolute;
     top:162px;
-    left:320px;
+    left:0px;
+    width:755px;
+    text-align:center;
 }
 
 .rowed-editor-cell{

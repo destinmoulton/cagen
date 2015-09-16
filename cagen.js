@@ -148,15 +148,15 @@ Generate a cellular automata board based on a passed rule.
       this._Tabs = TabsInstance;
       this._idCagenDashboardContent = "#cagen-dashboard-content";
       this._idRulesPreviewContainer = "#cagen-rules-preview-container";
-      this._idRuleSelectInput = "#cagen-console-select-input";
-      this._idGenerateButton = "#cagen-console-generate-button";
+      this._idRuleSelectInput = "#cagen-dash-select-input";
+      this._idGenerateButton = "#cagen-dash-generate-button";
       this._idEditTopRowButton = "#cagen-toprow-button";
       this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
       this._jCagenContainer = this._Vars.jMainContainer;
       this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
       this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
-      this._idPreviewCellPrefix = "#cagen-console-preview-";
-      this._idPreviewDigitPrefix = "#cagen-console-preview-digit-";
+      this._idPreviewCellPrefix = "#cagen-dash-preview-";
+      this._idPreviewDigitPrefix = "#cagen-dash-preview-digit-";
       this._currentRule = 0;
       this._previewBoxWidth = 40;
       this._noBoardColumns = 151;
@@ -205,7 +205,6 @@ Generate a cellular automata board based on a passed rule.
       boardHTML = this._jCagenBoardTemplate.html();
       this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
       this._jRulesContainer = $(this._idRulesPreviewContainer);
-      this._jRulesContainer.fadeOut();
       topRowBinary = this._Vars.getTopRowBinary();
       this._Board.buildBoard(topRowBinary, this._noBoardColumns, this._noBoardRows);
       this._buildRulePreview();
@@ -217,10 +216,12 @@ Generate a cellular automata board based on a passed rule.
     };
 
     Dashboard.prototype._buildRulePreview = function() {
-      var activeClass, binary, currentRule, i, index, jTmpCell, jTmpDigit, left, leftBit, middleBit, previewCellHtml, rendered, rightBit, tmplOptions;
+      var activeClass, binary, currentRule, i, index, jTmpCell, jTmpDigit, left, leftBit, middleBit, previewCellHtml, rendered, results, rightBit, tmplOptions;
       currentRule = this._Board.getCurrentRule();
       previewCellHtml = $(this._idTmplPreviewCell).html();
-      activeClass = 'cagen-console-preview-cell-active';
+      activeClass = 'cagen-dash-preview-cell-active';
+      this._jRulesContainer.html("");
+      results = [];
       for (index = i = 7; i >= 0; index = --i) {
         binary = index.toString(2);
         if (binary.length === 2) {
@@ -256,10 +257,12 @@ Generate a cellular automata board based on a passed rule.
         jTmpDigit.html(0);
         if (currentRule.substr(7 - index, 1) === "1") {
           jTmpCell.addClass(activeClass);
-          jTmpDigit.html(1);
+          results.push(jTmpDigit.html(1));
+        } else {
+          results.push(void 0);
         }
       }
-      return this._jRulesContainer.fadeIn();
+      return results;
     };
 
     return Dashboard;
@@ -509,19 +512,23 @@ Generate a cellular automata board based on a passed rule.
     function TopRowEditor(VariablesInstance, TabsInstance) {
       this._toggleEditorCell = bind(this._toggleEditorCell, this);
       this._moveSlider = bind(this._moveSlider, this);
-      var toproweditorTemplateId;
       this._Vars = VariablesInstance;
       this._Tabs = TabsInstance;
-      this._rowContainerId = "#rowed-slider-row-container";
-      this._sliderContainerId = "#rowed-slider-container";
-      this._sliderId = "#rowed-slider";
-      this._editorContainerId = "#rowed-editor-container";
-      this._returnButtonId = "#rowed-button-returntodashboard";
-      toproweditorTemplateId = "#tmpl-cagen-toproweditor";
-      this._editorCellActiveClass = 'rowed-editor-cell-active';
-      this._sliderCellActiveClass = 'cagen-board-cell-active';
+      this._idRowContainer = "#rowed-slider-row-container";
+      this._idSliderContainer = "#rowed-slider-container";
+      this._idSlider = "#rowed-slider";
+      this._idSliderArrowLeft = "#rowed-slider-arrow-left";
+      this._idSliderArrowRight = "#rowed-slider-arrow-right";
+      this._idEditorContainer = "#rowed-editor-container";
+      this._idReturnButton = "#rowed-button-returntodashboard";
+      this._idResetRowButton = "#rowed-button-resetrow";
+      this._idTmplEditorCell = '#tmpl-rowed-editor-cell';
+      this._idTmplSliderCell = '#tmpl-rowed-slider-cell';
+      this._classEditorCellActive = 'rowed-editor-cell-active';
+      this._classSlicerCellActive = 'cagen-board-cell-active';
+      this._prefixSliderCol = 'rowed-slider-col-';
       this._jCagenContainer = this._Vars.jMainContainer;
-      this._jTopRowEditorTemplate = $(toproweditorTemplateId);
+      this._jTopRowEditorTemplate = $("#tmpl-cagen-toproweditor");
       this._jEditorCells = [];
       this._aRowBinary = [];
       this._noColumns = 151;
@@ -539,25 +546,56 @@ Generate a cellular automata board based on a passed rule.
       var dashboardHTML;
       dashboardHTML = this._jTopRowEditorTemplate.html();
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-      this._jSliderContainer = $(this._sliderContainerId);
-      this._jSlider = $(this._sliderId);
-      this._jRowContainer = $(this._rowContainerId);
-      this._jEditorContainer = $(this._editorContainerId);
-      this._jReturnButton = $(this._returnButtonId);
+      this._jSliderContainer = $(this._idSliderContainer);
+      this._jSlider = $(this._idSlider);
+      this._jRowContainer = $(this._idRowContainer);
+      this._jEditorContainer = $(this._idEditorContainer);
       this._jRowContainer.height(this._rowHeight);
       this._jRowContainer.width(this._totalWidth);
       this._jSliderContainer.width(this._totalWidth);
       this._jSlider.width(this._colWidth * this._sliderCols);
-      this._jSliderContainer.mousemove(this._moveSlider);
+      this._jSliderLeftArrow = $(this._idSliderArrowLeft);
+      this._jSliderRightArrow = $(this._idSliderArrowRight);
+      this._sliderIsDragging = false;
+      this._jSlider.click((function(_this) {
+        return function() {
+          if (_this._sliderIsDragging) {
+            _this._sliderIsDragging = false;
+            _this._jSliderLeftArrow.fadeOut();
+            return _this._jSliderRightArrow.fadeOut();
+          } else {
+            _this._sliderIsDragging = true;
+            _this._jSliderLeftArrow.fadeIn();
+            return _this._jSliderRightArrow.fadeIn();
+          }
+        };
+      })(this));
+      this._jSlider.mousemove((function(_this) {
+        return function(event) {
+          if (_this._sliderIsDragging) {
+            return _this._moveSlider(event);
+          }
+        };
+      })(this));
       this._sliderInitialOffset = this._jSlider.offset();
       this._buildRow();
       this._buildEditorCells();
       this._updateEditorCells(1);
-      return this._jReturnButton.click((function(_this) {
+      $(this._idReturnButton).click((function(_this) {
         return function(event) {
           return _this._switchToDashboardClicked(event);
         };
       })(this));
+      return $(this._idResetRowButton).click((function(_this) {
+        return function(event) {
+          return _this._resetRow(event);
+        };
+      })(this));
+    };
+
+    TopRowEditor.prototype._resetRow = function(event) {
+      this._generateInitialBinary();
+      return this.run();
     };
 
     TopRowEditor.prototype._switchToDashboardClicked = function(event) {
@@ -565,18 +603,19 @@ Generate a cellular automata board based on a passed rule.
     };
 
     TopRowEditor.prototype._moveSlider = function(ev) {
-      var closestEdgePx, fullWidth, leftCellNo, leftPos, rightPos, xMousePos;
+      var adjustedLeft, closestEdgePx, fullWidth, leftCellNo, leftPos, rightPos, xMousePos;
       xMousePos = ev.clientX;
       closestEdgePx = xMousePos - (xMousePos % this._colWidth);
       leftPos = closestEdgePx - this._sliderPxToMid;
       rightPos = closestEdgePx + this._sliderPxToMid + this._colWidth;
-      fullWidth = this._totalWidth + this._sliderInitialOffset.left + (2 * this._colWidth);
-      if (leftPos >= this._sliderInitialOffset.left && rightPos <= fullWidth) {
+      fullWidth = this._totalWidth + this._colWidth;
+      adjustedLeft = leftPos + this._sliderInitialOffset.left;
+      if (adjustedLeft >= this._sliderInitialOffset.left && rightPos <= fullWidth) {
         this._jSlider.offset({
           top: this._sliderInitialOffset.top,
-          left: leftPos
+          left: adjustedLeft
         });
-        leftCellNo = (leftPos / this._colWidth) - 1;
+        leftCellNo = (leftPos / this._colWidth) + 1;
         return this._updateEditorCells(leftCellNo);
       }
     };
@@ -589,9 +628,9 @@ Generate a cellular automata board based on a passed rule.
         this._jEditorCells[cell].text(cellPos);
         this._jEditorCells[cell].data('cellIndex', cellPos);
         if (this._aRowBinary[cellPos] === 1) {
-          results.push(this._jEditorCells[cell].addClass(this._editorCellActiveClass));
+          results.push(this._jEditorCells[cell].addClass(this._classEditorCellActive));
         } else {
-          results.push(this._jEditorCells[cell].removeClass(this._editorCellActiveClass));
+          results.push(this._jEditorCells[cell].removeClass(this._classEditorCellActive));
         }
       }
       return results;
@@ -599,7 +638,7 @@ Generate a cellular automata board based on a passed rule.
 
     TopRowEditor.prototype._buildEditorCells = function() {
       var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
-      cellTemplate = $('#tmpl-rowed-editor-cell').html();
+      cellTemplate = $(this._idTmplEditorCell).html();
       this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
       results = [];
       for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
@@ -622,12 +661,12 @@ Generate a cellular automata board based on a passed rule.
       cellNo = jTmpCell.data('cellIndex');
       if (this._aRowBinary[cellNo] === 1) {
         this._aRowBinary[cellNo] = 0;
-        jTmpCell.removeClass(this._editorCellActiveClass);
-        $('#rowed-slider-col-' + cellNo).removeClass(this._sliderCellActiveClass);
+        jTmpCell.removeClass(this._classEditorCellActive);
+        $('#' + this._prefixSliderCol + cellNo).removeClass(this._classSlicerCellActive);
       } else {
         this._aRowBinary[cellNo] = 1;
-        jTmpCell.addClass(this._editorCellActiveClass);
-        $('#rowed-slider-col-' + cellNo).addClass(this._sliderCellActiveClass);
+        jTmpCell.addClass(this._classEditorCellActive);
+        $('#' + this._prefixSliderCol + cellNo).addClass(this._classSlicerCellActive);
       }
       return this._Vars.setTopRowBinary(this._aRowBinary);
     };
@@ -647,15 +686,15 @@ Generate a cellular automata board based on a passed rule.
 
     TopRowEditor.prototype._buildRow = function() {
       var activeClass, col, i, leftPos, ref, rendered, results, smallCellTemplate, tmpId;
-      smallCellTemplate = $('#tmpl-rowed-slider-cell').html();
+      smallCellTemplate = $(this._idTmplSliderCell).html();
       results = [];
       for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
         activeClass = "";
         if (this._aRowBinary[col] === 1) {
-          activeClass = this._sliderCellActiveClass;
+          activeClass = this._classSlicerCellActive;
         }
         leftPos = (col - 1) * this._colWidth;
-        tmpId = "rowed-slider-col-" + col;
+        tmpId = this._prefixSliderCol + col;
         rendered = Mustache.render(smallCellTemplate, {
           id: tmpId,
           left: leftPos,

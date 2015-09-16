@@ -32,51 +32,45 @@
   <div id='cagen-container'></div>
 </body>
 <script type='text/template' id='tmpl-cagen-dashboard'>
-	<div id='cagen-console-container'>
-		<div id='cagen-console-table-container' >
-		<table cellpadding=4 cellspacing=0>
-			<tr>
-			<td>
-				Rule
-			</td>
-			<td>
-				<select id='cagen-console-select-input'></select>
-			</td>
-			</tr>
-			<tr>
-			<td colspan='2' style='text-align:right;'>
-				<button id='cagen-console-generate-button'>Generate</button>
-			</td>
-			</tr>
-		</table>
-		</div>
-	
-	</div>
+	<div id='cagen-dash-container' class="well">
+      <div class='cagen-dash-box'>
+        <div class="form-inline" >
+        Rule&nbsp;<select id='cagen-dash-select-input'
+                          class='form-control input-sm'></select>
+        &nbsp;<button id='cagen-dash-generate-button'
+                      class='btn btn-default btn-sm'>Generate</button>
+        </div>
+      </div>
+
+      <div id="cagen-rules-preview-container"></div>
+      <div class='cagen-dash-box' style='float:right;'>
+        Current Rule:
+      </div>
+      <div id='cagen-generatemessage-container'>Generating Cellular Automata...</div>
+    </div>
     <div id="cagen-dashboard-content"></div>
 	
 </script>
 
-<!-- Preview and Board  -->
+<!-- Board  -->
 <script type='text/template' id='tmpl-cagen-dash-board'>
-  <div id="cagen-rules-preview-container"></div>
   <div id='cagen-board-container'>
-        <div id='cagen-generatemessage-container'>Generating Cellular Automata...</div>
 		<div id='cagen-board'></div>
   </div>
 </script>
 
 <script type='text/template' id='tmpl-cagen-dash-preview-cell'>
-  <div class="cagen-console-preview-box" style="left:{{left}}px;">
-	<div class='cagen-console-preview-triple-cell-container'>
-	  <div class='cagen-console-preview-cell cagen-console-preview-cell-left {{#leftBitActive}}cagen-console-preview-cell-active{{/leftBitActive}}'></div>
-	  <div class='cagen-console-preview-cell cagen-console-preview-cell-middle {{#middleBitActive}}cagen-console-preview-cell-active{{/middleBitActive}}'></div>
-	  <div class='cagen-console-preview-cell cagen-console-preview-cell-right {{#rightBitActive}}cagen-console-preview-cell-active{{/rightBitActive}}'></div>
+  <div class="cagen-dash-preview-box" >
+	<div class='cagen-dash-preview-triple-cell-container'>
+	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-left {{#leftBitActive}}cagen-dash-preview-cell-active{{/leftBitActive}}'></div>
+	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-middle {{#middleBitActive}}cagen-dash-preview-cell-active{{/middleBitActive}}'></div>
+	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-right {{#rightBitActive}}cagen-dash-preview-cell-active{{/rightBitActive}}'></div>
 	</div>
-	<div class='cagen-console-preview-result-cell-container'>
-	  <div id='cagen-console-preview-{{previewIndex}}'
-		   class='cagen-console-preview-cell cagen-console-preview-cell-middle'></div>
-	  <div id='cagen-console-preview-digit-{{previewIndex}}'
-		   class='cagen-console-preview-digit'></div>
+	<div class='cagen-dash-preview-result-cell-container'>
+	  <div id='cagen-dash-preview-{{previewIndex}}'
+		   class='cagen-dash-preview-cell cagen-dash-preview-cell-middle'></div>
+	  <div id='cagen-dash-preview-digit-{{previewIndex}}'
+		   class='cagen-dash-preview-digit'></div>
 	</div>
   </div>
 </script>
@@ -97,11 +91,28 @@
 <!-- Top Row Editor - The main container for the editor -->
 <script type='text/template' id='tmpl-cagen-toproweditor'>
     <div id="rowed-slider-container">
-		<div id="rowed-slider"></div>
+		<div id="rowed-slider"
+             data-toggle="tooltip"
+             data-placement="right"
+             title="Click to Start Dragging">
+          <div id="rowed-slider-arrow-left"
+               class="glyphicon glyphicon-chevron-left"
+               aria-hidden="true"></div>
+          <div id="rowed-slider-arrow-right"
+               class="glyphicon glyphicon-chevron-right"
+               aria-hidden="true"></div>
+        </div>
+        
 		<div id="rowed-slider-row-container"></div>
 	</div>
 	<div id="rowed-editor-container"></div>
-    <button id='rowed-button-returntodashboard'>Return to Dashboard</button>
+    <div id="rowed-button-container">
+      <button id='rowed-button-returntodashboard'
+              class='btn btn-default btn-sm'>Generate</button>
+      &nbsp;&nbsp;&nbsp;
+      <button id='rowed-button-resetrow'
+              class='btn btn-default btn-sm'>Reset Row</button>
+    </div>
 </script>
 
 <!-- Top Row Editor - Cells that compose the lower, numbered, row -->
