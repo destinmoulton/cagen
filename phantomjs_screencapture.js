@@ -1,5 +1,5 @@
 /*
-screencapture.js
+
 
 @author Destin Moulton
 
