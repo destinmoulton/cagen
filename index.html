@@ -3,14 +3,23 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.5/css/bootstrap-theme.min.css">
+    <!-- Bootstrap for Basic CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- CAGEN specific styles -->
 	<link rel="stylesheet" type="text/css" href="cagen.css">
 
+    <!-- jQuery for DOM interaction -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
-	<script src="mustache/mustache.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Mustache.js for HTML templates -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+
+    <!-- Main CAGEN js -->
 	<script src="cagen.js"></script>
 
 	<!--[if IE]>
@@ -52,13 +61,14 @@
 	
 </script>
 
-<!-- Board  -->
+<!-- Board Mustache Template -->
 <script type='text/template' id='tmpl-cagen-dash-board'>
   <div id='cagen-board-container'>
 		<div id='cagen-board'></div>
   </div>
 </script>
 
+<!-- Dashboard Preview Mustache Template -->
 <script type='text/template' id='tmpl-cagen-dash-preview-cell'>
   <div class="cagen-dash-preview-box" >
 	<div class='cagen-dash-preview-triple-cell-container'>
@@ -75,7 +85,7 @@
   </div>
 </script>
 
-<!-- Rule Thumbnails List  -->
+<!-- Rule Thumbnails List Mustache Template -->
 <script type='text/template' id='tmpl-cagen-rulethumbnails'>
 {{#ruleList}}
 <div class='cagen-rulethumb-box'
@@ -88,7 +98,7 @@
 </script>
 
 
-<!-- Top Row Editor - The main container for the editor -->
+<!-- Base Container for The Top Row Editor Mustache Template -->
 <script type='text/template' id='tmpl-cagen-toproweditor'>
     <div id="rowed-slider-container">
 		<div id="rowed-slider"
