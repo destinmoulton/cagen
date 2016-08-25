@@ -31,6 +31,11 @@ the composition of the next row and so on.
 ###
 
 class RuleMatcher
+    
+    #
+    # Setup the local variables
+    # @constructor
+    # 
     constructor: ()->
         @_binaryRule = ""
         @_patterns = [
@@ -44,16 +49,28 @@ class RuleMatcher
             '000'
         ]
 
+    #
+    # Set the current rule from a decimal value
+    # 
     setCurrentRule: (decimalRule)->
         # The binary rule contains the sequence of
         # 0's (no block) and 1's (block) for the
         # next row.
         @_binaryRule = @_decToBinary(decimalRule)
 
+    #
+    # Get the currently active rule
+    #
+    # @return string Binary rule
+    # 
     getCurrentRule: ()->
         return @_binaryRule
 
-    match: (zeroIndex,oneIndex,twoIndex)->
+
+    #
+    # Match a pattern for the three bit positions
+    # 
+    match: (zeroIndex, oneIndex, twoIndex)->
         # Match three cells within
         patternToFind = "#{zeroIndex}#{oneIndex}#{twoIndex}"
 
@@ -62,6 +79,11 @@ class RuleMatcher
         # Return the binary rule's 0 or 1 mapping
         return parseInt(@_binaryRule.substr(foundPatternIndex,1))
 
+    #
+    # Convert a decimal value to its binary representation
+    #
+    # @return string Binary rule
+    # 
     _decToBinary: (decValue)->
         # Generate the binary string from the decimal
         binary = (parseInt(decValue)).toString(2)
