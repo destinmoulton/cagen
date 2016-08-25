@@ -1,18 +1,26 @@
 ###
-TopRowEditor.coffee
+
+The top/root row editor for CAGEN.
 
 @author Destin Moulton
 @git https://github.com/destinmoulton/cagen
 @license MIT
 
-Component of Cellular Automata Generator (CAGEN)
+Component of Cellular Automata GENerator (CAGEN)
 
-Edit the top row of the cagen board.
+
+The user can edit the top/root row, allowing them to "seed"
+the generator to test configurations and create new variations
+on the standard NKS version.
 
 ###
 
 class TopRowEditor
 
+    #
+    # Setup the locally shared variables
+    # @constructor
+    # 
     constructor: (VariablesInstance, TabsInstance)->
         @_Vars = VariablesInstance
         @_Tabs = TabsInstance
@@ -54,17 +62,21 @@ class TopRowEditor
 
         @_generateInitialBinary()
 
+    #
+    # Start the top row editor
+    # 
     run: ()->
+        
         # Populate the main container with the template
         dashboardHTML = @_jTopRowEditorTemplate.html()
-
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
         @_jSliderContainer = $(@_idSliderContainer)
         @_jSlider = $(@_idSlider)
         @_jRowContainer = $(@_idRowContainer)
         @_jEditorContainer = $(@_idEditorContainer)
-    
+
+        # Set the dimensions
         @_jRowContainer.height(@_rowHeight)
         @_jRowContainer.width(@_totalWidth)
         @_jSliderContainer.width(@_totalWidth)
@@ -75,6 +87,7 @@ class TopRowEditor
         @_jSliderRightArrow = $(@_idSliderArrowRight)
         @_sliderIsDragging = false
 
+        # Event handler for when a click occurs while sliding the "zoom"
         @_jSlider.click( =>
             if @_sliderIsDragging
                 @_sliderIsDragging = false
@@ -86,6 +99,7 @@ class TopRowEditor
                 @_jSliderRightArrow.fadeIn()
         )
 
+        # Event handler for when the mouse moves over the "zoom" slider
         @_jSlider.mousemove( (event) =>
             if @_sliderIsDragging 
                 @_moveSlider(event)
@@ -94,32 +108,44 @@ class TopRowEditor
         # Get the initial slider position
         @_sliderInitialOffset = @_jSlider.offset()
 
+        # Build the row and the editor 
         @_buildRow()
-
         @_buildEditorCells()
         @_updateEditorCells(1)
 
-        # The Switch to Dashboard
+        # The Switch to Dashboard click event
         $(@_idReturnButton).click((event)=>@_switchToDashboardClicked(event))
 
-        # Reset button clicked
+        # Reset button click event
         $(@_idResetRowButton).click((event)=>@_resetRow(event))
 
-    # Reset the initial row
+    #
+    # Event handler when the user clicks the Reset button
+    # 
     _resetRow: (event)->
         @_generateInitialBinary()
         @run()
 
+    #
+    # Event handler when the user clicks the "Switch to Dashboard"
+    # 
     _switchToDashboardClicked: (event)->
         @_Tabs.showDashboardTab()
 
+    #
+    # Event handler when the mouse moves the slider
+    # 
     _moveSlider: (ev)=>
+        # Get the mouse position
         xMousePos = ev.clientX
         closestEdgePx = xMousePos - (xMousePos%@_colWidth)
+
+        # Calculate the relative position of the slider
         leftPos = closestEdgePx-@_sliderPxToMid
         rightPos = closestEdgePx+@_sliderPxToMid+@_colWidth
         fullWidth = @_totalWidth + @_colWidth
 
+        # Adjust the calculation based on a fudged initial offset
         adjustedLeft = leftPos+@_sliderInitialOffset.left
 
         if adjustedLeft >= @_sliderInitialOffset.left && rightPos <=  fullWidth
@@ -131,6 +157,12 @@ class TopRowEditor
             @_updateEditorCells(leftCellNo)
 
 
+    #
+    # Change the cells available to edit.
+    # 
+    # When the user moves the slider to "zoom" on a section
+    # this will update the editable cells.
+    # 
     _updateEditorCells: (beginCell)->
         
         for cell in [1..@_sliderCols]
@@ -139,13 +171,16 @@ class TopRowEditor
             @_jEditorCells[cell].text(cellPos)
             @_jEditorCells[cell].data('cellIndex',cellPos)
 
+            # Change the style to reflect which cells are active
             if @_aRowBinary[cellPos] is 1
                 @_jEditorCells[cell].addClass(@_classEditorCellActive)
             else
                 @_jEditorCells[cell].removeClass(@_classEditorCellActive)
             
             
-
+    #
+    # Build the editor cells
+    # 
     _buildEditorCells: ()->
         cellTemplate = $(@_idTmplEditorCell).html()
 
@@ -154,33 +189,45 @@ class TopRowEditor
         for cell in [1..@_sliderCols]
             tmpId = "editor-cell-"+cell
             leftPos = (cell-1)*@_editorCellWidth
+
+            # Create and append the editor cell via Mustache template
             rendered = Mustache.render(cellTemplate, {id:tmpId, left:leftPos})
             @_jEditorContainer.append(rendered)
 
             @_jEditorCells[cell] = $("#"+tmpId)
 
+            # Setup the click event when a user toggles a cell by clicking on it
             @_jEditorCells[cell].click(@_toggleEditorCell)
 
-
+    #
+    # Event handler for when a user clicks on a cell that they
+    # want to activate or deactivate
+    # 
     _toggleEditorCell: (event)=>
 
         jTmpCell = $("#"+event.target.id)
 
         cellNo = jTmpCell.data('cellIndex')
         if @_aRowBinary[cellNo] is 1
+            # Deactivate the cell 
             @_aRowBinary[cellNo] = 0
             jTmpCell.removeClass(@_classEditorCellActive)
             $('#'+@_prefixSliderCol+cellNo).removeClass(@_classSlicerCellActive)
         else
+            # Activate the cell
             @_aRowBinary[cellNo] = 1
             jTmpCell.addClass(@_classEditorCellActive)
             $('#'+@_prefixSliderCol+cellNo).addClass(@_classSlicerCellActive)
 
+        # Set the new binary configuration for the generator
         @_Vars.setTopRowBinary(@_aRowBinary)
         
 
+    #
     # Setup the initial binary representation of the row
+    # 
     _generateInitialBinary: ()->
+        # The middle cell is the only one initially active
         seed_col = Math.ceil(@_noColumns/2)
         
         for col in [1..@_noColumns]
@@ -192,7 +239,11 @@ class TopRowEditor
         @_Vars.setTopRowBinary(@_aRowBinary)
         
 
+    #
+    # Build the row of cells
+    # 
     _buildRow: ()->
+        # Get the Mustache template html
         smallCellTemplate = $(@_idTmplSliderCell).html()
 
         # Add cells to the row
@@ -203,5 +254,9 @@ class TopRowEditor
 
             leftPos = ((col-1)*@_colWidth)
             tmpId = @_prefixSliderCol+col
+
+            # Create a rendering of the cell via Mustache template
             rendered = Mustache.render(smallCellTemplate, {id:tmpId, left:leftPos, activeClass:activeClass})
+
+            # Add the cell to the row
             @_jRowContainer.append(rendered)
