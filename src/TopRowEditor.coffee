@@ -21,9 +21,8 @@ class TopRowEditor
     # Setup the locally shared variables
     # @constructor
     # 
-    constructor: (VariablesInstance, TabsInstance)->
+    constructor: (VariablesInstance)->
         @_Vars = VariablesInstance
-        @_Tabs = TabsInstance
         
         # HTML ids for the divs
         @_idRowContainer = "#rowed-slider-row-container"
@@ -61,6 +60,13 @@ class TopRowEditor
         @_totalWidth = @_colWidth*@_noColumns
 
         @_generateInitialBinary()
+
+
+        radio('toproweditor.run').subscribe(
+            ()=>
+                @run()
+                return
+        )
 
     #
     # Start the top row editor
@@ -113,8 +119,12 @@ class TopRowEditor
         @_buildEditorCells()
         @_updateEditorCells(1)
 
-        # The Switch to Dashboard click event
-        $(@_idReturnButton).click((event)=>@_switchToDashboardClicked(event))
+        # The Generate click event
+        $(@_idReturnButton).click(
+            ()=>
+                radio('tabs.show.dashboard').broadcast()
+                return
+        )
 
         # Reset button click event
         $(@_idResetRowButton).click((event)=>@_resetRow(event))
@@ -126,11 +136,6 @@ class TopRowEditor
         @_generateInitialBinary()
         @run()
 
-    #
-    # Event handler when the user clicks the "Switch to Dashboard"
-    # 
-    _switchToDashboardClicked: (event)->
-        @_Tabs.showDashboardTab()
 
     #
     # Event handler when the mouse moves the slider

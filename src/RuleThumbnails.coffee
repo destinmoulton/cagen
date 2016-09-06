@@ -13,8 +13,6 @@ Component of Cellular Automata GENerator (CAGEN)
 Each rule has a thumbnail. The user can click the thumbnail
 to generate the Automata for that rule.
 
-Tabs instantiates and runs the Rule Thumbnail generation.
-
 ###
 
 class RuleThumbnails
@@ -22,11 +20,17 @@ class RuleThumbnails
     #
     # Setup the local variables
     # 
-    constructor: (VariablesInstance, TabsInstance)->
+    constructor: (VariablesInstance)->
         @_Vars = VariablesInstance
-        @_Tabs = TabsInstance
+
         @_idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails"
         @_classRuleThumbBox = ".cagen-rulethumb-box"
+
+        radio('rulethumbnails.show').subscribe(
+            ()=>
+                @show()
+                return
+        )
 
     #
     # Show the rule thumbnails
@@ -54,7 +58,8 @@ class RuleThumbnails
         rule = jBox.data('rule')
 
         # Change the current rule
-        @_Vars.setCurrentRule(rule)
+        radio('rules.set.currentrule').broadcast(rule)
 
-        # Switch to the dashboard
-        @_Tabs.showDashboardTab()
+        # Show the dashboard via radio pub/sub broadcast
+        radio('tabs.show.dashboard').broadcast();
+

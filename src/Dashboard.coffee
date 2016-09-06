@@ -21,9 +21,8 @@ class Dashboard
     # Initialize the IDs, local jQuery objects, and sizes
     # for the Dashboard.
     # 
-    constructor:(VariablesInstance, TabsInstance) ->
+    constructor:(VariablesInstance) ->
         @_Vars = VariablesInstance
-        @_Tabs = TabsInstance
         
         @_idCagenDashboardContent = "#cagen-dashboard-content"
         @_idRulesPreviewContainer = "#cagen-rules-preview-container"
@@ -45,8 +44,13 @@ class Dashboard
         @_noBoardColumns = 151
         @_noBoardRows = 75
 
-        @_Tabs = new Tabs()
         @_ruleList = []
+
+        radio('dashboard.run').subscribe(
+            ()=>
+                @run()
+                return
+        )
 
     #
     # Show the Dashboard
@@ -93,7 +97,8 @@ class Dashboard
     # Event handler, called when the selected Rule is changed
     # 
     _changeRuleEvent:(event)->
-        @_Vars.setCurrentRule(@_jInputSelectRule.val())
+        radio('rules.set.currentrule').broadcast(@_jInputSelectRule.val())
+
 
     #
     # Build the preview board from the template

@@ -18,6 +18,12 @@ class Variables
         @currentRule = 0
         @topRowBinaryArray = []
 
+        radio('rules.set.currentrule').subscribe(
+            (data)=>
+                @setCurrentRule(data)
+                return
+        )
+
     setCurrentRule: (newRule)->
         @currentRule = newRule
 

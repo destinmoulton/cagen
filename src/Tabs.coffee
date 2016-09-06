@@ -41,14 +41,31 @@ class Tabs
         # Show the rule thumbnails first
         @showRuleThumbnailsTab()
 
-        # Rule Thumbnails button clicked event
-        $(@_idRuleThumbnailsTab).click((event)=>@showRuleThumbnailsTab())
+        # Create the radiojs subscriptions for the local functions
+        radio('tabs.show.rulethumbnails').subscribe(()=>@showRuleThumbnailsTab())
+        radio('tabs.show.toproweditor').subscribe(()=>@showTopRowEditorTab())
+        radio('tabs.show.dashboard').subscribe(()=>@showDashboardTab())
+
+        # Rule Thumbnails tab clicked event
+        $(@_idRuleThumbnailsTab).click(
+            (event)->
+                radio('tabs.show.rulethumbnails').broadcast()
+                return
+        )
 
         # Click the Top Row Editor Tab
-        $(@_idTopRowEditorTab).click((event)=>@showTopRowEditorTab())
+        $(@_idTopRowEditorTab).click(
+            (event)->
+                radio('tabs.show.toproweditor').broadcast()
+                return
+        )
 
         # Click the Dashboard tab
-        $(@_idDashboardTab).click((event)=>@showDashboardTab())
+        $(@_idDashboardTab).click(
+            (event)->
+                radio('tabs.show.dashboard').broadcast()
+                return
+        )
 
     #
     # Activate a tab via string name
@@ -60,21 +77,13 @@ class Tabs
         $(@_tabIdPrefix+tabName).addClass(@_classActive)
 
     #
-    # Setup the instances for the CAGEN features
-    # 
-    setClassInstances: (RuleThumbnailsInstance, TopRowEditorInstance, DashboardInstance)->
-        @_RuleThumbnails = RuleThumbnailsInstance
-        @_TopRowEditor = TopRowEditorInstance
-        @_Dashboard = DashboardInstance
-
-    #
     # Show the Rule Thumbnails tab
     # 
     showRuleThumbnailsTab:() ->
         # Activate the tab
         @activate('rulethumbnails')
 
-        @_RuleThumbnails.show()
+        radio('rulethumbnails.show').broadcast()
 
     #
     # Show the Top Row Editor tab
@@ -83,7 +92,8 @@ class Tabs
         # Activate the tab
         @activate('toproweditor')
 
-        @_TopRowEditor.run()
+        radio('toproweditor.run').broadcast()
+        
 
     #
     # Show the Dashboard tab
@@ -92,5 +102,5 @@ class Tabs
         # Activate the tab
         @activate('dashboard')
 
-        @_Dashboard.run()
+        radio('dashboard.run').broadcast()
 
