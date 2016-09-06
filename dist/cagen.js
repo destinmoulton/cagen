@@ -11,7 +11,7 @@ Generate a cellular automata board based on a passed rule.
  */
 
 (function() {
-  var Board, Dashboard, RuleMatcher, RuleThumbnails, Tabs, TopRowEditor, Variables,
+  var Board, DOM, Dashboard, RuleMatcher, RuleThumbnails, Tabs, TopRowEditor, Variables,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Board = (function() {
@@ -144,15 +144,9 @@ Generate a cellular automata board based on a passed rule.
   Dashboard = (function() {
     function Dashboard(VariablesInstance) {
       this._Vars = VariablesInstance;
-      this._idCagenDashboardContent = "#cagen-dashboard-content";
-      this._idRulesPreviewContainer = "#cagen-rules-preview-container";
-      this._idRuleSelectInput = "#cagen-dash-select-input";
-      this._idGenerateButton = "#cagen-dash-generate-button";
-      this._idEditTopRowButton = "#cagen-toprow-button";
-      this._idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell";
       this._jCagenContainer = this._Vars.jMainContainer;
-      this._jCagenDashboardTemplate = $('#tmpl-cagen-dashboard');
-      this._jCagenBoardTemplate = $('#tmpl-cagen-dash-board');
+      this._jCagenDashboardTemplate = $(DOM.getID('template', 'dashboard_main'));
+      this._jCagenBoardTemplate = $(DOM.getID('template', 'dashboard_board'));
       this._idPreviewCellPrefix = "#cagen-dash-preview-";
       this._idPreviewDigitPrefix = "#cagen-dash-preview-digit-";
       this._currentRule = 0;
@@ -171,8 +165,8 @@ Generate a cellular automata board based on a passed rule.
       var dashboardHTML, i, rule, tmpOption;
       dashboardHTML = this._jCagenDashboardTemplate.html();
       this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-      this._jCagenContentContainer = $(this._idCagenDashboardContent);
-      this._jInputSelectRule = $(this._idRuleSelectInput);
+      this._jCagenContentContainer = $(DOM.getID('dashboard', 'content'));
+      this._jInputSelectRule = $(DOM.getID('dashboard', 'rule_dropdown'));
       this._Board = new Board(this._Vars);
       for (rule = i = 0; i <= 255; rule = ++i) {
         tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
@@ -184,14 +178,9 @@ Generate a cellular automata board based on a passed rule.
           return _this._changeRuleEvent(event);
         };
       })(this));
-      $(this._idGenerateButton).click((function(_this) {
+      $(DOM.getID('dashboard', 'rule_generate_button')).click((function(_this) {
         return function(event) {
           return _this._generateButtonClicked(event);
-        };
-      })(this));
-      $(this._idEditTopRowButton).click((function(_this) {
-        return function(event) {
-          return _this._topRowButtonClicked(event);
         };
       })(this));
       this._buildBoard();
@@ -210,7 +199,7 @@ Generate a cellular automata board based on a passed rule.
       var boardHTML, topRowBinary;
       boardHTML = this._jCagenBoardTemplate.html();
       this._jCagenContentContainer.html(Mustache.render(boardHTML, {}));
-      this._jRulesContainer = $(this._idRulesPreviewContainer);
+      this._jRulesContainer = $(DOM.getID('dashboard', 'rule_bitset_container'));
       topRowBinary = this._Vars.getTopRowBinary();
       this._Board.buildBoard(topRowBinary, this._noBoardColumns, this._noBoardRows);
       this._buildRulePreview();
@@ -220,9 +209,8 @@ Generate a cellular automata board based on a passed rule.
     Dashboard.prototype._buildRulePreview = function() {
       var activeClass, binary, currentRule, i, index, jTmpCell, jTmpDigit, left, leftBit, middleBit, previewCellHtml, rendered, results, rightBit, tmplOptions;
       currentRule = this._Board.getCurrentRule();
-      previewCellHtml = $(this._idTmplPreviewCell).html();
-      activeClass = 'cagen-dash-preview-cell-active';
-      this._jRulesContainer.html("");
+      previewCellHtml = $(DOM.getID('template', 'dashboard_rule_preview_cell')).html();
+      activeClass = this._jRulesContainer.html("");
       results = [];
       for (index = i = 7; i >= 0; index = --i) {
         binary = index.toString(2);
@@ -255,10 +243,10 @@ Generate a cellular automata board based on a passed rule.
         this._jRulesContainer.append(rendered);
         jTmpCell = $(this._idPreviewCellPrefix + index);
         jTmpDigit = $(this._idPreviewDigitPrefix + index);
-        jTmpCell.removeClass(activeClass);
+        jTmpCell.removeClass(DOM.getClass('dashboard', 'rule_preview_cell_active'));
         jTmpDigit.html(0);
         if (currentRule.substr(7 - index, 1) === "1") {
-          jTmpCell.addClass(activeClass);
+          jTmpCell.addClass(DOM.getClass('dashboard', 'rule_preview_cell_active'));
           results.push(jTmpDigit.html(1));
         } else {
           results.push(void 0);
@@ -268,6 +256,65 @@ Generate a cellular automata board based on a passed rule.
     };
 
     return Dashboard;
+
+  })();
+
+
+  /*
+  
+  The DOM configuration for the Cellular Automata GENerator (CAGEN).
+  
+  @author Destin Moulton
+  @git https://github.com/destinmoulton/cagen
+  @license MIT
+  
+  Component of Cellular Automata Generator (CAGEN)
+  
+  Contains the settings for the DOM objects.
+  
+  Holds ids and classes of relevant DOM objects.
+   */
+
+  DOM = (function() {
+    function DOM() {}
+
+    DOM.ids = {
+      'dashboard': {
+        'content': "#cagen-dashboard-content",
+        'rule_bitset_container': "#cagen-rules-preview-container",
+        'rule_dropdown': "#cagen-dash-select-input",
+        'rule_generate_button': "#cagen-dash-generate-button"
+      },
+      'template': {
+        'dashboard_rule_preview_cell': "#tmpl-cagen-dash-preview-cell",
+        'dashboard_main': '#tmpl-cagen-dashboard',
+        'dashboard_board': '#tmpl-cagen-dash-board'
+      }
+    };
+
+    DOM.classes = {
+      'dashboard': {
+        'rule_preview_cell_active': 'cagen-dash-preview-cell-active'
+      }
+    };
+
+    DOM.getClass = function(section, element) {
+      return this.classes[section][element];
+    };
+
+    DOM.getID = function(section, element) {
+      if (!this.ids.hasOwnProperty(section)) {
+        console.log("DOM::getID() - Unable to find `" + section + "`");
+        return void 0;
+      }
+      if (!this.ids[section].hasOwnProperty(element)) {
+        console.log("DOM::getID() - Unable to find `" + element + "`");
+        return void 0;
+      }
+      return this.ids[section][element];
+    };
+
+    return DOM;
 
   })();
 

@@ -23,19 +23,11 @@ class Dashboard
     # 
     constructor:(VariablesInstance) ->
         @_Vars = VariablesInstance
-        
-        @_idCagenDashboardContent = "#cagen-dashboard-content"
-        @_idRulesPreviewContainer = "#cagen-rules-preview-container"
-        @_idRuleSelectInput = "#cagen-dash-select-input"
-        @_idGenerateButton = "#cagen-dash-generate-button"
-        @_idEditTopRowButton = "#cagen-toprow-button"
-        
-        @_idTmplPreviewCell = "#tmpl-cagen-dash-preview-cell"
-        
+
         @_jCagenContainer = @_Vars.jMainContainer
         
-        @_jCagenDashboardTemplate = $('#tmpl-cagen-dashboard')
-        @_jCagenBoardTemplate = $('#tmpl-cagen-dash-board')
+        @_jCagenDashboardTemplate = $(DOM.getID('template','dashboard_main'))
+        @_jCagenBoardTemplate = $(DOM.getID('template','dashboard_board'))
         
         @_idPreviewCellPrefix = "#cagen-dash-preview-"
         @_idPreviewDigitPrefix = "#cagen-dash-preview-digit-"
@@ -59,9 +51,9 @@ class Dashboard
         # Populate the main container with the template
         dashboardHTML = @_jCagenDashboardTemplate.html()
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
-        @_jCagenContentContainer = $(@_idCagenDashboardContent)
+        @_jCagenContentContainer = $(DOM.getID('dashboard','content'))
         
-        @_jInputSelectRule = $(@_idRuleSelectInput)
+        @_jInputSelectRule = $(DOM.getID('dashboard','rule_dropdown'))
         
         @_Board = new Board(@_Vars)
         
@@ -77,10 +69,7 @@ class Dashboard
         @_jInputSelectRule.change((event)=>@_changeRuleEvent(event))
 
         # Setup the Generate button click event
-        $(@_idGenerateButton).click((event)=>@_generateButtonClicked(event))
-
-        # Edit Top Row button clicked event
-        $(@_idEditTopRowButton).click((event)=>@_topRowButtonClicked(event))
+        $(DOM.getID('dashboard', 'rule_generate_button')).click((event)=>@_generateButtonClicked(event))
 
         # Final step is to build the board
         @_buildBoard()
@@ -106,7 +95,7 @@ class Dashboard
     _buildBoard:() ->
         boardHTML = @_jCagenBoardTemplate.html()
         @_jCagenContentContainer.html(Mustache.render(boardHTML,{}))
-        @_jRulesContainer = $(@_idRulesPreviewContainer)
+        @_jRulesContainer = $(DOM.getID('dashboard','rule_bitset_container'))
         
         topRowBinary = @_Vars.getTopRowBinary()
         @_Board.buildBoard(topRowBinary, @_noBoardColumns, @_noBoardRows)
@@ -120,9 +109,9 @@ class Dashboard
         currentRule = @_Board.getCurrentRule()
 
         # Use the template to generate the preview
-        previewCellHtml = $(@_idTmplPreviewCell).html()
+        previewCellHtml = $(DOM.getID('template','dashboard_rule_preview_cell')).html()
 
-        activeClass = 'cagen-dash-preview-cell-active'
+        activeClass = 
         @_jRulesContainer.html("")
         for index in [7..0]
             # Get the binary representation of the index
@@ -165,9 +154,9 @@ class Dashboard
             jTmpCell = $(@_idPreviewCellPrefix+index)
             jTmpDigit = $(@_idPreviewDigitPrefix+index)
 
-            jTmpCell.removeClass(activeClass)
+            jTmpCell.removeClass(DOM.getClass('dashboard', 'rule_preview_cell_active'))
             jTmpDigit.html(0)
             if currentRule.substr(7-index,1) is "1"
 
-                jTmpCell.addClass(activeClass)
+                jTmpCell.addClass(DOM.getClass('dashboard', 'rule_preview_cell_active'))
                 jTmpDigit.html(1)
