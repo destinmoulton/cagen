@@ -13,19 +13,22 @@ Cagen is written in CoffeeScript. Transpiled to javascript, the application shou
 
 ### Requirements
 ***
-Cagen has the following requirements:
+Cagen has the following in browser requirements:
 - mustache.js - HTML template handling
-- radio.js  - Pub/Sub
+- radio.js  - Pub/Sub inter-class communication
 - jQuery - DOM manipulation
 
+Node requirements for compilation are in the ever-changing package.json file.
 
 ### Compiling the Coffee Source Files
 ***
-To compile the CoffeeScript source code into JS, I use the following command:
+gulpfile.js contains the gulp configuration.
+
+Watch and compile the src/*.coffee files and build the main dist/cagen.js file.
 ```
-$ coffee --join dist/cagen.js -cw src/*
+$ npm run-script build
 ```
-This will compile the coffee files in the src/ directory and watch (-w) them for changes so that you can develop without worrying about running the compilation after every save.
+
 
 
 ### License
