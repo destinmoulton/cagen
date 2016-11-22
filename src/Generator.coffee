@@ -1,6 +1,6 @@
 ###
 
-The Dashboard for the Cellular Automata GENerator (CAGEN).
+The Generator for the Cellular Automata GENerator (CAGEN).
 
 @author Destin Moulton
 @git https://github.com/destinmoulton/cagen
@@ -8,26 +8,27 @@ The Dashboard for the Cellular Automata GENerator (CAGEN).
 
 Component of Cellular Automata Generator (CAGEN)
 
-Functionality for building the dashboard for
+Functionality for building the generator for
 controlling the cellular automata generation.
 
-Display a preview of the rules.
+- Display a preview of the rules.
+- Display the generated board.
 
 ###
-class Dashboard
+class Generator
 
     #
-    # Dashboard Constructor
+    # Generator Constructor
     # Initialize the IDs, local jQuery objects, and sizes
-    # for the Dashboard.
+    # for the Generator.
     # 
     constructor:(VariablesInstance) ->
         @_Vars = VariablesInstance
 
-        @_jCagenContainer = @_Vars.jMainContainer
+        @_$cagenContainer = @_Vars.jMainContainer
         
-        @_jCagenDashboardTemplate = $(DOM.getID('template','dashboard_main'))
-        @_jCagenBoardTemplate = $(DOM.getID('template','dashboard_board'))
+        @dashboardTemplateHtml = $(DOM.getID('template','dashboard_main')).html()
+        @cellBoardHtml = $(DOM.getID('template','dashboard_board')).html()
         
         @_idPreviewCellPrefix = "#cagen-dash-preview-"
         @_idPreviewDigitPrefix = "#cagen-dash-preview-digit-"
@@ -49,9 +50,7 @@ class Dashboard
     # 
     run:() ->
         # Populate the main container with the template
-        dashboardHTML = @_jCagenDashboardTemplate.html()
-        @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
-        @_jCagenContentContainer = $(DOM.getID('dashboard','content'))
+        @_$cagenContainer.html(Mustache.render(@dashboardTemplateHtml,{}))
         
         @_jInputSelectRule = $(DOM.getID('dashboard','rule_dropdown'))
         
@@ -93,12 +92,10 @@ class Dashboard
     # Build the preview board from the template
     # 
     _buildBoard:() ->
-        boardHTML = @_jCagenBoardTemplate.html()
-        @_jCagenContentContainer.html(Mustache.render(boardHTML,{}))
-        @_jRulesContainer = $(DOM.getID('dashboard','rule_bitset_container'))
+        $(DOM.getID('dashboard','content')).html(Mustache.render(@cellBoardHtml,{}))
+        @_$rulesContainer = $(DOM.getID('dashboard','rule_bitset_container'))
         
-        topRowBinary = @_Vars.getTopRowBinary()
-        @_Board.buildBoard(topRowBinary, @_noBoardColumns, @_noBoardRows)
+        @_Board.buildBoard(@_Vars.getTopRowBinary(), @_noBoardColumns, @_noBoardRows)
         @_buildRulePreview()
         return true
 
@@ -112,7 +109,7 @@ class Dashboard
         previewCellHtml = $(DOM.getID('template','dashboard_rule_preview_cell')).html()
 
         activeClass = 
-        @_jRulesContainer.html("")
+        @_$rulesContainer.html("")
         for index in [7..0]
             # Get the binary representation of the index
             binary = index.toString(2)
@@ -149,7 +146,7 @@ class Dashboard
             }
             
             rendered = Mustache.render(previewCellHtml, tmplOptions)
-            @_jRulesContainer.append(rendered)
+            @_$rulesContainer.append(rendered)
             
             jTmpCell = $(@_idPreviewCellPrefix+index)
             jTmpDigit = $(@_idPreviewDigitPrefix+index)

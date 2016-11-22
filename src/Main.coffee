@@ -19,13 +19,13 @@ $ ->
     tabs = new Tabs(vars)
 
     # Create instance of the Rule Thumbnails preview/selector
-    ruleThumbnails = new RuleThumbnails(vars)
+    new RuleThumbnails(vars)
 
     # Create instance of the Top Row Editor
-    topRowEditor = new TopRowEditor(vars)
+    new TopRowEditor(vars)
 
     # Create instance of the Dashboard
-    dashboard = new Dashboard(vars)
+    new Generator(vars)
 
     # Start the tab interface
     tabs.start()

@@ -43,8 +43,8 @@ class Board
     # 
     buildBoard: (rootRowBinary, noCellsWide, noSectionsHigh) ->
         # Select local jQuery DOM objects
-        @_jBoard =$(@_boardContainerID)
-        @_jGenerateMessage = $(@_generateMessageContainerID)
+        @_$board =$(@_boardContainerID)
+        @_$generateMessage = $(@_generateMessageContainerID)
         
         @_rootRowBinary = rootRowBinary
         
@@ -52,20 +52,20 @@ class Board
 
         @_boardNoCellsWide = noCellsWide
         @_boardNoCellsHigh = noSectionsHigh
-        @_jBoard.width(noCellsWide*@_boardCellWidthPx)
-        @_jBoard.height(noSectionsHigh*@_boardCellHeightPx)
+        @_$board.width(noCellsWide*@_boardCellWidthPx)
+        @_$board.height(noSectionsHigh*@_boardCellHeightPx)
 
         # Clear the board
-        @_jBoard.html("")
-        @_jBoard.hide()
+        @_$board.html("")
+        @_$board.hide()
         @_currentRow = 1
 
         # Show the generating message
-        @_jGenerateMessage.show(=>
+        @_$generateMessage.show(=>
             # Generate the rows
             @_generateRows()
-            @_jGenerateMessage.hide()
-            @_jBoard.show())
+            @_$generateMessage.hide()
+            @_$board.show())
 
     #
     # Get the current rule (as selected by the user)
@@ -88,6 +88,8 @@ class Board
     # Add the blocks to a row
     # 
     _buildRow: (row) ->
+        rowHtml = ""
+
         # Loop over each column in the current row
         for col in [1..@_boardNoCellsWide]
             zeroIndex = @_currentCells[row-1][col-1]
@@ -104,10 +106,10 @@ class Board
 
             # Determine whether the block should be set or not
             if @_RuleMatcher.match(zeroIndex, oneIndex, twoIndex) is 0
-                @_getCellHtml(row, col, false)
+                rowHtml += @_getCellHtml(row, col, false)
             else
-                @_getCellHtml(row, col, true)
-
+                rowHtml += @_getCellHtml(row, col, true)
+        @_$board.append(rowHtml);
         @_currentRow++
         
 
@@ -115,15 +117,17 @@ class Board
     # Add cells to the root/top row
     # 
     _buildTopRow: ->
+        rowHtml = ""
 
         # Build the top row from the root row binary
         #   this is defined by the root row editor
         for col in [1..@_boardNoCellsWide]
             cell = @_rootRowBinary[col]
             if cell is 1
-                @_getCellHtml(@_currentRow, col, true)
+                rowHtml += @_getCellHtml(@_currentRow, col, true)
             else
-                @_getCellHtml(@_currentRow, col, false)
+                rowHtml += @_getCellHtml(@_currentRow, col, false)
+        @_$board.append(rowHtml);
         @_currentRow++
 
     #
@@ -147,5 +151,4 @@ class Board
             tmpClass = " #{tmpClass} #{@_cellActiveClass} "
         
         tmpDiv = "<div id='#{tmpID}' class='#{tmpClass}' #{tmpStyle}></div>";
-
-        @_jBoard.append(tmpDiv)
+        return tmpDiv

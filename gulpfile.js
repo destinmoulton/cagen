@@ -6,7 +6,7 @@ var coffeeFiles = [
     'src/Variables.coffee',
     'src/DOM.coffee',
     'src/Board.coffee',
-    'src/Dashboard.coffee',
+    'src/Generator.coffee',
     'src/RuleMatcher.coffee',
     'src/RuleThumbnails.coffee',
     'src/Tabs.coffee',
