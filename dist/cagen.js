@@ -179,9 +179,9 @@ Board = (function() {
         twoIndex = this._currentCells[row - 1][1];
       }
       if (this._RuleMatcher.match(zeroIndex, oneIndex, twoIndex) === 0) {
-        this._addBlockToBoard(row, col, false);
+        this._getCellHtml(row, col, false);
       } else {
-        this._addBlockToBoard(row, col, true);
+        this._getCellHtml(row, col, true);
       }
     }
     return this._currentRow++;
@@ -192,15 +192,15 @@ Board = (function() {
     for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       cell = this._rootRowBinary[col];
       if (cell === 1) {
-        this._addBlockToBoard(this._currentRow, col, true);
+        this._getCellHtml(this._currentRow, col, true);
       } else {
-        this._addBlockToBoard(this._currentRow, col, false);
+        this._getCellHtml(this._currentRow, col, false);
       }
     }
     return this._currentRow++;
   };
 
-  Board.prototype._addBlockToBoard = function(row, col, active) {
+  Board.prototype._getCellHtml = function(row, col, active) {
     var tmpClass, tmpDiv, tmpID, tmpLeftPx, tmpStyle, tmpTopPx;
     if (!this._currentCells[row]) {
       this._currentCells[row] = [];

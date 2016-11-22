@@ -104,15 +104,15 @@ class Board
 
             # Determine whether the block should be set or not
             if @_RuleMatcher.match(zeroIndex, oneIndex, twoIndex) is 0
-                @_addBlockToBoard(row, col, false)
+                @_getCellHtml(row, col, false)
             else
-                @_addBlockToBoard(row, col, true)
+                @_getCellHtml(row, col, true)
 
         @_currentRow++
         
 
     #
-    # Add blocks to the root/top row
+    # Add cells to the root/top row
     # 
     _buildTopRow: ->
 
@@ -121,26 +121,25 @@ class Board
         for col in [1..@_boardNoCellsWide]
             cell = @_rootRowBinary[col]
             if cell is 1
-                @_addBlockToBoard(@_currentRow, col, true)
+                @_getCellHtml(@_currentRow, col, true)
             else
-                @_addBlockToBoard(@_currentRow, col, false)
+                @_getCellHtml(@_currentRow, col, false)
         @_currentRow++
 
     #
-    # Add a block to the board
+    # Get the cell html
     # 
-    _addBlockToBoard: (row, col, active)->
-        # Add the block state to the current array
+    _getCellHtml: (row, col, active)->
+        # Add the cell state to the current array
         if !@_currentCells[row]
             @_currentCells[row] = []
         @_currentCells[row][col] = if active then 1 else 0
 
-        # Add a div block to the board
         tmpID = @_cellIDPrefix+@_currentRow+"_"+col
         tmpLeftPx = (col-1)*@_boardCellWidthPx
         tmpTopPx = (row-1)*@_boardCellHeightPx
 
-        # Inline CSS for the absolute position of the block
+        # Inline CSS for the absolute position of the cell
         tmpStyle = " style='top:#{tmpTopPx}px;left:#{tmpLeftPx}px;' "
 
         tmpClass = @_cellBaseClass
