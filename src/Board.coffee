@@ -44,7 +44,7 @@ class Board
     buildBoard: (rootRowBinary, noCellsWide, noSectionsHigh) ->
         # Select local jQuery DOM objects
         @_$board =$(@_boardContainerID)
-        @_jGenerateMessage = $(@_generateMessageContainerID)
+        @_$generateMessage = $(@_generateMessageContainerID)
         
         @_rootRowBinary = rootRowBinary
         
@@ -61,10 +61,10 @@ class Board
         @_currentRow = 1
 
         # Show the generating message
-        @_jGenerateMessage.show(=>
+        @_$generateMessage.show(=>
             # Generate the rows
             @_generateRows()
-            @_jGenerateMessage.hide()
+            @_$generateMessage.hide()
             @_$board.show())
 
     #

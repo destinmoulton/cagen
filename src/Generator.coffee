@@ -8,13 +8,14 @@ The Dashboard for the Cellular Automata GENerator (CAGEN).
 
 Component of Cellular Automata Generator (CAGEN)
 
-Functionality for building the dashboard for
+Functionality for building the generator for
 controlling the cellular automata generation.
 
-Display a preview of the rules.
+- Display a preview of the rules.
+- Display the generated board.
 
 ###
-class Dashboard
+class Generator
 
     #
     # Dashboard Constructor
