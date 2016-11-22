@@ -151,6 +151,10 @@ Board = (function() {
     })(this));
   };
 
+  Board.prototype.getCurrentRule = function() {
+    return this._RuleMatcher.getCurrentRule();
+  };
+
   Board.prototype._generateRows = function() {
     var i, ref, results, row;
     this._buildTopRow();
@@ -160,10 +164,6 @@ Board = (function() {
       results.push(this._buildRow(row));
     }
     return results;
-  };
-
-  Board.prototype.getCurrentRule = function() {
-    return this._RuleMatcher.getCurrentRule();
   };
 
   Board.prototype._buildRow = function(row) {

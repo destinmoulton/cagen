@@ -39,7 +39,7 @@ class Board
     #
     # Build the board.
     # Take a binary representation of the root/top row and
-    # then generate te
+    # then generate the cells.
     # 
     buildBoard: (rootRowBinary, noCellsWide, noSectionsHigh) ->
         # Select local jQuery DOM objects
@@ -67,7 +67,11 @@ class Board
             @_jGenerateMessage.hide()
             @_jBoard.show())
 
-
+    #
+    # Get the current rule (as selected by the user)
+    # 
+    getCurrentRule:()->
+        return @_RuleMatcher.getCurrentRule()
 
     #
     # Generate the rows in the board
@@ -79,12 +83,6 @@ class Board
         for row in [2..@_boardNoCellsHigh]
             @_currentRow = row
             @_buildRow(row)
-
-    #
-    # Get the current rule (as selected by the user)
-    # 
-    getCurrentRule:()->
-        return @_RuleMatcher.getCurrentRule()
 
     #
     # Add the blocks to a row
