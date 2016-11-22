@@ -228,6 +228,138 @@ Board = (function() {
 
 
 /*
+
+The Generator for the Cellular Automata GENerator (CAGEN).
+
+@author Destin Moulton
+@git https://github.com/destinmoulton/cagen
+@license MIT
+
+Component of Cellular Automata Generator (CAGEN)
+
+Functionality for building the generator for
+controlling the cellular automata generation.
+
+- Display a preview of the rules.
+- Display the generated board.
+ */
+var Generator;
+
+Generator = (function() {
+  function Generator(VariablesInstance) {
+    this._Vars = VariablesInstance;
+    this._$cagenContainer = this._Vars.jMainContainer;
+    this.dashboardTemplateHtml = $(DOM.getID('template', 'dashboard_main')).html();
+    this.cellBoardHtml = $(DOM.getID('template', 'dashboard_board')).html();
+    this._idPreviewCellPrefix = "#cagen-dash-preview-";
+    this._idPreviewDigitPrefix = "#cagen-dash-preview-digit-";
+    this._currentRule = 0;
+    this._previewBoxWidth = 40;
+    this._noBoardColumns = 151;
+    this._noBoardRows = 75;
+    this._ruleList = [];
+    radio('dashboard.run').subscribe((function(_this) {
+      return function() {
+        _this.run();
+      };
+    })(this));
+  }
+
+  Generator.prototype.run = function() {
+    var i, rule, tmpOption;
+    this._$cagenContainer.html(Mustache.render(this.dashboardTemplateHtml, {}));
+    this._jInputSelectRule = $(DOM.getID('dashboard', 'rule_dropdown'));
+    this._Board = new Board(this._Vars);
+    for (rule = i = 0; i <= 255; rule = ++i) {
+      tmpOption = "<option value='" + rule + "'>" + rule + "</option>";
+      this._jInputSelectRule.append(tmpOption);
+    }
+    this._jInputSelectRule.val(this._Vars.currentRule);
+    this._jInputSelectRule.change((function(_this) {
+      return function(event) {
+        return _this._changeRuleEvent(event);
+      };
+    })(this));
+    $(DOM.getID('dashboard', 'rule_generate_button')).click((function(_this) {
+      return function(event) {
+        return _this._generateButtonClicked(event);
+      };
+    })(this));
+    this._buildBoard();
+    return true;
+  };
+
+  Generator.prototype._generateButtonClicked = function(event) {
+    return this._buildBoard();
+  };
+
+  Generator.prototype._changeRuleEvent = function(event) {
+    return radio('rules.set.currentrule').broadcast(this._jInputSelectRule.val());
+  };
+
+  Generator.prototype._buildBoard = function() {
+    $(DOM.getID('dashboard', 'content')).html(Mustache.render(this.cellBoardHtml, {}));
+    this._$rulesContainer = $(DOM.getID('dashboard', 'rule_bitset_container'));
+    this._Board.buildBoard(this._Vars.getTopRowBinary(), this._noBoardColumns, this._noBoardRows);
+    this._buildRulePreview();
+    return true;
+  };
+
+  Generator.prototype._buildRulePreview = function() {
+    var activeClass, binary, currentRule, i, index, jTmpCell, jTmpDigit, left, leftBit, middleBit, previewCellHtml, rendered, results, rightBit, tmplOptions;
+    currentRule = this._Board.getCurrentRule();
+    previewCellHtml = $(DOM.getID('template', 'dashboard_rule_preview_cell')).html();
+    activeClass = this._$rulesContainer.html("");
+    results = [];
+    for (index = i = 7; i >= 0; index = --i) {
+      binary = index.toString(2);
+      if (binary.length === 2) {
+        binary = "0" + binary;
+      } else if (binary.length === 1) {
+        binary = "00" + binary;
+      }
+      leftBit = false;
+      middleBit = false;
+      rightBit = false;
+      if (binary.charAt(0) === "1") {
+        leftBit = true;
+      }
+      if (binary.charAt(1) === "1") {
+        middleBit = true;
+      }
+      if (binary.charAt(2) === "1") {
+        rightBit = true;
+      }
+      left = (7 - index) * this._previewBoxWidth;
+      tmplOptions = {
+        left: left,
+        previewIndex: index,
+        leftBitActive: leftBit,
+        middleBitActive: middleBit,
+        rightBitActive: rightBit
+      };
+      rendered = Mustache.render(previewCellHtml, tmplOptions);
+      this._$rulesContainer.append(rendered);
+      jTmpCell = $(this._idPreviewCellPrefix + index);
+      jTmpDigit = $(this._idPreviewDigitPrefix + index);
+      jTmpCell.removeClass(DOM.getClass('dashboard', 'rule_preview_cell_active'));
+      jTmpDigit.html(0);
+      if (currentRule.substr(7 - index, 1) === "1") {
+        jTmpCell.addClass(DOM.getClass('dashboard', 'rule_preview_cell_active'));
+        results.push(jTmpDigit.html(1));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
+
+  return Generator;
+
+})();
+
+
+/*
 RuleMatcher.coffee
 
 @author Destin Moulton
@@ -675,11 +807,11 @@ The jQuery onload function that initializes the various
 CAGEN features and starts the tabbed interface.
  */
 $(function() {
-  var dashboard, ruleThumbnails, tabs, topRowEditor, vars;
+  var tabs, vars;
   vars = new Variables();
   tabs = new Tabs(vars);
-  ruleThumbnails = new RuleThumbnails(vars);
-  topRowEditor = new TopRowEditor(vars);
-  dashboard = new Dashboard(vars);
+  new RuleThumbnails(vars);
+  new TopRowEditor(vars);
+  new Generator(vars);
   return tabs.start();
 });
