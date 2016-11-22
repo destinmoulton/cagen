@@ -131,22 +131,22 @@ Board = (function() {
   }
 
   Board.prototype.buildBoard = function(rootRowBinary, noCellsWide, noSectionsHigh) {
-    this._jBoard = $(this._boardContainerID);
+    this._$board = $(this._boardContainerID);
     this._jGenerateMessage = $(this._generateMessageContainerID);
     this._rootRowBinary = rootRowBinary;
     this._RuleMatcher.setCurrentRule(this._Vars.currentRule);
     this._boardNoCellsWide = noCellsWide;
     this._boardNoCellsHigh = noSectionsHigh;
-    this._jBoard.width(noCellsWide * this._boardCellWidthPx);
-    this._jBoard.height(noSectionsHigh * this._boardCellHeightPx);
-    this._jBoard.html("");
-    this._jBoard.hide();
+    this._$board.width(noCellsWide * this._boardCellWidthPx);
+    this._$board.height(noSectionsHigh * this._boardCellHeightPx);
+    this._$board.html("");
+    this._$board.hide();
     this._currentRow = 1;
     return this._jGenerateMessage.show((function(_this) {
       return function() {
         _this._generateRows();
         _this._jGenerateMessage.hide();
-        return _this._jBoard.show();
+        return _this._$board.show();
       };
     })(this));
   };
@@ -167,7 +167,8 @@ Board = (function() {
   };
 
   Board.prototype._buildRow = function(row) {
-    var col, i, oneIndex, ref, twoIndex, zeroIndex;
+    var col, i, oneIndex, ref, rowHtml, twoIndex, zeroIndex;
+    rowHtml = "";
     for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       zeroIndex = this._currentCells[row - 1][col - 1];
       if (zeroIndex === void 0) {
@@ -179,24 +180,27 @@ Board = (function() {
         twoIndex = this._currentCells[row - 1][1];
       }
       if (this._RuleMatcher.match(zeroIndex, oneIndex, twoIndex) === 0) {
-        this._getCellHtml(row, col, false);
+        rowHtml += this._getCellHtml(row, col, false);
       } else {
-        this._getCellHtml(row, col, true);
+        rowHtml += this._getCellHtml(row, col, true);
       }
     }
+    this._$board.append(rowHtml);
     return this._currentRow++;
   };
 
   Board.prototype._buildTopRow = function() {
-    var cell, col, i, ref;
+    var cell, col, i, ref, rowHtml;
+    rowHtml = "";
     for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       cell = this._rootRowBinary[col];
       if (cell === 1) {
-        this._getCellHtml(this._currentRow, col, true);
+        rowHtml += this._getCellHtml(this._currentRow, col, true);
       } else {
-        this._getCellHtml(this._currentRow, col, false);
+        rowHtml += this._getCellHtml(this._currentRow, col, false);
       }
     }
+    this._$board.append(rowHtml);
     return this._currentRow++;
   };
 
@@ -215,7 +219,7 @@ Board = (function() {
       tmpClass = " " + tmpClass + " " + this._cellActiveClass + " ";
     }
     tmpDiv = "<div id='" + tmpID + "' class='" + tmpClass + "' " + tmpStyle + "></div>";
-    return this._jBoard.append(tmpDiv);
+    return tmpDiv;
   };
 
   return Board;
