@@ -8,7 +8,7 @@ body{
 }
 
 #cagen-generatemessage-container{
-    position:position:relative;
+    position:relative;
     float:left;
     top:0px;
     width:700px;
@@ -24,7 +24,7 @@ body{
 	position:absolute;
     border-top:1px solid black;
 	border-left:1px solid black;
-    display:none;
+    /*display:none;*/
 }
 
 .cagen-board-cell{

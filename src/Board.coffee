@@ -20,8 +20,7 @@ class Board
         @_Vars = VariablesInstance
         
         # Define container IDs
-        @_boardContainerID = '#cagen-board'
-        @_generateMessageContainerID = '#cagen-generatemessage-container'
+        @_generateMessageContainerID = '#'
         
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
@@ -43,8 +42,8 @@ class Board
     # 
     buildBoard: (rootRowBinary, noCellsWide, noSectionsHigh) ->
         # Select local jQuery DOM objects
-        @_$board =$(@_boardContainerID)
-        @_$generateMessage = $(@_generateMessageContainerID)
+        @_boardElem = document.getElementById(DOM.getID('BOARD', 'CONTAINER'));
+        @_messageElem = document.getElementById(DOM.getID('BOARD', 'MESSAGE_CONTAINER'));
         
         @_rootRowBinary = rootRowBinary
         
@@ -52,20 +51,23 @@ class Board
 
         @_boardNoCellsWide = noCellsWide
         @_boardNoCellsHigh = noSectionsHigh
-        @_$board.width(noCellsWide*@_boardCellWidthPx)
-        @_$board.height(noSectionsHigh*@_boardCellHeightPx)
+        @_boardElem.innerWidth = noCellsWide * @_boardCellWidthPx
+        @_boardElem.innerHeight = noSectionsHigh * @_boardCellHeightPx
 
         # Clear the board
-        @_$board.html("")
-        @_$board.hide()
+        @_boardElem.innerHtml = ""
+        console.log(@_boardElem.style.display)
+        @_boardElem.style.display = "none"
         @_currentRow = 1
 
         # Show the generating message
-        @_$generateMessage.show(=>
+        @_messageElem.style.display = "block"
+        setTimeout(=>
             # Generate the rows
             @_generateRows()
-            @_$generateMessage.hide()
-            @_$board.show())
+            @_messageElem.style.display = "none"
+            @_boardElem.style.display = "block"
+        ,500)
 
     #
     # Get the current rule (as selected by the user)
@@ -83,12 +85,12 @@ class Board
         for row in [2..@_boardNoCellsHigh]
             @_currentRow = row
             @_buildRow(row)
+        
 
     #
     # Add the blocks to a row
     # 
     _buildRow: (row) ->
-        rowHtml = ""
 
         # Loop over each column in the current row
         for col in [1..@_boardNoCellsWide]
@@ -106,10 +108,10 @@ class Board
 
             # Determine whether the block should be set or not
             if @_RuleMatcher.match(zeroIndex, oneIndex, twoIndex) is 0
-                rowHtml += @_getCellHtml(row, col, false)
+                @_getCellHtml(row, col, false)
             else
-                rowHtml += @_getCellHtml(row, col, true)
-        @_$board.append(rowHtml);
+                @_getCellHtml(row, col, true)
+
         @_currentRow++
         
 
@@ -117,17 +119,15 @@ class Board
     # Add cells to the root/top row
     # 
     _buildTopRow: ->
-        rowHtml = ""
 
         # Build the top row from the root row binary
         #   this is defined by the root row editor
         for col in [1..@_boardNoCellsWide]
             cell = @_rootRowBinary[col]
             if cell is 1
-                rowHtml += @_getCellHtml(@_currentRow, col, true)
+                @_getCellHtml(@_currentRow, col, true)
             else
-                rowHtml += @_getCellHtml(@_currentRow, col, false)
-        @_$board.append(rowHtml);
+                @_getCellHtml(@_currentRow, col, false)
         @_currentRow++
 
     #
@@ -143,12 +143,17 @@ class Board
         tmpLeftPx = (col-1)*@_boardCellWidthPx
         tmpTopPx = (row-1)*@_boardCellHeightPx
 
+        tmpCell = document.createElement('div')
+        tmpCell.setAttribute('id', tmpID)
+        tmpCell.style.top = tmpTopPx + "px"
+        tmpCell.style.left = tmpLeftPx + "px"
         # Inline CSS for the absolute position of the cell
-        tmpStyle = " style='top:#{tmpTopPx}px;left:#{tmpLeftPx}px;' "
 
         tmpClass = @_cellBaseClass
         if active
-            tmpClass = " #{tmpClass} #{@_cellActiveClass} "
+            tmpClass += " #{@_cellActiveClass}"
+
+        tmpCell.setAttribute('class', "#{tmpClass}")
         
-        tmpDiv = "<div id='#{tmpID}' class='#{tmpClass}' #{tmpStyle}></div>";
-        return tmpDiv
+        @_boardElem.appendChild(tmpCell);
+        

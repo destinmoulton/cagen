@@ -61,6 +61,10 @@ DOM = (function() {
   function DOM() {}
 
   DOM.ids = {
+    'BOARD': {
+      'CONTAINER': 'cagen-board',
+      'MESSAGE_CONTAINER': 'cagen-generatemessage-container'
+    },
     'dashboard': {
       'content': "#cagen-dashboard-content",
       'rule_bitset_container': "#cagen-rules-preview-container",
@@ -115,8 +119,7 @@ var Board;
 Board = (function() {
   function Board(VariablesInstance) {
     this._Vars = VariablesInstance;
-    this._boardContainerID = '#cagen-board';
-    this._generateMessageContainerID = '#cagen-generatemessage-container';
+    this._generateMessageContainerID = '#';
     this._boardNoCellsWide = 0;
     this._boardNoCellsHigh = 0;
     this._boardCellWidthPx = 5;
@@ -131,24 +134,26 @@ Board = (function() {
   }
 
   Board.prototype.buildBoard = function(rootRowBinary, noCellsWide, noSectionsHigh) {
-    this._$board = $(this._boardContainerID);
-    this._$generateMessage = $(this._generateMessageContainerID);
+    this._boardElem = document.getElementById(DOM.getID('BOARD', 'CONTAINER'));
+    this._messageElem = document.getElementById(DOM.getID('BOARD', 'MESSAGE_CONTAINER'));
     this._rootRowBinary = rootRowBinary;
     this._RuleMatcher.setCurrentRule(this._Vars.currentRule);
     this._boardNoCellsWide = noCellsWide;
     this._boardNoCellsHigh = noSectionsHigh;
-    this._$board.width(noCellsWide * this._boardCellWidthPx);
-    this._$board.height(noSectionsHigh * this._boardCellHeightPx);
-    this._$board.html("");
-    this._$board.hide();
+    this._boardElem.innerWidth = noCellsWide * this._boardCellWidthPx;
+    this._boardElem.innerHeight = noSectionsHigh * this._boardCellHeightPx;
+    this._boardElem.innerHtml = "";
+    console.log(this._boardElem.style.display);
+    this._boardElem.style.display = "none";
     this._currentRow = 1;
-    return this._$generateMessage.show((function(_this) {
+    this._messageElem.style.display = "block";
+    return setTimeout((function(_this) {
       return function() {
         _this._generateRows();
-        _this._$generateMessage.hide();
-        return _this._$board.show();
+        _this._messageElem.style.display = "none";
+        return _this._boardElem.style.display = "block";
       };
-    })(this));
+    })(this), 500);
   };
 
   Board.prototype.getCurrentRule = function() {
@@ -167,8 +172,7 @@ Board = (function() {
   };
 
   Board.prototype._buildRow = function(row) {
-    var col, i, oneIndex, ref, rowHtml, twoIndex, zeroIndex;
-    rowHtml = "";
+    var col, i, oneIndex, ref, twoIndex, zeroIndex;
     for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       zeroIndex = this._currentCells[row - 1][col - 1];
       if (zeroIndex === void 0) {
@@ -180,32 +184,29 @@ Board = (function() {
         twoIndex = this._currentCells[row - 1][1];
       }
       if (this._RuleMatcher.match(zeroIndex, oneIndex, twoIndex) === 0) {
-        rowHtml += this._getCellHtml(row, col, false);
+        this._getCellHtml(row, col, false);
       } else {
-        rowHtml += this._getCellHtml(row, col, true);
+        this._getCellHtml(row, col, true);
       }
     }
-    this._$board.append(rowHtml);
     return this._currentRow++;
   };
 
   Board.prototype._buildTopRow = function() {
-    var cell, col, i, ref, rowHtml;
-    rowHtml = "";
+    var cell, col, i, ref;
     for (col = i = 1, ref = this._boardNoCellsWide; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       cell = this._rootRowBinary[col];
       if (cell === 1) {
-        rowHtml += this._getCellHtml(this._currentRow, col, true);
+        this._getCellHtml(this._currentRow, col, true);
       } else {
-        rowHtml += this._getCellHtml(this._currentRow, col, false);
+        this._getCellHtml(this._currentRow, col, false);
       }
     }
-    this._$board.append(rowHtml);
     return this._currentRow++;
   };
 
   Board.prototype._getCellHtml = function(row, col, active) {
-    var tmpClass, tmpDiv, tmpID, tmpLeftPx, tmpStyle, tmpTopPx;
+    var tmpCell, tmpClass, tmpID, tmpLeftPx, tmpTopPx;
     if (!this._currentCells[row]) {
       this._currentCells[row] = [];
     }
@@ -213,13 +214,16 @@ Board = (function() {
     tmpID = this._cellIDPrefix + this._currentRow + "_" + col;
     tmpLeftPx = (col - 1) * this._boardCellWidthPx;
     tmpTopPx = (row - 1) * this._boardCellHeightPx;
-    tmpStyle = " style='top:" + tmpTopPx + "px;left:" + tmpLeftPx + "px;' ";
+    tmpCell = document.createElement('div');
+    tmpCell.setAttribute('id', tmpID);
+    tmpCell.style.top = tmpTopPx + "px";
+    tmpCell.style.left = tmpLeftPx + "px";
     tmpClass = this._cellBaseClass;
     if (active) {
-      tmpClass = " " + tmpClass + " " + this._cellActiveClass + " ";
+      tmpClass += " " + this._cellActiveClass;
     }
-    tmpDiv = "<div id='" + tmpID + "' class='" + tmpClass + "' " + tmpStyle + "></div>";
-    return tmpDiv;
+    tmpCell.setAttribute('class', "" + tmpClass);
+    return this._boardElem.appendChild(tmpCell);
   };
 
   return Board;
@@ -806,7 +810,7 @@ Component of Cellular Automata Generator (CAGEN)
 The jQuery onload function that initializes the various
 CAGEN features and starts the tabbed interface.
  */
-$(function() {
+window.onload = function() {
   var tabs, vars;
   vars = new Variables();
   tabs = new Tabs(vars);
@@ -814,4 +818,4 @@ $(function() {
   new TopRowEditor(vars);
   new Generator(vars);
   return tabs.start();
-});
+};

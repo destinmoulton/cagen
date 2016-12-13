@@ -12,7 +12,7 @@ CAGEN features and starts the tabbed interface.
 
 ###
 
-$ ->
+window.onload = ->
     vars = new Variables()
 
     # Create an instance of the Tabs (visual sectional management)

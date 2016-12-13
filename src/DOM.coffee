@@ -14,6 +14,10 @@ Holds ids and classes of relevant DOM objects.
 ###
 class DOM
     @ids = {
+        'BOARD':{
+            'CONTAINER':'cagen-board'
+            'MESSAGE_CONTAINER':'cagen-generatemessage-container'
+        },
         'dashboard':{
             'content':"#cagen-dashboard-content",
             'rule_bitset_container':"#cagen-rules-preview-container",
