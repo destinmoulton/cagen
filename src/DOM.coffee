@@ -41,6 +41,10 @@ class DOM
     }
 
     @classes = {
+        'TOPROWEDITOR':{
+            'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
+            'SLIDER_CELL_ACTIVE':'cagen-board-cell-active'
+        },
         'dashboard':{
             'rule_preview_cell_active':'cagen-dash-preview-cell-active',
             

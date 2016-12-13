@@ -25,15 +25,9 @@ class TopRowEditor
         @_Vars = VariablesInstance
         
         # HTML ids for the divs
-
-
         @_idEditorContainer = "#rowed-editor-container"
         @_idReturnButton = "#rowed-button-returntodashboard"
         @_idResetRowButton = "#rowed-button-resetrow"
-
-        # CSS classes for the active cells
-        @_classEditorCellActive = 'rowed-editor-cell-active'
-        @_classSlicerCellActive = 'cagen-board-cell-active'
 
         # Dom element prefixes
         @_prefixSliderCol = 'rowed-slider-col-'
@@ -182,9 +176,9 @@ class TopRowEditor
 
             # Change the style to reflect which cells are active
             if @_aRowBinary[cellPos] is 1
-                @_jEditorCells[cell].addClass(@_classEditorCellActive)
+                @_jEditorCells[cell].addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
             else
-                @_jEditorCells[cell].removeClass(@_classEditorCellActive)
+                @_jEditorCells[cell].removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
             
             
     #
@@ -221,13 +215,13 @@ class TopRowEditor
         if @_aRowBinary[cellNo] is 1
             # Deactivate the cell 
             @_aRowBinary[cellNo] = 0
-            jTmpCell.removeClass(@_classEditorCellActive)
-            $('#'+@_prefixSliderCol+cellNo).removeClass(@_classSlicerCellActive)
+            jTmpCell.removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+            $('#'+@_prefixSliderCol+cellNo).removeClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
         else
             # Activate the cell
             @_aRowBinary[cellNo] = 1
-            jTmpCell.addClass(@_classEditorCellActive)
-            $('#'+@_prefixSliderCol+cellNo).addClass(@_classSlicerCellActive)
+            jTmpCell.addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+            $('#'+@_prefixSliderCol+cellNo).addClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
 
         # Set the new binary configuration for the generator
         @_Vars.setTopRowBinary(@_aRowBinary)
@@ -262,7 +256,7 @@ class TopRowEditor
         for col in [1..@_noColumns]
             activeClass = ""
             if @_aRowBinary[col] is 1
-                activeClass = @_classSlicerCellActive
+                activeClass = DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE')
 
             leftPos = ((col-1)*@_colWidth)
             tmpId = @_prefixSliderCol+col
