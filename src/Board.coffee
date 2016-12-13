@@ -56,7 +56,7 @@ class Board
 
         # Clear the board
         @_boardElem.innerHtml = ""
-        console.log(@_boardElem.style.display)
+
         @_boardElem.style.display = "none"
         @_currentRow = 1
 

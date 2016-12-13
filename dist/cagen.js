@@ -143,7 +143,6 @@ Board = (function() {
     this._boardElem.innerWidth = noCellsWide * this._boardCellWidthPx;
     this._boardElem.innerHeight = noSectionsHigh * this._boardCellHeightPx;
     this._boardElem.innerHtml = "";
-    console.log(this._boardElem.style.display);
     this._boardElem.style.display = "none";
     this._currentRow = 1;
     this._messageElem.style.display = "block";
