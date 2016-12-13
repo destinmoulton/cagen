@@ -25,14 +25,11 @@ class TopRowEditor
         @_Vars = VariablesInstance
         
         # HTML ids for the divs
-        @_idRowContainer = "#rowed-slider-row-container"
-        @_idSliderContainer = "#rowed-slider-container"
+
 
         @_idEditorContainer = "#rowed-editor-container"
         @_idReturnButton = "#rowed-button-returntodashboard"
         @_idResetRowButton = "#rowed-button-resetrow"
-        @_idTmplEditorCell = '#tmpl-rowed-editor-cell'
-        @_idTmplSliderCell = '#tmpl-rowed-slider-cell'
 
         # CSS classes for the active cells
         @_classEditorCellActive = 'rowed-editor-cell-active'
@@ -75,38 +72,39 @@ class TopRowEditor
         dashboardHTML = @_jTopRowEditorTemplate.html()
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
-        @_jSliderContainer = $(@_idSliderContainer)
+        sliderContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_CONTAINER')) 
+        sliderContainerElem.style.width = @_totalWidth + "px"
         
         @_sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR','SLIDER'))
-        @_jRowContainer = $(@_idRowContainer)
+        @_rowContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'ROW_CONTAINER'))
+        
         @_jEditorContainer = $(@_idEditorContainer)
 
         # Set the dimensions
-        @_jRowContainer.height(@_rowHeight)
-        @_jRowContainer.width(@_totalWidth)
-        @_jSliderContainer.width(@_totalWidth)
+        @_rowContainerElem.style.height = @_rowHeight + "px"
+        @_rowContainerElem.style.width = @_totalWidth + "px"
         
         @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
         sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'))
         sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'))
-        @_sliderIsDragging = false
+        isSliderInDragMode = false
 
         # Event handler for when a click occurs while sliding the "zoom"
         @_sliderElem.addEventListener('click', =>
-            if @_sliderIsDragging
-                @_sliderIsDragging = false
+            if isSliderInDragMode
+                isSliderInDragMode = false
                 sliderArrowLeftElem.style.display = "none"
                 sliderArrowRightElem.style.display = "none"
             else
-                @_sliderIsDragging = true
+                isSliderInDragMode = true
                 sliderArrowLeftElem.style.display = "block"
                 sliderArrowRightElem.style.display = "block"
         )
 
         # Event handler for when the mouse moves over the "zoom" slider
         @_sliderElem.addEventListener('mousemove', (event) =>
-            if @_sliderIsDragging 
+            if isSliderInDragMode 
                 @_moveSlider(event)
         )
 
@@ -147,6 +145,7 @@ class TopRowEditor
     # Event handler when the mouse moves the slider
     # 
     _moveSlider: (ev)=>
+
         # Get the mouse position
         xMousePos = ev.clientX
         closestEdgePx = xMousePos - (xMousePos % @_colWidth)
@@ -192,8 +191,9 @@ class TopRowEditor
     # Build the editor cells
     # 
     _buildEditorCells: ()->
-        cellTemplate = $(@_idTmplEditorCell).html()
 
+        cellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL')).innerHTML
+        
         @_jEditorContainer.width(@_sliderCols*@_editorCellWidth)
         
         for cell in [1..@_sliderCols]
@@ -254,8 +254,10 @@ class TopRowEditor
     # 
     _buildRow: ()->
         # Get the Mustache template html
-        smallCellTemplate = $(@_idTmplSliderCell).html()
 
+        smallCellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL')).innerHTML
+
+        rowHtml = ""
         # Add cells to the row
         for col in [1..@_noColumns]
             activeClass = ""
@@ -266,7 +268,7 @@ class TopRowEditor
             tmpId = @_prefixSliderCol+col
 
             # Create a rendering of the cell via Mustache template
-            rendered = Mustache.render(smallCellTemplate, {id:tmpId, left:leftPos, activeClass:activeClass})
+            rowHtml += Mustache.render(smallCellTemplate, {id:tmpId, left:leftPos, activeClass:activeClass})
 
-            # Add the cell to the row
-            @_jRowContainer.append(rendered)
+        # Add the cells
+        @_rowContainerElem.innerHTML = rowHtml

@@ -66,9 +66,13 @@ DOM = (function() {
       'MESSAGE_CONTAINER': 'cagen-generatemessage-container'
     },
     'TOPROWEDITOR': {
+      'ROW_CONTAINER': 'rowed-slider-row-container',
+      'SLIDER_CONTAINER': 'rowed-slider-container',
       'SLIDER': 'rowed-slider',
       'SLIDER_ARROW_LEFT': 'rowed-slider-arrow-left',
-      'SLIDER_ARROW_RIGHT': 'rowed-slider-arrow-right'
+      'SLIDER_ARROW_RIGHT': 'rowed-slider-arrow-right',
+      'TEMPLATE_SLIDER_CELL': 'tmpl-rowed-slider-cell',
+      'TEMPLATE_EDITOR_CELL': 'tmpl-rowed-editor-cell'
     },
     'dashboard': {
       'content': "#cagen-dashboard-content",
@@ -605,13 +609,9 @@ TopRowEditor = (function() {
     this._toggleEditorCell = bind(this._toggleEditorCell, this);
     this._moveSlider = bind(this._moveSlider, this);
     this._Vars = VariablesInstance;
-    this._idRowContainer = "#rowed-slider-row-container";
-    this._idSliderContainer = "#rowed-slider-container";
     this._idEditorContainer = "#rowed-editor-container";
     this._idReturnButton = "#rowed-button-returntodashboard";
     this._idResetRowButton = "#rowed-button-resetrow";
-    this._idTmplEditorCell = '#tmpl-rowed-editor-cell';
-    this._idTmplSliderCell = '#tmpl-rowed-slider-cell';
     this._classEditorCellActive = 'rowed-editor-cell-active';
     this._classSlicerCellActive = 'cagen-board-cell-active';
     this._prefixSliderCol = 'rowed-slider-col-';
@@ -636,28 +636,28 @@ TopRowEditor = (function() {
   }
 
   TopRowEditor.prototype.run = function() {
-    var dashboardHTML, sliderArrowLeftElem, sliderArrowRightElem;
+    var dashboardHTML, isSliderInDragMode, sliderArrowLeftElem, sliderArrowRightElem, sliderContainerElem;
     dashboardHTML = this._jTopRowEditorTemplate.html();
     this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-    this._jSliderContainer = $(this._idSliderContainer);
+    sliderContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_CONTAINER'));
+    sliderContainerElem.style.width = this._totalWidth + "px";
     this._sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER'));
-    this._jRowContainer = $(this._idRowContainer);
+    this._rowContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'ROW_CONTAINER'));
     this._jEditorContainer = $(this._idEditorContainer);
-    this._jRowContainer.height(this._rowHeight);
-    this._jRowContainer.width(this._totalWidth);
-    this._jSliderContainer.width(this._totalWidth);
+    this._rowContainerElem.style.height = this._rowHeight + "px";
+    this._rowContainerElem.style.width = this._totalWidth + "px";
     this._sliderElem.style.width = (this._colWidth * this._sliderCols) + "px";
     sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'));
     sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'));
-    this._sliderIsDragging = false;
+    isSliderInDragMode = false;
     this._sliderElem.addEventListener('click', (function(_this) {
       return function() {
-        if (_this._sliderIsDragging) {
-          _this._sliderIsDragging = false;
+        if (isSliderInDragMode) {
+          isSliderInDragMode = false;
           sliderArrowLeftElem.style.display = "none";
           return sliderArrowRightElem.style.display = "none";
         } else {
-          _this._sliderIsDragging = true;
+          isSliderInDragMode = true;
           sliderArrowLeftElem.style.display = "block";
           return sliderArrowRightElem.style.display = "block";
         }
@@ -665,7 +665,7 @@ TopRowEditor = (function() {
     })(this));
     this._sliderElem.addEventListener('mousemove', (function(_this) {
       return function(event) {
-        if (_this._sliderIsDragging) {
+        if (isSliderInDragMode) {
           return _this._moveSlider(event);
         }
       };
@@ -734,7 +734,7 @@ TopRowEditor = (function() {
 
   TopRowEditor.prototype._buildEditorCells = function() {
     var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
-    cellTemplate = $(this._idTmplEditorCell).html();
+    cellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL')).innerHTML;
     this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
     results = [];
     for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
@@ -781,9 +781,9 @@ TopRowEditor = (function() {
   };
 
   TopRowEditor.prototype._buildRow = function() {
-    var activeClass, col, i, leftPos, ref, rendered, results, smallCellTemplate, tmpId;
-    smallCellTemplate = $(this._idTmplSliderCell).html();
-    results = [];
+    var activeClass, col, i, leftPos, ref, rowHtml, smallCellTemplate, tmpId;
+    smallCellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL')).innerHTML;
+    rowHtml = "";
     for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       activeClass = "";
       if (this._aRowBinary[col] === 1) {
@@ -791,14 +791,13 @@ TopRowEditor = (function() {
       }
       leftPos = (col - 1) * this._colWidth;
       tmpId = this._prefixSliderCol + col;
-      rendered = Mustache.render(smallCellTemplate, {
+      rowHtml += Mustache.render(smallCellTemplate, {
         id: tmpId,
         left: leftPos,
         activeClass: activeClass
       });
-      results.push(this._jRowContainer.append(rendered));
     }
-    return results;
+    return this._rowContainerElem.innerHTML = rowHtml;
   };
 
   return TopRowEditor;

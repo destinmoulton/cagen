@@ -19,9 +19,13 @@ class DOM
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
         },
         'TOPROWEDITOR':{
+            'ROW_CONTAINER': 'rowed-slider-row-container',
+            'SLIDER_CONTAINER': 'rowed-slider-container',
             'SLIDER':'rowed-slider',
             'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
-            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right'
+            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right',
+            'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
+            'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
         },
         'dashboard':{
             'content':"#cagen-dashboard-content",
