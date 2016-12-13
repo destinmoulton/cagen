@@ -65,6 +65,9 @@ DOM = (function() {
       'CONTAINER': 'cagen-board',
       'MESSAGE_CONTAINER': 'cagen-generatemessage-container'
     },
+    'TOPROWEDITOR': {
+      'SLIDER': 'rowed-slider'
+    },
     'dashboard': {
       'content': "#cagen-dashboard-content",
       'rule_bitset_container': "#cagen-rules-preview-container",
@@ -72,7 +75,7 @@ DOM = (function() {
       'rule_generate_button': "#cagen-dash-generate-button"
     },
     'template': {
-      'dashboard_rule_preview_cell': "#tmpl-cagen-dash-preview-cell",
+      'dashboard_rule_preview_cell': '#tmpl-cagen-dash-preview-cell',
       'dashboard_main': '#tmpl-cagen-dashboard',
       'dashboard_board': '#tmpl-cagen-dash-board'
     }
@@ -639,12 +642,13 @@ TopRowEditor = (function() {
     this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
     this._jSliderContainer = $(this._idSliderContainer);
     this._jSlider = $(this._idSlider);
+    this._sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER'));
     this._jRowContainer = $(this._idRowContainer);
     this._jEditorContainer = $(this._idEditorContainer);
     this._jRowContainer.height(this._rowHeight);
     this._jRowContainer.width(this._totalWidth);
     this._jSliderContainer.width(this._totalWidth);
-    this._jSlider.width(this._colWidth * this._sliderCols);
+    this._sliderElem.style.width = (this._colWidth * this._sliderCols) + "px";
     this._jSliderLeftArrow = $(this._idSliderArrowLeft);
     this._jSliderRightArrow = $(this._idSliderArrowRight);
     this._sliderIsDragging = false;
@@ -668,7 +672,7 @@ TopRowEditor = (function() {
         }
       };
     })(this));
-    this._sliderInitialOffset = this._jSlider.offset();
+    this._sliderInitialOffset = this._getOffsetPosition(this._sliderElem);
     this._buildRow();
     this._buildEditorCells();
     this._updateEditorCells(1);
@@ -682,6 +686,16 @@ TopRowEditor = (function() {
         return _this._resetRow(event);
       };
     })(this));
+  };
+
+  TopRowEditor.prototype._getOffsetPosition = function(elem) {
+    var left, top;
+    top = elem.getBoundingClientRect().top + window.pageYOffset;
+    left = elem.getBoundingClientRect().left + window.pageXOffset;
+    return {
+      top: top,
+      left: left
+    };
   };
 
   TopRowEditor.prototype._resetRow = function(event) {

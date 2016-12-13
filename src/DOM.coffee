@@ -15,8 +15,11 @@ Holds ids and classes of relevant DOM objects.
 class DOM
     @ids = {
         'BOARD':{
-            'CONTAINER':'cagen-board'
+            'CONTAINER':'cagen-board',
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
+        },
+        'TOPROWEDITOR':{
+            'SLIDER':'rowed-slider',
         },
         'dashboard':{
             'content':"#cagen-dashboard-content",
@@ -25,7 +28,7 @@ class DOM
             'rule_generate_button':"#cagen-dash-generate-button"
         },
         'template':{
-            'dashboard_rule_preview_cell':"#tmpl-cagen-dash-preview-cell"
+            'dashboard_rule_preview_cell':'#tmpl-cagen-dash-preview-cell'
             'dashboard_main':'#tmpl-cagen-dashboard',
             'dashboard_board':'#tmpl-cagen-dash-board'
         }

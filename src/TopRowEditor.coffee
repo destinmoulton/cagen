@@ -55,7 +55,7 @@ class TopRowEditor
         @_rowHeight = 5
         @_sliderLeft = 0
         @_sliderCols = 26
-        @_sliderPxToMid = (@_sliderCols/2)*@_colWidth
+        @_sliderPxToMid = (@_sliderCols / 2) * @_colWidth
         @_editorCellWidth = 29
         @_totalWidth = @_colWidth*@_noColumns
 
@@ -79,6 +79,7 @@ class TopRowEditor
 
         @_jSliderContainer = $(@_idSliderContainer)
         @_jSlider = $(@_idSlider)
+        @_sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR','SLIDER'))
         @_jRowContainer = $(@_idRowContainer)
         @_jEditorContainer = $(@_idEditorContainer)
 
@@ -86,7 +87,8 @@ class TopRowEditor
         @_jRowContainer.height(@_rowHeight)
         @_jRowContainer.width(@_totalWidth)
         @_jSliderContainer.width(@_totalWidth)
-        @_jSlider.width(@_colWidth*@_sliderCols)
+        
+        @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
         #
         @_jSliderLeftArrow = $(@_idSliderArrowLeft)
@@ -112,7 +114,7 @@ class TopRowEditor
         )
 
         # Get the initial slider position
-        @_sliderInitialOffset = @_jSlider.offset()
+        @_sliderInitialOffset = @_getOffsetPosition(@_sliderElem)
 
         # Build the row and the editor 
         @_buildRow()
@@ -129,6 +131,13 @@ class TopRowEditor
         # Reset button click event
         $(@_idResetRowButton).click((event)=>@_resetRow(event))
 
+    #
+    # Get the offset position for an element
+    #
+    _getOffsetPosition: (elem)->
+        top = elem.getBoundingClientRect().top + window.pageYOffset
+        left = elem.getBoundingClientRect().left + window.pageXOffset
+        return { top, left };
     #
     # Event handler when the user clicks the Reset button
     # 
@@ -157,7 +166,7 @@ class TopRowEditor
             
             @_jSlider.offset({top:@_sliderInitialOffset.top, left:adjustedLeft})
 
-            leftCellNo = (leftPos/@_colWidth)+1
+            leftCellNo = (leftPos / @_colWidth) + 1
 
             @_updateEditorCells(leftCellNo)
 
@@ -233,7 +242,7 @@ class TopRowEditor
     # 
     _generateInitialBinary: ()->
         # The middle cell is the only one initially active
-        seed_col = Math.ceil(@_noColumns/2)
+        seed_col = Math.ceil(@_noColumns / 2)
         
         for col in [1..@_noColumns]
             if col is seed_col
