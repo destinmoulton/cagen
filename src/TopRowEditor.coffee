@@ -27,9 +27,7 @@ class TopRowEditor
         # HTML ids for the divs
         @_idRowContainer = "#rowed-slider-row-container"
         @_idSliderContainer = "#rowed-slider-container"
-        @_idSlider = "#rowed-slider"
-        @_idSliderArrowLeft = "#rowed-slider-arrow-left"
-        @_idSliderArrowRight = "#rowed-slider-arrow-right"
+
         @_idEditorContainer = "#rowed-editor-container"
         @_idReturnButton = "#rowed-button-returntodashboard"
         @_idResetRowButton = "#rowed-button-resetrow"
@@ -78,7 +76,7 @@ class TopRowEditor
         @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
 
         @_jSliderContainer = $(@_idSliderContainer)
-        @_jSlider = $(@_idSlider)
+        
         @_sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR','SLIDER'))
         @_jRowContainer = $(@_idRowContainer)
         @_jEditorContainer = $(@_idEditorContainer)
@@ -90,25 +88,24 @@ class TopRowEditor
         
         @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
-        #
-        @_jSliderLeftArrow = $(@_idSliderArrowLeft)
-        @_jSliderRightArrow = $(@_idSliderArrowRight)
+        sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'))
+        sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'))
         @_sliderIsDragging = false
 
         # Event handler for when a click occurs while sliding the "zoom"
-        @_jSlider.click( =>
+        @_sliderElem.addEventListener('click', =>
             if @_sliderIsDragging
                 @_sliderIsDragging = false
-                @_jSliderLeftArrow.fadeOut()
-                @_jSliderRightArrow.fadeOut()
+                sliderArrowLeftElem.style.display = "none"
+                sliderArrowRightElem.style.display = "none"
             else
                 @_sliderIsDragging = true
-                @_jSliderLeftArrow.fadeIn()
-                @_jSliderRightArrow.fadeIn()
+                sliderArrowLeftElem.style.display = "block"
+                sliderArrowRightElem.style.display = "block"
         )
 
         # Event handler for when the mouse moves over the "zoom" slider
-        @_jSlider.mousemove( (event) =>
+        @_sliderElem.addEventListener('mousemove', (event) =>
             if @_sliderIsDragging 
                 @_moveSlider(event)
         )
@@ -152,19 +149,18 @@ class TopRowEditor
     _moveSlider: (ev)=>
         # Get the mouse position
         xMousePos = ev.clientX
-        closestEdgePx = xMousePos - (xMousePos%@_colWidth)
+        closestEdgePx = xMousePos - (xMousePos % @_colWidth)
 
         # Calculate the relative position of the slider
-        leftPos = closestEdgePx-@_sliderPxToMid
-        rightPos = closestEdgePx+@_sliderPxToMid+@_colWidth
+        leftPos = closestEdgePx - @_sliderPxToMid
+        rightPos = closestEdgePx + @_sliderPxToMid+@_colWidth
         fullWidth = @_totalWidth + @_colWidth
 
         # Adjust the calculation based on a fudged initial offset
         adjustedLeft = leftPos+@_sliderInitialOffset.left
 
         if adjustedLeft >= @_sliderInitialOffset.left && rightPos <=  fullWidth
-            
-            @_jSlider.offset({top:@_sliderInitialOffset.top, left:adjustedLeft})
+            @_sliderElem.style.left = adjustedLeft + "px"
 
             leftCellNo = (leftPos / @_colWidth) + 1
 

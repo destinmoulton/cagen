@@ -66,7 +66,9 @@ DOM = (function() {
       'MESSAGE_CONTAINER': 'cagen-generatemessage-container'
     },
     'TOPROWEDITOR': {
-      'SLIDER': 'rowed-slider'
+      'SLIDER': 'rowed-slider',
+      'SLIDER_ARROW_LEFT': 'rowed-slider-arrow-left',
+      'SLIDER_ARROW_RIGHT': 'rowed-slider-arrow-right'
     },
     'dashboard': {
       'content': "#cagen-dashboard-content",
@@ -605,9 +607,6 @@ TopRowEditor = (function() {
     this._Vars = VariablesInstance;
     this._idRowContainer = "#rowed-slider-row-container";
     this._idSliderContainer = "#rowed-slider-container";
-    this._idSlider = "#rowed-slider";
-    this._idSliderArrowLeft = "#rowed-slider-arrow-left";
-    this._idSliderArrowRight = "#rowed-slider-arrow-right";
     this._idEditorContainer = "#rowed-editor-container";
     this._idReturnButton = "#rowed-button-returntodashboard";
     this._idResetRowButton = "#rowed-button-resetrow";
@@ -637,11 +636,10 @@ TopRowEditor = (function() {
   }
 
   TopRowEditor.prototype.run = function() {
-    var dashboardHTML;
+    var dashboardHTML, sliderArrowLeftElem, sliderArrowRightElem;
     dashboardHTML = this._jTopRowEditorTemplate.html();
     this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
     this._jSliderContainer = $(this._idSliderContainer);
-    this._jSlider = $(this._idSlider);
     this._sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER'));
     this._jRowContainer = $(this._idRowContainer);
     this._jEditorContainer = $(this._idEditorContainer);
@@ -649,23 +647,23 @@ TopRowEditor = (function() {
     this._jRowContainer.width(this._totalWidth);
     this._jSliderContainer.width(this._totalWidth);
     this._sliderElem.style.width = (this._colWidth * this._sliderCols) + "px";
-    this._jSliderLeftArrow = $(this._idSliderArrowLeft);
-    this._jSliderRightArrow = $(this._idSliderArrowRight);
+    sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'));
+    sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'));
     this._sliderIsDragging = false;
-    this._jSlider.click((function(_this) {
+    this._sliderElem.addEventListener('click', (function(_this) {
       return function() {
         if (_this._sliderIsDragging) {
           _this._sliderIsDragging = false;
-          _this._jSliderLeftArrow.fadeOut();
-          return _this._jSliderRightArrow.fadeOut();
+          sliderArrowLeftElem.style.display = "none";
+          return sliderArrowRightElem.style.display = "none";
         } else {
           _this._sliderIsDragging = true;
-          _this._jSliderLeftArrow.fadeIn();
-          return _this._jSliderRightArrow.fadeIn();
+          sliderArrowLeftElem.style.display = "block";
+          return sliderArrowRightElem.style.display = "block";
         }
       };
     })(this));
-    this._jSlider.mousemove((function(_this) {
+    this._sliderElem.addEventListener('mousemove', (function(_this) {
       return function(event) {
         if (_this._sliderIsDragging) {
           return _this._moveSlider(event);
@@ -712,10 +710,7 @@ TopRowEditor = (function() {
     fullWidth = this._totalWidth + this._colWidth;
     adjustedLeft = leftPos + this._sliderInitialOffset.left;
     if (adjustedLeft >= this._sliderInitialOffset.left && rightPos <= fullWidth) {
-      this._jSlider.offset({
-        top: this._sliderInitialOffset.top,
-        left: adjustedLeft
-      });
+      this._sliderElem.style.left = adjustedLeft + "px";
       leftCellNo = (leftPos / this._colWidth) + 1;
       return this._updateEditorCells(leftCellNo);
     }

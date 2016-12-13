@@ -20,6 +20,8 @@ class DOM
         },
         'TOPROWEDITOR':{
             'SLIDER':'rowed-slider',
+            'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
+            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right'
         },
         'dashboard':{
             'content':"#cagen-dashboard-content",
