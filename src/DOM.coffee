@@ -14,6 +14,9 @@ Holds ids and classes of relevant DOM objects.
 ###
 class DOM
     @ids = {
+        'CAGEN':{
+            'MAIN_CONTAINER':'cagen-container'
+        },
         'BOARD':{
             'CONTAINER':'cagen-board',
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
@@ -24,6 +27,7 @@ class DOM
             'SLIDER':'rowed-slider',
             'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
             'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right',
+            'TEMPLATE_TOPROWEDITOR': 'tmpl-cagen-toproweditor',
             'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
             'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
         },
@@ -50,6 +54,12 @@ class DOM
             
         }
     }
+
+    #
+    # Get an element by id
+    #
+    @elemById:(section, element) ->
+        return document.getElementById(@getID(section, element))
 
     @getClass:(section, element) ->
         return @classes[section][element]

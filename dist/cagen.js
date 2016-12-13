@@ -61,6 +61,9 @@ DOM = (function() {
   function DOM() {}
 
   DOM.ids = {
+    'CAGEN': {
+      'MAIN_CONTAINER': 'cagen-container'
+    },
     'BOARD': {
       'CONTAINER': 'cagen-board',
       'MESSAGE_CONTAINER': 'cagen-generatemessage-container'
@@ -71,6 +74,7 @@ DOM = (function() {
       'SLIDER': 'rowed-slider',
       'SLIDER_ARROW_LEFT': 'rowed-slider-arrow-left',
       'SLIDER_ARROW_RIGHT': 'rowed-slider-arrow-right',
+      'TEMPLATE_TOPROWEDITOR': 'tmpl-cagen-toproweditor',
       'TEMPLATE_SLIDER_CELL': 'tmpl-rowed-slider-cell',
       'TEMPLATE_EDITOR_CELL': 'tmpl-rowed-editor-cell'
     },
@@ -95,6 +99,10 @@ DOM = (function() {
     'dashboard': {
       'rule_preview_cell_active': 'cagen-dash-preview-cell-active'
     }
+  };
+
+  DOM.elemById = function(section, element) {
+    return document.getElementById(this.getID(section, element));
   };
 
   DOM.getClass = function(section, element) {
@@ -617,9 +625,7 @@ TopRowEditor = (function() {
     this._idReturnButton = "#rowed-button-returntodashboard";
     this._idResetRowButton = "#rowed-button-resetrow";
     this._prefixSliderCol = 'rowed-slider-col-';
-    this._jCagenContainer = this._Vars.jMainContainer;
-    this._jTopRowEditorTemplate = $("#tmpl-cagen-toproweditor");
-    this._jEditorCells = [];
+    this._editorCellsElems = [];
     this._aRowBinary = [];
     this._noColumns = 151;
     this._colWidth = 5;
@@ -638,19 +644,20 @@ TopRowEditor = (function() {
   }
 
   TopRowEditor.prototype.run = function() {
-    var dashboardHTML, isSliderInDragMode, sliderArrowLeftElem, sliderArrowRightElem, sliderContainerElem;
-    dashboardHTML = this._jTopRowEditorTemplate.html();
-    this._jCagenContainer.html(Mustache.render(dashboardHTML, {}));
-    sliderContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_CONTAINER'));
+    var cagenMainElem, dashboardHTML, isSliderInDragMode, sliderArrowLeftElem, sliderArrowRightElem, sliderContainerElem;
+    dashboardHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML;
+    cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER');
+    cagenMainElem.innerHTML = Mustache.render(dashboardHTML, {});
+    sliderContainerElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_CONTAINER');
     sliderContainerElem.style.width = this._totalWidth + "px";
-    this._sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER'));
-    this._rowContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'ROW_CONTAINER'));
+    this._sliderElem = DOM.elemById('TOPROWEDITOR', 'SLIDER');
+    this._rowContainerElem = DOM.elemById('TOPROWEDITOR', 'ROW_CONTAINER');
     this._jEditorContainer = $(this._idEditorContainer);
     this._rowContainerElem.style.height = this._rowHeight + "px";
     this._rowContainerElem.style.width = this._totalWidth + "px";
     this._sliderElem.style.width = (this._colWidth * this._sliderCols) + "px";
-    sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'));
-    sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'));
+    sliderArrowLeftElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_LEFT');
+    sliderArrowRightElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT');
     isSliderInDragMode = false;
     this._sliderElem.addEventListener('click', (function(_this) {
       return function() {
@@ -723,12 +730,12 @@ TopRowEditor = (function() {
     results = [];
     for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
       cellPos = cell + beginCell - 1;
-      this._jEditorCells[cell].innerHTML = cellPos;
-      this._jEditorCells[cell].setAttribute('data-cellIndex', cellPos);
+      this._editorCellsElems[cell].innerHTML = cellPos;
+      this._editorCellsElems[cell].setAttribute('data-cellIndex', cellPos);
       if (this._aRowBinary[cellPos] === 1) {
-        results.push(this._jEditorCells[cell].classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
+        results.push(this._editorCellsElems[cell].classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
       } else {
-        results.push(this._jEditorCells[cell].classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
+        results.push(this._editorCellsElems[cell].classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
       }
     }
     return results;
@@ -736,7 +743,7 @@ TopRowEditor = (function() {
 
   TopRowEditor.prototype._buildEditorCells = function() {
     var cell, cellTemplate, i, leftPos, ref, rendered, results, tmpId;
-    cellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL')).innerHTML;
+    cellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL').innerHTML;
     this._jEditorContainer.width(this._sliderCols * this._editorCellWidth);
     results = [];
     for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
@@ -747,25 +754,25 @@ TopRowEditor = (function() {
         left: leftPos
       });
       this._jEditorContainer.append(rendered);
-      this._jEditorCells[cell] = document.getElementById(tmpId);
-      results.push(this._jEditorCells[cell].addEventListener('click', this._toggleEditorCell));
+      this._editorCellsElems[cell] = document.getElementById(tmpId);
+      results.push(this._editorCellsElems[cell].addEventListener('click', this._toggleEditorCell));
     }
     return results;
   };
 
   TopRowEditor.prototype._toggleEditorCell = function(event) {
-    var cellElem, cellNo, jTmpCell;
-    jTmpCell = $("#" + event.target.id);
-    cellElem = event.target;
-    cellNo = cellElem.getAttribute('data-cellIndex');
+    var cellNo, editorCellElem, sliderCellElem;
+    editorCellElem = event.target;
+    cellNo = editorCellElem.getAttribute('data-cellIndex');
+    sliderCellElem = document.getElementById(this._prefixSliderCol + cellNo);
     if (this._aRowBinary[cellNo] === 1) {
       this._aRowBinary[cellNo] = 0;
-      cellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
-      $('#' + this._prefixSliderCol + cellNo).removeClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
+      editorCellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
+      sliderCellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
     } else {
       this._aRowBinary[cellNo] = 1;
-      cellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
-      $('#' + this._prefixSliderCol + cellNo).addClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
+      editorCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
+      sliderCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
     }
     return this._Vars.setTopRowBinary(this._aRowBinary);
   };
@@ -785,7 +792,7 @@ TopRowEditor = (function() {
 
   TopRowEditor.prototype._buildRow = function() {
     var activeClass, col, i, leftPos, ref, rowHtml, smallCellTemplate, tmpId;
-    smallCellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL')).innerHTML;
+    smallCellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML;
     rowHtml = "";
     for (col = i = 1, ref = this._noColumns; 1 <= ref ? i <= ref : i >= ref; col = 1 <= ref ? ++i : --i) {
       activeClass = "";

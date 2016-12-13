@@ -31,10 +31,6 @@ class TopRowEditor
 
         # Dom element prefixes
         @_prefixSliderCol = 'rowed-slider-col-'
-
-        # local jQuery objects so we don't have to do repeated dom lookups
-        @_jCagenContainer = @_Vars.jMainContainer
-        @_jTopRowEditorTemplate = $("#tmpl-cagen-toproweditor")
         
         @_editorCellsElems = []
 
@@ -63,14 +59,15 @@ class TopRowEditor
     run: ()->
         
         # Populate the main container with the template
-        dashboardHTML = @_jTopRowEditorTemplate.html()
-        @_jCagenContainer.html(Mustache.render(dashboardHTML,{}))
+        dashboardHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML
+        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
+        cagenMainElem.innerHTML = Mustache.render(dashboardHTML,{}) 
 
-        sliderContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_CONTAINER')) 
+        sliderContainerElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_CONTAINER')
         sliderContainerElem.style.width = @_totalWidth + "px"
         
-        @_sliderElem = document.getElementById(DOM.getID('TOPROWEDITOR','SLIDER'))
-        @_rowContainerElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'ROW_CONTAINER'))
+        @_sliderElem = DOM.elemById('TOPROWEDITOR','SLIDER')
+        @_rowContainerElem = DOM.elemById('TOPROWEDITOR', 'ROW_CONTAINER')
         
         @_jEditorContainer = $(@_idEditorContainer)
 
@@ -80,8 +77,8 @@ class TopRowEditor
         
         @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
-        sliderArrowLeftElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_LEFT'))
-        sliderArrowRightElem = document.getElementById(DOM.getID('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT'))
+        sliderArrowLeftElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_LEFT')
+        sliderArrowRightElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT')
         isSliderInDragMode = false
 
         # Event handler for when a click occurs while sliding the "zoom"
@@ -186,7 +183,7 @@ class TopRowEditor
     # 
     _buildEditorCells: ()->
 
-        cellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL')).innerHTML
+        cellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL').innerHTML
         
         @_jEditorContainer.width(@_sliderCols*@_editorCellWidth)
         
@@ -249,7 +246,7 @@ class TopRowEditor
     _buildRow: ()->
         # Get the Mustache template html
 
-        smallCellTemplate = document.getElementById(DOM.getID('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL')).innerHTML
+        smallCellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML
 
         rowHtml = ""
         # Add cells to the row
