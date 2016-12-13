@@ -723,12 +723,12 @@ TopRowEditor = (function() {
     results = [];
     for (cell = i = 1, ref = this._sliderCols; 1 <= ref ? i <= ref : i >= ref; cell = 1 <= ref ? ++i : --i) {
       cellPos = cell + beginCell - 1;
-      this._jEditorCells[cell].text(cellPos);
-      this._jEditorCells[cell].data('cellIndex', cellPos);
+      this._jEditorCells[cell].innerHTML = cellPos;
+      this._jEditorCells[cell].setAttribute('data-cellIndex', cellPos);
       if (this._aRowBinary[cellPos] === 1) {
-        results.push(this._jEditorCells[cell].addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
+        results.push(this._jEditorCells[cell].classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
       } else {
-        results.push(this._jEditorCells[cell].removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
+        results.push(this._jEditorCells[cell].classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE')));
       }
     }
     return results;
@@ -747,23 +747,24 @@ TopRowEditor = (function() {
         left: leftPos
       });
       this._jEditorContainer.append(rendered);
-      this._jEditorCells[cell] = $("#" + tmpId);
-      results.push(this._jEditorCells[cell].click(this._toggleEditorCell));
+      this._jEditorCells[cell] = document.getElementById(tmpId);
+      results.push(this._jEditorCells[cell].addEventListener('click', this._toggleEditorCell));
     }
     return results;
   };
 
   TopRowEditor.prototype._toggleEditorCell = function(event) {
-    var cellNo, jTmpCell;
+    var cellElem, cellNo, jTmpCell;
     jTmpCell = $("#" + event.target.id);
-    cellNo = jTmpCell.data('cellIndex');
+    cellElem = event.target;
+    cellNo = cellElem.getAttribute('data-cellIndex');
     if (this._aRowBinary[cellNo] === 1) {
       this._aRowBinary[cellNo] = 0;
-      jTmpCell.removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
+      cellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
       $('#' + this._prefixSliderCol + cellNo).removeClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
     } else {
       this._aRowBinary[cellNo] = 1;
-      jTmpCell.addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
+      cellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'));
       $('#' + this._prefixSliderCol + cellNo).addClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'));
     }
     return this._Vars.setTopRowBinary(this._aRowBinary);

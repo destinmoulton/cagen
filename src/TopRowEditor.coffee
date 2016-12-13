@@ -36,7 +36,7 @@ class TopRowEditor
         @_jCagenContainer = @_Vars.jMainContainer
         @_jTopRowEditorTemplate = $("#tmpl-cagen-toproweditor")
         
-        @_jEditorCells = []
+        @_editorCellsElems = []
 
         @_aRowBinary = []
         @_noColumns = 151
@@ -171,14 +171,14 @@ class TopRowEditor
         for cell in [1..@_sliderCols]
             cellPos = cell+beginCell-1
 
-            @_jEditorCells[cell].text(cellPos)
-            @_jEditorCells[cell].data('cellIndex',cellPos)
+            @_editorCellsElems[cell].innerHTML = cellPos
+            @_editorCellsElems[cell].setAttribute('data-cellIndex', cellPos)
 
             # Change the style to reflect which cells are active
             if @_aRowBinary[cellPos] is 1
-                @_jEditorCells[cell].addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+                @_editorCellsElems[cell].classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
             else
-                @_jEditorCells[cell].removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+                @_editorCellsElems[cell].classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
             
             
     #
@@ -198,10 +198,10 @@ class TopRowEditor
             rendered = Mustache.render(cellTemplate, {id:tmpId, left:leftPos})
             @_jEditorContainer.append(rendered)
 
-            @_jEditorCells[cell] = $("#"+tmpId)
+            @_editorCellsElems[cell] = document.getElementById(tmpId)
 
             # Setup the click event when a user toggles a cell by clicking on it
-            @_jEditorCells[cell].click(@_toggleEditorCell)
+            @_editorCellsElems[cell].addEventListener('click', @_toggleEditorCell)
 
     #
     # Event handler for when a user clicks on a cell that they
@@ -209,19 +209,19 @@ class TopRowEditor
     # 
     _toggleEditorCell: (event)=>
 
-        jTmpCell = $("#"+event.target.id)
-
-        cellNo = jTmpCell.data('cellIndex')
+        editorCellElem = event.target
+        cellNo = editorCellElem.getAttribute('data-cellIndex')
+        sliderCellElem = document.getElementById(@_prefixSliderCol + cellNo)
         if @_aRowBinary[cellNo] is 1
             # Deactivate the cell 
             @_aRowBinary[cellNo] = 0
-            jTmpCell.removeClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
-            $('#'+@_prefixSliderCol+cellNo).removeClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
+            editorCellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+            sliderCellElem.classList.remove(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
         else
             # Activate the cell
             @_aRowBinary[cellNo] = 1
-            jTmpCell.addClass(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
-            $('#'+@_prefixSliderCol+cellNo).addClass(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
+            editorCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL_ACTIVE'))
+            sliderCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
 
         # Set the new binary configuration for the generator
         @_Vars.setTopRowBinary(@_aRowBinary)
