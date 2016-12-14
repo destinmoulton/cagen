@@ -21,83 +21,48 @@ class Tabs
     # 
     constructor: (VariablesInstance)->
         @_Vars = VariablesInstance
-        
-        @_classActive = "active"
 
-        @_tabIdPrefix = "#tab-"
-        @_tabs = [
-            "screenshots",
-            "toproweditor",
-            "generator"
-            ]
+        @_tabsElems = []
 
     #
     # Start the tabbed interface
     # 
     start:()->
-        # Show the Screenshots first
-        @showScreenshotsTab()
+        tabContainerElem = DOM.elemById('TABS','CONTAINER')
+        @_tabsElems = tabContainerElem.querySelectorAll('li')
 
-        # Create the radiojs subscriptions for the local functions
-        radio('tabs.show.screenshots').subscribe(()=>@showScreenshotsTab())
-        radio('tabs.show.toproweditor').subscribe(()=>@showTopRowEditorTab())
-        radio('tabs.show.generator').subscribe(()=>@showGeneratorTab())
+        for tab in @_tabsElems
+            do(tab) =>
+                moduleName = tab.getAttribute("data-tab-module")
 
-        # Screenshots tab clicked event
-        DOM.elemById('TABS', 'SCREENSHOTS').addEventListener('click',
-            (event)->
-                radio('tabs.show.screenshots').broadcast()
-                return
-        )
+                if tab.className is DOM.getClass('TABS', 'ACTIVE')
+                    @_runTabModule(moduleName)
 
-        # Click the Top Row Editor Tab
-        DOM.elemById('TABS', 'TOPROWEDITOR').addEventListener('click',
-            (event)->
-                radio('tabs.show.toproweditor').broadcast()
-                return
-        )
+                radio('tabs.show.' + moduleName).subscribe(()=>@_runTabModule(moduleName))
 
-        # Click the Generator tab
-        DOM.elemById('TABS', 'GENERATOR').addEventListener('click',
-            (event)->
-                radio('tabs.show.generator').broadcast()
-                return
-        )
-
+                tab.addEventListener('click',
+                    (event)->
+                        radio('tabs.show.' + moduleName).broadcast()
+                        return
+                )
     #
     # Activate a tab via string name
     # 
-    activate: (tabName)->
-        for tab in @_tabs
-            $(@_tabIdPrefix+tab).removeClass(@_classActive)
+    _activateTab: (tabName)->
+        activeClass = DOM.getClass('TABS', 'ACTIVE')
+        for tab in @_tabsElems
+            tab.classList.remove(activeClass)
 
-        $(@_tabIdPrefix+tabName).addClass(@_classActive)
-
-    #
-    # Show the Screenshots tab
-    # 
-    showScreenshotsTab:() ->
-        # Activate the tab
-        @activate('screenshots')
-
-        radio('screenshots.show').broadcast()
+        DOM.elemByPrefix('TABS', 'TAB_PREFIX', tabName).classList.add(activeClass)
 
     #
-    # Show the Top Row Editor tab
-    # 
-    showTopRowEditorTab:() ->
-        # Activate the tab
-        @activate('toproweditor')
-
-        radio('toproweditor.run').broadcast()
-        
-
+    # Run the Tab
+    #  - ie if Generator is clicked, run the Generator
     #
-    # Show the Generator tab
-    # 
-    showGeneratorTab:() ->
+    _runTabModule:(tabName)=>
         # Activate the tab
-        @activate('generator')
+        @_activateTab(tabName)
 
-        radio('generator.run').broadcast()
-
+        # Run the tab
+        radio(tabName + '.run').broadcast()
+    

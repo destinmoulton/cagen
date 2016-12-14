@@ -32,14 +32,18 @@
 </head>
 
 <body >
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs"
+      id="cagen-tab-container">
     <li role="presentation"
         class="active"
-        id="tab-screenshots"><a href="#">Screenshots</a></li>
+        id="cagen-tab-thumbnails"
+        data-tab-module="thumbnails"><a href="#">Thumbnails</a></li>
     <li role="presentation"
-        id="tab-toproweditor"><a href="#">Top Row Editor</a></li>
+        id="cagen-tab-toproweditor"
+        data-tab-module="toproweditor"><a href="#">Top Row Editor</a></li>
     <li role="presentation"
-        id="tab-generator"><a href="#">Generator</a></li>
+        id="cagen-tab-generator"
+        data-tab-module="generator"><a href="#">Generator</a></li>
   </ul>
   <div id='cagen-container'></div>
 </body>
@@ -89,7 +93,7 @@
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->
-<script type='text/template' id='tmpl-cagen-rulethumbnails'>
+<script type='text/template' id='tmpl-cagen-thumbnails'>
 {{#ruleList}}
 <div class='cagen-rulethumb-box'
      data-rule="{{.}}">

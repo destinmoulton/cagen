@@ -31,9 +31,7 @@ class DOM
             'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
         },
         'TABS':{
-            'SCREENSHOTS':'tab-screenshots',
-            'TOPROWEDITOR':'tab-toproweditor',
-            'GENERATOR':'tab-generator'  
+            'CONTAINER':'cagen-tab-container'
         },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',
@@ -51,6 +49,9 @@ class DOM
     }
 
     @classes = {
+        'TABS':{
+            'ACTIVE':'active'
+        },
         'TOPROWEDITOR':{
             'EDITOR_CELL':'rowed-editor-cell',
             'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
@@ -62,6 +63,9 @@ class DOM
     }
 
     @prefixes = {
+        'TABS':{
+            'TAB_PREFIX':'cagen-tab-'
+        },
         'TOPROWEDITOR':{
             'SLIDER_COL':'rowed-slider-col-'
         },
