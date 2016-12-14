@@ -27,11 +27,6 @@ class Generator
 
         @_$cagenContainer = @_Vars.jMainContainer
         
-        @dashboardTemplateHtml = $(DOM.getID('template','dashboard_main')).html()
-        @cellBoardHtml = $(DOM.getID('template','dashboard_board')).html()
-        
-        @_idPreviewCellPrefix = "#cagen-dash-preview-"
-        @_idPreviewDigitPrefix = "#cagen-dash-preview-digit-"
         @_currentRule = 0
         @_previewBoxWidth = 40
         @_noBoardColumns = 151
@@ -49,26 +44,34 @@ class Generator
     # Show the Dashboard
     # 
     run:() ->
+        generatorTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_MAIN_CONTAINER').innerHTML
         # Populate the main container with the template
-        @_$cagenContainer.html(Mustache.render(@dashboardTemplateHtml,{}))
+        @_$cagenContainer.html(Mustache.render(generatorTemplateHTML,{}))
         
-        @_jInputSelectRule = $(DOM.getID('dashboard','rule_dropdown'))
+        dropdownElem = DOM.elemById('GENERATOR','RULE_DROPDOWN')
         
         @_Board = new Board(@_Vars)
         
         # Generate the rule dropdown options
+        optionsHTML = ""
         for rule in [0..255]
-            tmpOption = "<option value='#{rule}'>#{rule}</option>";
-            @_jInputSelectRule.append(tmpOption)
+            optionsHTML += "<option value='#{rule}'>#{rule}</option>"
+            
+        dropdownElem.innerHTML = optionsHTML
 
         # Change the current rule from the dropdown
-        @_jInputSelectRule.val(@_Vars.currentRule)
+        dropdownElem.value = @_Vars.currentRule
 
         # Setup the change rule event
-        @_jInputSelectRule.change((event)=>@_changeRuleEvent(event))
+        dropdownElem.addEventListener('change', 
+            (event)=>
+                radio('rules.set.currentrule').broadcast(event.target.value)
+        )
 
         # Setup the Generate button click event
-        $(DOM.getID('dashboard', 'rule_generate_button')).click((event)=>@_generateButtonClicked(event))
+        DOM.elemById('GENERATOR', 'RULE_GENERATE_BUTTON').addEventListener('click',
+            ()=>@_buildBoard()
+        )
 
         # Final step is to build the board
         @_buildBoard()
@@ -76,24 +79,14 @@ class Generator
         return true
 
     #
-    # Event handler when the Generate button is clicked
-    # 
-    _generateButtonClicked:(event) ->
-        @_buildBoard()
-
-    #
-    # Event handler, called when the selected Rule is changed
-    # 
-    _changeRuleEvent:(event)->
-        radio('rules.set.currentrule').broadcast(@_jInputSelectRule.val())
-
-
-    #
     # Build the preview board from the template
     # 
     _buildBoard:() ->
-        $(DOM.getID('dashboard','content')).html(Mustache.render(@cellBoardHtml,{}))
-        @_$rulesContainer = $(DOM.getID('dashboard','rule_bitset_container'))
+        cellBoardHtml = DOM.elemById('GENERATOR','TEMPLATE_BOARD').innerHTML
+        
+        DOM.elemById('GENERATOR','CONTENT_CONTAINER').innerHTML = Mustache.render(cellBoardHtml,{})
+
+        @_rulesContainerElem = DOM.elemById('GENERATOR','RULE_PREVIEW_CONTAINER')
         
         @_Board.buildBoard(@_Vars.getTopRowBinary(), @_noBoardColumns, @_noBoardRows)
         @_buildRulePreview()
@@ -106,10 +99,10 @@ class Generator
         currentRule = @_Board.getCurrentRule()
 
         # Use the template to generate the preview
-        previewCellHtml = $(DOM.getID('template','dashboard_rule_preview_cell')).html()
+        previewCellHtml = DOM.elemById('GENERATOR','TEMPLATE_RULE_PREVIEW_CELL').innerHTML
 
         activeClass = 
-        @_$rulesContainer.html("")
+        @_rulesContainerElem.innerHTML = ""
         for index in [7..0]
             # Get the binary representation of the index
             binary = index.toString(2)
@@ -146,14 +139,13 @@ class Generator
             }
             
             rendered = Mustache.render(previewCellHtml, tmplOptions)
-            @_$rulesContainer.append(rendered)
+            @_rulesContainerElem.innerHTML += rendered
             
-            jTmpCell = $(@_idPreviewCellPrefix+index)
-            jTmpDigit = $(@_idPreviewDigitPrefix+index)
+            jTmpCell = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_CELL',index)
+            jTmpDigit = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_DIGIT',index)
 
-            jTmpCell.removeClass(DOM.getClass('dashboard', 'rule_preview_cell_active'))
-            jTmpDigit.html(0)
+            jTmpCell.classList.remove(DOM.getClass('GENERATOR', 'RULE_PREVIEW_CELL_ACTIVE'))
+            jTmpDigit.innerHTML = "0"
             if currentRule.substr(7-index,1) is "1"
-
-                jTmpCell.addClass(DOM.getClass('dashboard', 'rule_preview_cell_active'))
-                jTmpDigit.html(1)
+                jTmpCell.classList.add(DOM.getClass('GENERATOR', 'RULE_PREVIEW_CELL_ACTIVE'))
+                jTmpDigit.innerHTML = "1"

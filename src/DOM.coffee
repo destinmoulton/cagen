@@ -34,16 +34,14 @@ class DOM
             'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
             'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
         },
-        'dashboard':{
-            'content':"#cagen-dashboard-content",
-            'rule_bitset_container':"#cagen-rules-preview-container",
-            'rule_dropdown':"#cagen-dash-select-input",
-            'rule_generate_button':"#cagen-dash-generate-button"
-        },
-        'template':{
-            'dashboard_rule_preview_cell':'#tmpl-cagen-dash-preview-cell'
-            'dashboard_main':'#tmpl-cagen-dashboard',
-            'dashboard_board':'#tmpl-cagen-dash-board'
+        'GENERATOR':{
+            'CONTENT_CONTAINER':'cagen-dashboard-content',
+            'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
+            'RULE_DROPDOWN':'cagen-dash-select-input',
+            'RULE_GENERATE_BUTTON':'cagen-dash-generate-button',
+            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-dash-preview-cell',
+            'TEMPLATE_BOARD':'tmpl-cagen-dash-board',
+            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
         }
     }
 
@@ -53,15 +51,18 @@ class DOM
             'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
             'SLIDER_CELL_ACTIVE':'cagen-board-cell-active'
         },
-        'dashboard':{
-            'rule_preview_cell_active':'cagen-dash-preview-cell-active',
-            
+        'GENERATOR':{
+            'RULE_PREVIEW_CELL_ACTIVE':'cagen-dash-preview-cell-active'
         }
     }
 
     @prefixes = {
         'TOPROWEDITOR':{
             'SLIDER_COL':'rowed-slider-col-'
+        },
+        'GENERATOR':{
+            'RULE_PREVIEW_CELL':'cagen-dash-preview-',
+            'RULE_PREVIEW_DIGIT':'cagen-dash-preview-digit-'
         }
     }
 
@@ -70,6 +71,9 @@ class DOM
     #
     @elemById:(section, element) ->
         return document.getElementById(@getID(section, element))
+
+    @elemByPrefix:(section, prefix, suffix) ->
+        return document.getElementById(@getPrefix(section, prefix) + suffix)
 
     @getClass:(section, element) ->
         return @classes[section][element]
