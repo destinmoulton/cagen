@@ -22,6 +22,7 @@ class DOM
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
         },
         'TOPROWEDITOR':{
+            'EDITOR_CONTAINER': 'rowed-editor-container',
             'ROW_CONTAINER': 'rowed-slider-row-container',
             'SLIDER_CONTAINER': 'rowed-slider-container',
             'SLIDER':'rowed-slider',
@@ -46,6 +47,7 @@ class DOM
 
     @classes = {
         'TOPROWEDITOR':{
+            'EDITOR_CELL':'rowed-editor-cell',
             'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
             'SLIDER_CELL_ACTIVE':'cagen-board-cell-active'
         },

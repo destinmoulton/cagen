@@ -69,7 +69,7 @@ class TopRowEditor
         @_sliderElem = DOM.elemById('TOPROWEDITOR','SLIDER')
         @_rowContainerElem = DOM.elemById('TOPROWEDITOR', 'ROW_CONTAINER')
         
-        @_jEditorContainer = $(@_idEditorContainer)
+        @_jEditorContainer = DOM.elemById('TOPROWEDITOR', 'EDITOR_CONTAINER')
 
         # Set the dimensions
         @_rowContainerElem.style.height = @_rowHeight + "px"
@@ -183,22 +183,27 @@ class TopRowEditor
     # 
     _buildEditorCells: ()->
 
-        cellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL').innerHTML
+        cellTemplateHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL').innerHTML
         
-        @_jEditorContainer.width(@_sliderCols*@_editorCellWidth)
-        
+        @_jEditorContainer.style.width = (@_sliderCols * @_editorCellWidth) + "px"
+        cellHtml = ""
         for cell in [1..@_sliderCols]
             tmpId = "editor-cell-"+cell
             leftPos = (cell-1)*@_editorCellWidth
 
             # Create and append the editor cell via Mustache template
-            rendered = Mustache.render(cellTemplate, {id:tmpId, left:leftPos})
-            @_jEditorContainer.append(rendered)
-
-            @_editorCellsElems[cell] = document.getElementById(tmpId)
-
+            cellHtml += Mustache.render(cellTemplateHTML, {id:tmpId, left:leftPos})
             # Setup the click event when a user toggles a cell by clicking on it
-            @_editorCellsElems[cell].addEventListener('click', @_toggleEditorCell)
+
+        @_jEditorContainer.innerHTML = cellHtml
+
+        cells = document.getElementsByClassName(DOM.getClass('TOPROWEDITOR', 'EDITOR_CELL'))
+        
+        for i in [0..cells.length - 1]
+            @_editorCellsElems[i+1] = cells[i]
+            cells[i].addEventListener('click', @_toggleEditorCell)
+        
+
 
     #
     # Event handler for when a user clicks on a cell that they
@@ -246,7 +251,7 @@ class TopRowEditor
     _buildRow: ()->
         # Get the Mustache template html
 
-        smallCellTemplate = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML
+        smallcellTemplateHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML
 
         rowHtml = ""
         # Add cells to the row
@@ -259,7 +264,7 @@ class TopRowEditor
             tmpId = @_prefixSliderCol+col
 
             # Create a rendering of the cell via Mustache template
-            rowHtml += Mustache.render(smallCellTemplate, {id:tmpId, left:leftPos, activeClass:activeClass})
+            rowHtml += Mustache.render(smallcellTemplateHTML, {id:tmpId, left:leftPos, activeClass:activeClass})
 
         # Add the cells
         @_rowContainerElem.innerHTML = rowHtml

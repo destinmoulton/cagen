@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var coffee = require('gulp-coffee');
 var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
 
 var coffeeFiles = [
     'src/Variables.coffee',
@@ -16,7 +17,9 @@ var coffeeFiles = [
 
 gulp.task('compile-coffee', function() {
     gulp.src(coffeeFiles)
+        .pipe(sourcemaps.init())
         .pipe(coffee({bare:true}))
+        .pipe(sourcemaps.write())        
         .pipe(concat('cagen.js'))
         .pipe(gulp.dest('dist/'));
 });
