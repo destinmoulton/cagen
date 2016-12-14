@@ -33,6 +33,9 @@ class DOM
         'TABS':{
             'CONTAINER':'cagen-tab-container'
         },
+        'THUMBNAILS':{
+            'TEMPLATE_THUMBNAILS':'tmpl-cagen-thumbnails',
+        },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',
             'BUTTON_RESET': 'rowed-button-resetrow',
@@ -51,6 +54,9 @@ class DOM
     @classes = {
         'TABS':{
             'ACTIVE':'active'
+        },
+        'THUMBNAILS':{
+            'THUMB_BOX':'cagen-rulethumb-box',
         },
         'TOPROWEDITOR':{
             'EDITOR_CELL':'rowed-editor-cell',

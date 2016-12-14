@@ -21,41 +21,36 @@ class Thumbnails
     # Setup the local variables
     # 
     constructor: (VariablesInstance)->
-        @_Vars = VariablesInstance
-
-        @_idTmplRuleThumbnails = "#tmpl-cagen-thumbnails"
-        @_classRuleThumbBox = ".cagen-rulethumb-box"
-
         radio('thumbnails.run').subscribe(
             ()=>
-                @show()
+                @run()
                 return
         )
 
     #
     # Show the rule thumbnails
     # 
-    show: ()->
+    run: ()->
         # Setup the list of rules
-        @_ruleList = [0..255]
+        ruleList = [0..255]
 
         # Clear the current thumbnails and populate it via Mustache template
-        thumbnailHTML = $(@_idTmplRuleThumbnails).html()
-        rendered = Mustache.render(thumbnailHTML, {ruleList:@_ruleList})
-        @_Vars.jMainContainer.html(rendered)
+        thumbnailHTML = DOM.elemById('THUMBNAILS', 'TEMPLATE_THUMBNAILS').innerHTML
+        rendered = Mustache.render(thumbnailHTML, {ruleList:ruleList})
 
-        # Setup events for when the rule thumbnails are clicked
-        $(@_classRuleThumbBox).click((event)=>@_ruleThumbBoxClicked(event))    
+        DOM.elemById('CAGEN', 'MAIN_CONTAINER').innerHTML = rendered
+
+        thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
+        
+        for i in [0..thumbsElems.length - 1]
+            thumbsElems[i].addEventListener('click', (event)=>@_ruleThumbClicked(event))
 
     #
     # Event handler for when a rule thumbnail is clicked
     # Sets the rule and switches to the generator
     # 
-    _ruleThumbBoxClicked:(event) ->
-
-        jBox = $(event.currentTarget)
-
-        rule = jBox.data('rule')
+    _ruleThumbClicked:(event) ->
+        rule = event.target.getAttribute('data-rule')
 
         # Change the current rule
         radio('rules.set.currentrule').broadcast(rule)
