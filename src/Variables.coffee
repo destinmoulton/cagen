@@ -14,7 +14,6 @@ Manage variables for the cagen components.
 class Variables
 
     constructor: ()->
-        @jMainContainer = $("#cagen-container")
         @currentRule = 0
         @topRowBinaryArray = []
 
