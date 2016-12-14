@@ -25,8 +25,6 @@ class Generator
     constructor:(VariablesInstance) ->
         @_Vars = VariablesInstance
 
-        @_$cagenContainer = @_Vars.jMainContainer
-        
         @_currentRule = 0
         @_previewBoxWidth = 40
         @_noBoardColumns = 151
@@ -41,16 +39,28 @@ class Generator
         )
 
     #
-    # Show the Dashboard
+    # Show the Generator
     # 
     run:() ->
         generatorTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_MAIN_CONTAINER').innerHTML
-        # Populate the main container with the template
-        @_$cagenContainer.html(Mustache.render(generatorTemplateHTML,{}))
-        
-        dropdownElem = DOM.elemById('GENERATOR','RULE_DROPDOWN')
-        
+        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
+        cagenMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
+
+        # Build a new Board
         @_Board = new Board(@_Vars)
+        
+        @_setupRuleDropdown()
+
+        # Final step is to build the board
+        @_buildBoard()
+
+        return true
+
+    #
+    # Setup the rule selector dropdown
+    #
+    _setupRuleDropdown:() ->
+        dropdownElem = DOM.elemById('GENERATOR','RULE_DROPDOWN')
         
         # Generate the rule dropdown options
         optionsHTML = ""
@@ -72,11 +82,6 @@ class Generator
         DOM.elemById('GENERATOR', 'RULE_GENERATE_BUTTON').addEventListener('click',
             ()=>@_buildBoard()
         )
-
-        # Final step is to build the board
-        @_buildBoard()
-
-        return true
 
     #
     # Build the preview board from the template
