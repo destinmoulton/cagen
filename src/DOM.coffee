@@ -31,7 +31,7 @@ class DOM
             'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
         },
         'TABS':{
-            'SCREENSHOTS':'tab-rulethumbnails',
+            'SCREENSHOTS':'tab-screenshots',
             'TOPROWEDITOR':'tab-toproweditor',
             'GENERATOR':'tab-generator'  
         },

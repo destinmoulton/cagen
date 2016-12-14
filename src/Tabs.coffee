@@ -26,7 +26,7 @@ class Tabs
 
         @_tabIdPrefix = "#tab-"
         @_tabs = [
-            "rulethumbnails",
+            "screenshots",
             "toproweditor",
             "generator"
             ]
@@ -35,18 +35,18 @@ class Tabs
     # Start the tabbed interface
     # 
     start:()->
-        # Show the rule thumbnails first
-        @showRuleThumbnailsTab()
+        # Show the Screenshots first
+        @showScreenshotsTab()
 
         # Create the radiojs subscriptions for the local functions
-        radio('tabs.show.rulethumbnails').subscribe(()=>@showRuleThumbnailsTab())
+        radio('tabs.show.screenshots').subscribe(()=>@showScreenshotsTab())
         radio('tabs.show.toproweditor').subscribe(()=>@showTopRowEditorTab())
         radio('tabs.show.generator').subscribe(()=>@showGeneratorTab())
 
-        # Rule Thumbnails tab clicked event
+        # Screenshots tab clicked event
         DOM.elemById('TABS', 'SCREENSHOTS').addEventListener('click',
             (event)->
-                radio('tabs.show.rulethumbnails').broadcast()
+                radio('tabs.show.screenshots').broadcast()
                 return
         )
 
@@ -74,13 +74,13 @@ class Tabs
         $(@_tabIdPrefix+tabName).addClass(@_classActive)
 
     #
-    # Show the Rule Thumbnails tab
+    # Show the Screenshots tab
     # 
-    showRuleThumbnailsTab:() ->
+    showScreenshotsTab:() ->
         # Activate the tab
-        @activate('rulethumbnails')
+        @activate('screenshots')
 
-        radio('rulethumbnails.show').broadcast()
+        radio('screenshots.show').broadcast()
 
     #
     # Show the Top Row Editor tab

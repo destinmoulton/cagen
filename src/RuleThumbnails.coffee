@@ -26,7 +26,7 @@ class RuleThumbnails
         @_idTmplRuleThumbnails = "#tmpl-cagen-rulethumbnails"
         @_classRuleThumbBox = ".cagen-rulethumb-box"
 
-        radio('rulethumbnails.show').subscribe(
+        radio('screenshots.show').subscribe(
             ()=>
                 @show()
                 return
@@ -60,6 +60,6 @@ class RuleThumbnails
         # Change the current rule
         radio('rules.set.currentrule').broadcast(rule)
 
-        # Show the dashboard via radio pub/sub broadcast
-        radio('tabs.show.dashboard').broadcast();
+        # Show the generator
+        radio('tabs.show.generator').broadcast();
 
