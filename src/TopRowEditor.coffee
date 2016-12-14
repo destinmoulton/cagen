@@ -38,7 +38,6 @@ class TopRowEditor
 
         @_generateInitialBinary()
 
-
         radio('toproweditor.run').subscribe(
             ()=>
                 @run()
@@ -50,23 +49,41 @@ class TopRowEditor
     # 
     run: ()->
         
-        # Populate the main container with the template
-        dashboardHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML
-        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
-        cagenMainElem.innerHTML = Mustache.render(dashboardHTML,{}) 
+        @_setupContainerTemplate()
 
-        sliderContainerElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_CONTAINER')
-        sliderContainerElem.style.width = @_totalWidth + "px"
-        
+        # Set the local elements (to alleviate lookups)        
         @_sliderElem = DOM.elemById('TOPROWEDITOR','SLIDER')
         @_rowContainerElem = DOM.elemById('TOPROWEDITOR', 'ROW_CONTAINER')
-        
         @_jEditorContainer = DOM.elemById('TOPROWEDITOR', 'EDITOR_CONTAINER')
 
         # Set the dimensions
         @_rowContainerElem.style.height = @_rowHeight + "px"
         @_rowContainerElem.style.width = @_totalWidth + "px"
         
+        @_setupSlider()        
+
+        # Build the row and the editor 
+        @_buildRow()
+        @_buildEditorCells()
+        @_updateEditorCells(1)
+        @_setupButtonEvents()
+        
+
+    #
+    # Populate the main container with the template
+    #
+    _setupContainerTemplate: ()->
+        toproweditorHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML
+        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
+        cagenMainElem.innerHTML = Mustache.render(toproweditorHTML,{})
+
+    #
+    # Setup the slider (zoomer)
+    #
+    _setupSlider: ()->
+        sliderContainerElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_CONTAINER')
+        sliderContainerElem.style.width = @_totalWidth + "px"
+
         @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
         sliderArrowLeftElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_LEFT')
@@ -93,12 +110,11 @@ class TopRowEditor
 
         # Get the initial slider position
         @_sliderInitialOffset = @_getOffsetPosition(@_sliderElem)
-
-        # Build the row and the editor 
-        @_buildRow()
-        @_buildEditorCells()
-        @_updateEditorCells(1)
-
+    
+    #
+    # Setup the Button events
+    #
+    _setupButtonEvents: ()->
         # The Generate click event
         DOM.elemById('TOPROWEDITOR', 'BUTTON_GENERATE').addEventListener('click',
             ()=>
@@ -110,8 +126,6 @@ class TopRowEditor
         DOM.elemById('TOPROWEDITOR', 'BUTTON_RESET').addEventListener('click',
             (event)=>@_resetRow(event)
         )
-
-    
 
     #
     # Get the offset position for an element
