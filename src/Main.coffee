@@ -19,7 +19,7 @@ window.onload = ->
     tabs = new Tabs(vars)
 
     # Create instance of the Rule Thumbnails preview/selector
-    new RuleThumbnails(vars)
+    new Thumbnails(vars)
 
     # Create instance of the Top Row Editor
     new TopRowEditor(vars)

@@ -15,7 +15,7 @@ to generate the Automata for that rule.
 
 ###
 
-class RuleThumbnails
+class Thumbnails
 
     #
     # Setup the local variables

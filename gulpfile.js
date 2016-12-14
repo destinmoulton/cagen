@@ -9,7 +9,7 @@ var coffeeFiles = [
     'src/Board.coffee',
     'src/Generator.coffee',
     'src/RuleMatcher.coffee',
-    'src/RuleThumbnails.coffee',
+    'src/Thumbnails.coffee',
     'src/Tabs.coffee',
     'src/TopRowEditor.coffee',
     'src/Main.coffee'
