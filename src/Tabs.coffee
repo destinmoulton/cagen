@@ -24,14 +24,11 @@ class Tabs
         
         @_classActive = "active"
 
-        @_idRuleThumbnailsTab = "#tab-rulethumbnails"
-        @_idTopRowEditorTab = "#tab-toproweditor"
-        @_idDashboardTab = "#tab-dashboard"
         @_tabIdPrefix = "#tab-"
         @_tabs = [
             "rulethumbnails",
             "toproweditor",
-            "dashboard"
+            "generator"
             ]
 
     #
@@ -44,26 +41,26 @@ class Tabs
         # Create the radiojs subscriptions for the local functions
         radio('tabs.show.rulethumbnails').subscribe(()=>@showRuleThumbnailsTab())
         radio('tabs.show.toproweditor').subscribe(()=>@showTopRowEditorTab())
-        radio('tabs.show.dashboard').subscribe(()=>@showDashboardTab())
+        radio('tabs.show.generator').subscribe(()=>@showGeneratorTab())
 
         # Rule Thumbnails tab clicked event
-        $(@_idRuleThumbnailsTab).click(
+        DOM.elemById('TABS', 'SCREENSHOTS').addEventListener('click',
             (event)->
                 radio('tabs.show.rulethumbnails').broadcast()
                 return
         )
 
         # Click the Top Row Editor Tab
-        $(@_idTopRowEditorTab).click(
+        DOM.elemById('TABS', 'TOPROWEDITOR').addEventListener('click',
             (event)->
                 radio('tabs.show.toproweditor').broadcast()
                 return
         )
 
-        # Click the Dashboard tab
-        $(@_idDashboardTab).click(
+        # Click the Generator tab
+        DOM.elemById('TABS', 'GENERATOR').addEventListener('click',
             (event)->
-                radio('tabs.show.dashboard').broadcast()
+                radio('tabs.show.generator').broadcast()
                 return
         )
 
@@ -96,11 +93,11 @@ class Tabs
         
 
     #
-    # Show the Dashboard tab
+    # Show the Generator tab
     # 
-    showDashboardTab:() ->
+    showGeneratorTab:() ->
         # Activate the tab
-        @activate('dashboard')
+        @activate('generator')
 
-        radio('dashboard.run').broadcast()
+        radio('generator.run').broadcast()
 

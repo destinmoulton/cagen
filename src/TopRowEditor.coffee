@@ -118,7 +118,7 @@ class TopRowEditor
         # The Generate click event
         DOM.elemById('TOPROWEDITOR', 'BUTTON_GENERATE').addEventListener('click',
             ()=>
-                radio('tabs.show.dashboard').broadcast()
+                radio('tabs.show.generator').broadcast()
                 return
         )
 

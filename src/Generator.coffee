@@ -32,7 +32,7 @@ class Generator
 
         @_ruleList = []
 
-        radio('dashboard.run').subscribe(
+        radio('generator.run').subscribe(
             ()=>
                 @run()
                 return

@@ -14,12 +14,26 @@ Holds ids and classes of relevant DOM objects.
 ###
 class DOM
     @ids = {
-        'CAGEN':{
-            'MAIN_CONTAINER':'cagen-container'
-        },
         'BOARD':{
             'CONTAINER':'cagen-board',
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
+        },
+        'CAGEN':{
+            'MAIN_CONTAINER':'cagen-container'
+        },
+        'GENERATOR':{
+            'CONTENT_CONTAINER':'cagen-dashboard-content',
+            'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
+            'RULE_DROPDOWN':'cagen-dash-select-input',
+            'RULE_GENERATE_BUTTON':'cagen-dash-generate-button',
+            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-dash-preview-cell',
+            'TEMPLATE_BOARD':'tmpl-cagen-dash-board',
+            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
+        },
+        'TABS':{
+            'SCREENSHOTS':'tab-rulethumbnails',
+            'TOPROWEDITOR':'tab-toproweditor',
+            'GENERATOR':'tab-generator'  
         },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',
@@ -34,15 +48,6 @@ class DOM
             'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
             'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
         },
-        'GENERATOR':{
-            'CONTENT_CONTAINER':'cagen-dashboard-content',
-            'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
-            'RULE_DROPDOWN':'cagen-dash-select-input',
-            'RULE_GENERATE_BUTTON':'cagen-dash-generate-button',
-            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-dash-preview-cell',
-            'TEMPLATE_BOARD':'tmpl-cagen-dash-board',
-            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
-        }
     }
 
     @classes = {
