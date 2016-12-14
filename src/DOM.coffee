@@ -22,6 +22,8 @@ class DOM
             'MESSAGE_CONTAINER':'cagen-generatemessage-container'
         },
         'TOPROWEDITOR':{
+            'BUTTON_GENERATE': 'rowed-button-generate',
+            'BUTTON_RESET': 'rowed-button-resetrow',
             'EDITOR_CONTAINER': 'rowed-editor-container',
             'ROW_CONTAINER': 'rowed-slider-row-container',
             'SLIDER_CONTAINER': 'rowed-slider-container',
@@ -57,6 +59,12 @@ class DOM
         }
     }
 
+    @prefixes = {
+        'TOPROWEDITOR':{
+            'SLIDER_COL':'rowed-slider-col-'
+        }
+    }
+
     #
     # Get an element by id
     #
@@ -78,3 +86,5 @@ class DOM
             
         return @ids[section][element]
     
+    @getPrefix:(section, prefix)->
+        return @prefixes[section][prefix]

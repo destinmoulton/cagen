@@ -24,14 +24,6 @@ class TopRowEditor
     constructor: (VariablesInstance)->
         @_Vars = VariablesInstance
         
-        # HTML ids for the divs
-        @_idEditorContainer = "#rowed-editor-container"
-        @_idReturnButton = "#rowed-button-returntodashboard"
-        @_idResetRowButton = "#rowed-button-resetrow"
-
-        # Dom element prefixes
-        @_prefixSliderCol = 'rowed-slider-col-'
-        
         @_editorCellsElems = []
 
         @_aRowBinary = []
@@ -108,14 +100,18 @@ class TopRowEditor
         @_updateEditorCells(1)
 
         # The Generate click event
-        $(@_idReturnButton).click(
+        DOM.elemById('TOPROWEDITOR', 'BUTTON_GENERATE').addEventListener('click',
             ()=>
                 radio('tabs.show.dashboard').broadcast()
                 return
         )
 
         # Reset button click event
-        $(@_idResetRowButton).click((event)=>@_resetRow(event))
+        DOM.elemById('TOPROWEDITOR', 'BUTTON_RESET').addEventListener('click',
+            (event)=>@_resetRow(event)
+        )
+
+    
 
     #
     # Get the offset position for an element
@@ -213,7 +209,8 @@ class TopRowEditor
 
         editorCellElem = event.target
         cellNo = editorCellElem.getAttribute('data-cellIndex')
-        sliderCellElem = document.getElementById(@_prefixSliderCol + cellNo)
+        sliderColPrefix = DOM.getPrefix('TOPROWEDITOR', 'SLIDER_COL')
+        sliderCellElem = document.getElementById(sliderColPrefix + cellNo)
         if @_aRowBinary[cellNo] is 1
             # Deactivate the cell 
             @_aRowBinary[cellNo] = 0
@@ -252,7 +249,7 @@ class TopRowEditor
         # Get the Mustache template html
 
         smallcellTemplateHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML
-
+        sliderColPrefix = DOM.getPrefix('TOPROWEDITOR', 'SLIDER_COL')
         rowHtml = ""
         # Add cells to the row
         for col in [1..@_noColumns]
@@ -260,8 +257,8 @@ class TopRowEditor
             if @_aRowBinary[col] is 1
                 activeClass = DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE')
 
-            leftPos = ((col-1)*@_colWidth)
-            tmpId = @_prefixSliderCol+col
+            leftPos = ((col - 1) * @_colWidth)
+            tmpId = sliderColPrefix + col
 
             # Create a rendering of the cell via Mustache template
             rowHtml += Mustache.render(smallcellTemplateHTML, {id:tmpId, left:leftPos, activeClass:activeClass})
