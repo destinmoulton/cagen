@@ -4,7 +4,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 
 var coffeeFiles = [
-    'src/Variables.coffee',
+    'src/Shared.coffee',
     'src/DOM.coffee',
     'src/Board.coffee',
     'src/Generator.coffee',

@@ -52,6 +52,13 @@ class DOM
     }
 
     @classes = {
+        'BOARD':{
+            'CELL_ACTIVE_CLASS':'cagen-board-cell-active',
+            'CELL_BASE_CLASS':'cagen-board-cell',
+        },
+        'GENERATOR':{
+            'RULE_PREVIEW_CELL_ACTIVE':'cagen-dash-preview-cell-active'
+        },
         'TABS':{
             'ACTIVE':'active'
         },
@@ -63,22 +70,22 @@ class DOM
             'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
             'SLIDER_CELL_ACTIVE':'cagen-board-cell-active'
         },
-        'GENERATOR':{
-            'RULE_PREVIEW_CELL_ACTIVE':'cagen-dash-preview-cell-active'
-        }
     }
 
     @prefixes = {
+        'BOARD':{
+            'CELL':'sb_'
+        },
+        'GENERATOR':{
+            'RULE_PREVIEW_CELL':'cagen-dash-preview-',
+            'RULE_PREVIEW_DIGIT':'cagen-dash-preview-digit-'
+        },
         'TABS':{
             'TAB_PREFIX':'cagen-tab-'
         },
         'TOPROWEDITOR':{
             'SLIDER_COL':'rowed-slider-col-'
         },
-        'GENERATOR':{
-            'RULE_PREVIEW_CELL':'cagen-dash-preview-',
-            'RULE_PREVIEW_DIGIT':'cagen-dash-preview-digit-'
-        }
     }
 
     #

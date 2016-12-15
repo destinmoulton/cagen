@@ -20,8 +20,6 @@ class Tabs
     # @constructor
     # 
     constructor: (VariablesInstance)->
-        @_Vars = VariablesInstance
-
         @_tabsElems = []
 
     #

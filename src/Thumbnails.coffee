@@ -53,7 +53,7 @@ class Thumbnails
         rule = event.target.getAttribute('data-rule')
 
         # Change the current rule
-        radio('rules.set.currentrule').broadcast(rule)
+        radio('shared.set.currentruledecimal').broadcast(rule)
 
         # Show the dashboard via radio pub/sub broadcast
         radio('tabs.show.generator').broadcast();

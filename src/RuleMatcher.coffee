@@ -49,6 +49,11 @@ class RuleMatcher
             '000'
         ]
 
+        radio('rulematcher.get.rulebinarysting').subscribe(
+            (callback)=>
+                callback(@_binaryRule)
+        )
+
     #
     # Set the current rule from a decimal value
     # 
@@ -57,15 +62,6 @@ class RuleMatcher
         # 0's (no block) and 1's (block) for the
         # next row.
         @_binaryRule = @_decToBinary(decimalRule)
-
-    #
-    # Get the currently active rule
-    #
-    # @return string Binary rule
-    # 
-    getCurrentRule: ()->
-        return @_binaryRule
-
 
     #
     # Match a pattern for the three bit positions

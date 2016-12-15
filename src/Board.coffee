@@ -16,19 +16,13 @@ class Board
     # Constructor for the Board class.
     # Initialize the shared variables for the board.
     # 
-    constructor: (VariablesInstance)->
-        @_Vars = VariablesInstance
-        
-        # Define container IDs
-        @_generateMessageContainerID = '#'
-        
+    constructor: ()->
+
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
         @_boardCellWidthPx = 5
         @_boardCellHeightPx = 5
-        @_cellBaseClass = 'cagen-board-cell'
-        @_cellActiveClass = 'cagen-board-cell-active'
-        @_cellIDPrefix = 'sb_'
+
         @_currentRow = 1
         
         @_rootRowBinary = []
@@ -47,7 +41,10 @@ class Board
         
         @_rootRowBinary = rootRowBinary
         
-        @_RuleMatcher.setCurrentRule(@_Vars.currentRule)
+        radio('shared.get.currentruledecimal').broadcast(
+            (currentRuleDecimal)=>
+                @_RuleMatcher.setCurrentRule(currentRuleDecimal)
+        )
 
         @_boardNoCellsWide = noCellsWide
         @_boardNoCellsHigh = noSectionsHigh
@@ -68,12 +65,6 @@ class Board
             @_messageElem.style.display = "none"
             @_boardElem.style.display = "block"
         ,500)
-
-    #
-    # Get the current rule (as selected by the user)
-    # 
-    getCurrentRule:()->
-        return @_RuleMatcher.getCurrentRule()
 
     #
     # Generate the rows in the board
@@ -139,7 +130,7 @@ class Board
             @_currentCells[row] = []
         @_currentCells[row][col] = if active then 1 else 0
 
-        tmpID = @_cellIDPrefix+@_currentRow+"_"+col
+        tmpID = DOM.getPrefix('BOARD','CELL') + @_currentRow + "_" + col
         tmpLeftPx = (col-1)*@_boardCellWidthPx
         tmpTopPx = (row-1)*@_boardCellHeightPx
 
@@ -149,9 +140,9 @@ class Board
         tmpCell.style.left = tmpLeftPx + "px"
         # Inline CSS for the absolute position of the cell
 
-        tmpClass = @_cellBaseClass
+        tmpClass = DOM.getClass('BOARD', 'CELL_BASE_CLASS')
         if active
-            tmpClass += " #{@_cellActiveClass}"
+            tmpClass += " #{ DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS') }"
 
         tmpCell.setAttribute('class', "#{tmpClass}")
         

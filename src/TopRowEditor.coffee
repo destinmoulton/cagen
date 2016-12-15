@@ -22,8 +22,7 @@ class TopRowEditor
     # @constructor
     # 
     constructor: (VariablesInstance)->
-        @_Vars = VariablesInstance
-        
+
         @_editorCellsElems = []
 
         @_aRowBinary = []
@@ -237,7 +236,7 @@ class TopRowEditor
             sliderCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
 
         # Set the new binary configuration for the generator
-        @_Vars.setTopRowBinary(@_aRowBinary)
+        radio('shared.set.toprowbinary').broadcast(@_aRowBinary)
         
 
     #
@@ -252,8 +251,7 @@ class TopRowEditor
                 @_aRowBinary[col] = 1
             else
                 @_aRowBinary[col] = 0
-
-        @_Vars.setTopRowBinary(@_aRowBinary)
+        radio('shared.set.toprowbinary').broadcast(@_aRowBinary)
         
 
     #

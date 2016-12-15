@@ -22,8 +22,7 @@ class Generator
     # Initialize the IDs, local jQuery objects, and sizes
     # for the Generator.
     # 
-    constructor:(VariablesInstance) ->
-        @_Vars = VariablesInstance
+    constructor:() ->
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -47,7 +46,7 @@ class Generator
         cagenMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
 
         # Build a new Board
-        @_Board = new Board(@_Vars)
+        @_Board = new Board()
         
         @_setupRuleDropdown()
 
@@ -70,12 +69,15 @@ class Generator
         dropdownElem.innerHTML = optionsHTML
 
         # Change the current rule from the dropdown
-        dropdownElem.value = @_Vars.currentRule
+        radio('shared.get.currentruledecimal').broadcast(
+            (currentRule)->
+                dropdownElem.value = currentRule
+        )
 
         # Setup the change rule event
         dropdownElem.addEventListener('change', 
             (event)=>
-                radio('rules.set.currentrule').broadcast(event.target.value)
+                radio('shared.set.currentruledecimal').broadcast(event.target.value)
         )
 
         # Setup the Generate button click event
@@ -93,7 +95,13 @@ class Generator
 
         @_rulesContainerElem = DOM.elemById('GENERATOR','RULE_PREVIEW_CONTAINER')
         
-        @_Board.buildBoard(@_Vars.getTopRowBinary(), @_noBoardColumns, @_noBoardRows)
+        binary = []
+        radio('shared.get.toprowbinary').broadcast(
+            (currentRule)->
+                binary = currentRule
+        )
+
+        @_Board.buildBoard(binary, @_noBoardColumns, @_noBoardRows)
         @_buildRulePreview()
         return true
 
@@ -101,7 +109,11 @@ class Generator
     # Build the Rule Preview
     # 
     _buildRulePreview: ->
-        currentRule = @_Board.getCurrentRule()
+        currentRule = ""
+        radio('rulematcher.get.rulebinarysting').broadcast(
+            (binaryString)=>
+                currentRule = binaryString
+        )
 
         # Use the template to generate the preview
         previewCellHtml = DOM.elemById('GENERATOR','TEMPLATE_RULE_PREVIEW_CELL').innerHTML
