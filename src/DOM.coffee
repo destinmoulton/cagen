@@ -26,12 +26,13 @@ class DOM
             'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
             'RULE_DROPDOWN':'cagen-generator-select-input',
             'RULE_GENERATE_BUTTON':'cagen-generator-generate-button',
-            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-generator-preview-cell',
             'TEMPLATE_BOARD':'tmpl-cagen-generator-board',
-            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-generator'
+            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-generator',
+            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-generator-preview-cell',
         },
         'TABS':{
-            'CONTAINER':'cagen-tab-container'
+            'CONTAINER':'cagen-tab-container',
+            'TEMPLATE':'tmpl-cagen-tabs'
         },
         'THUMBNAILS':{
             'TEMPLATE_THUMBNAILS':'tmpl-cagen-thumbnails',

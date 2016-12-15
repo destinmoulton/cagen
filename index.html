@@ -1,115 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title></title>
-    <!-- Bootstrap for Basic CSS -->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title></title>
+  <!-- Bootstrap for Basic CSS -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- CAGEN specific styles -->
-	<link rel="stylesheet" type="text/css" href="cagen.css">
+  <!-- CAGEN specific styles -->
+  <link rel="stylesheet" type="text/css" href="cagen.css">
 
-    <!-- jQuery for DOM interaction -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <!-- jQuery for DOM interaction -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-    <!-- Bootstrap js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Bootstrap js -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Mustache.js for HTML templates -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+  <!-- Mustache.js for HTML templates -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 
-    <!-- Radio for pub/sub event handling -->
-	<script src="radio.min.js"></script>
+  <!-- Radio for pub/sub event handling -->
+  <script src="radio.min.js"></script>
 
-    <!-- Main CAGEN js -->
-	<script src="dist/cagen.js"></script>
+  <!-- Main CAGEN js -->
+  <script src="dist/cagen.js"></script>
 
-	<!--[if IE]>
+  <!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 </head>
 
-<body >
-  <ul class="nav nav-tabs"
-      id="cagen-tab-container">
-    <li role="presentation"
-        class="active"
-        id="cagen-tab-thumbnails"
-        data-tab-module="thumbnails"><a href="#">Thumbnails</a></li>
-    <li role="presentation"
-        id="cagen-tab-toproweditor"
-        data-tab-module="toproweditor"><a href="#">Top Row Editor</a></li>
-    <li role="presentation"
-        id="cagen-tab-generator"
-        data-tab-module="generator"><a href="#">Generator</a></li>
-  </ul>
-  <div id='cagen-container'></div>
+<body>
+  <ul class="nav nav-tabs" 
+      id="cagen-tab-container"></ul>
+  <div id="cagen-container"></div>
 </body>
 
+<script type="text/template" id="tmpl-cagen-tabs">
+  <li role="presentation" 
+      class="active" 
+      id="cagen-tab-thumbnails" 
+      data-tab-module="thumbnails"><a href="#">Thumbnails</a></li>
+  <li role="presentation" 
+      id="cagen-tab-toproweditor" 
+      data-tab-module="toproweditor"><a href="#">Top Row Editor</a></li>
+  <li role="presentation" 
+      id="cagen-tab-generator" 
+      data-tab-module="generator"><a href="#">Generator</a></li>
+</scrip>
+
 <!-- Generator Mustache Template -->
-<script type='text/template' id='tmpl-cagen-generator'>
-	<div id='cagen-generator-container' class="well">
-      <div class='cagen-generator-box'>
+<script type="text/template" id="tmpl-cagen-generator">
+	<div id="cagen-generator-container" class="well">
+      <div class="cagen-generator-box">
         <div class="form-inline" >
-        Rule&nbsp;<select id='cagen-generator-select-input'
-                          class='form-control input-sm'></select>
-        &nbsp;<button id='cagen-generator-generate-button'
-                      class='btn btn-default btn-sm'>Generate</button>
+        Rule&nbsp;<select id="cagen-generator-select-input"
+                          class="form-control input-sm"></select>
+        &nbsp;<button id="cagen-generator-generate-button"
+                      class="btn btn-default btn-sm">Generate</button>
         </div>
       </div>
 
       <div id="cagen-rules-preview-container"></div>
-      <div class='cagen-generator-box' style='float:right;'>
+      <div class="cagen-generator-box" style="float:right;">
         Current Rule:
       </div>
-      <div id='cagen-generatemessage-container'>Generating Cellular Automata...</div>
+      <div id="cagen-generatemessage-container">Generating Cellular Automata...</div>
     </div>
     <div id="cagen-generator-content"></div>
 	
 </script>
 
 <!-- Board Mustache Template -->
-<script type='text/template' id='tmpl-cagen-generator-board'>
-  <div id='cagen-board-container'>
-		<div id='cagen-board'></div>
+<script type="text/template" id="tmpl-cagen-generator-board">
+  <div id="cagen-board-container">
+		<div id="cagen-board"></div>
   </div>
 </script>
 
 <!-- Generator Preview Mustache Template -->
-<script type='text/template' id='tmpl-cagen-generator-preview-cell'>
+<script type="text/template" id="tmpl-cagen-generator-preview-cell">
   <div class="cagen-generator-preview-box" >
-	<div class='cagen-generator-preview-triple-cell-container'>
-	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-left {{#leftBitActive}}cagen-generator-preview-cell-active{{/leftBitActive}}'></div>
-	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-middle {{#middleBitActive}}cagen-generator-preview-cell-active{{/middleBitActive}}'></div>
-	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-right {{#rightBitActive}}cagen-generator-preview-cell-active{{/rightBitActive}}'></div>
+	<div class="cagen-generator-preview-triple-cell-container">
+	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-left {{#leftBitActive}}cagen-generator-preview-cell-active{{/leftBitActive}}"></div>
+	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-middle {{#middleBitActive}}cagen-generator-preview-cell-active{{/middleBitActive}}"></div>
+	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-right {{#rightBitActive}}cagen-generator-preview-cell-active{{/rightBitActive}}"></div>
 	</div>
-	<div class='cagen-generator-preview-result-cell-container'>
-	  <div id='cagen-generator-preview-{{previewIndex}}'
-		   class='cagen-generator-preview-cell cagen-generator-preview-cell-middle'></div>
-	  <div id='cagen-generator-preview-digit-{{previewIndex}}'
-		   class='cagen-generator-preview-digit'></div>
+	<div class="cagen-generator-preview-result-cell-container">
+	  <div id="cagen-generator-preview-{{previewIndex}}"
+		   class="cagen-generator-preview-cell cagen-generator-preview-cell-middle"></div>
+	  <div id="cagen-generator-preview-digit-{{previewIndex}}"
+		   class="cagen-generator-preview-digit"></div>
 	</div>
   </div>
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->
-<script type='text/template' id='tmpl-cagen-thumbnails'>
+<script type="text/template" id="tmpl-cagen-thumbnails">
 {{#ruleList}}
-<div class='cagen-rulethumb-box'
+<div class="cagen-rulethumb-box"
      data-rule="{{.}}">
-  <img src='captures/thumbs/rule_{{.}}.png'
-       class='cagen-rulethumb-img'
+  <img src="captures/thumbs/rule_{{.}}.png"
+       class="cagen-rulethumb-img"
        data-rule="{{.}}"/>
-  <div class='cagen-rulethumb-rulenum'>{{.}}</div>
+  <div class="cagen-rulethumb-rulenum">{{.}}</div>
 </div>
 {{/ruleList}}
 </script>
 
 
 <!-- Base Container for The Top Row Editor Mustache Template -->
-<script type='text/template' id='tmpl-cagen-toproweditor'>
+<script type="text/template" id="tmpl-cagen-toproweditor">
     <div id="rowed-slider-container">
 		<div id="rowed-slider"
              data-toggle="tooltip"
@@ -127,21 +130,22 @@
 	</div>
 	<div id="rowed-editor-container"></div>
     <div id="rowed-button-container">
-      <button id='rowed-button-generate'
-              class='btn btn-default btn-sm'>Generate</button>
+      <button id="rowed-button-generate"
+              class="btn btn-default btn-sm">Generate</button>
       &nbsp;&nbsp;&nbsp;
-      <button id='rowed-button-resetrow'
-              class='btn btn-default btn-sm'>Reset Row</button>
+      <button id="rowed-button-resetrow"
+              class="btn btn-default btn-sm">Reset Row</button>
     </div>
 </script>
 
 <!-- Top Row Editor - Cells that compose the lower, numbered, row -->
-<script type='text/template'  id='tmpl-rowed-editor-cell'>
-  <div id='{{ id }}' class='rowed-editor-cell' style='left:{{ left }}px;'></div>
+<script type="text/template" id="tmpl-rowed-editor-cell">
+  <div id="{{ id }}" class="rowed-editor-cell" style="left:{{ left }}px;"></div>
 </script>
 
 <!-- Top Row Editor - Cells that compose the upper small preview row -->
-<script type='text/template'  id='tmpl-rowed-slider-cell'>
-  <div id='{{ id }}' style='left:{{ left }}px;' class='cagen-board-cell {{ activeClass }}'></div>
+<script type="text/template" id="tmpl-rowed-slider-cell">
+  <div id="{{ id }}" style="left:{{ left }}px;" class="cagen-board-cell {{ activeClass }}"></div>
 </script>
+
 </html>
