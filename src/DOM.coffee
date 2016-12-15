@@ -22,13 +22,13 @@ class DOM
             'MAIN_CONTAINER':'cagen-container'
         },
         'GENERATOR':{
-            'CONTENT_CONTAINER':'cagen-dashboard-content',
+            'CONTENT_CONTAINER':'cagen-generator-content',
             'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
-            'RULE_DROPDOWN':'cagen-dash-select-input',
-            'RULE_GENERATE_BUTTON':'cagen-dash-generate-button',
-            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-dash-preview-cell',
-            'TEMPLATE_BOARD':'tmpl-cagen-dash-board',
-            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-dashboard'
+            'RULE_DROPDOWN':'cagen-generator-select-input',
+            'RULE_GENERATE_BUTTON':'cagen-generator-generate-button',
+            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-generator-preview-cell',
+            'TEMPLATE_BOARD':'tmpl-cagen-generator-board',
+            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-generator'
         },
         'TABS':{
             'CONTAINER':'cagen-tab-container'
@@ -57,7 +57,7 @@ class DOM
             'CELL_BASE_CLASS':'cagen-board-cell',
         },
         'GENERATOR':{
-            'RULE_PREVIEW_CELL_ACTIVE':'cagen-dash-preview-cell-active'
+            'RULE_PREVIEW_CELL_ACTIVE':'cagen-generator-preview-cell-active'
         },
         'TABS':{
             'ACTIVE':'active'
@@ -77,8 +77,8 @@ class DOM
             'CELL':'sb_'
         },
         'GENERATOR':{
-            'RULE_PREVIEW_CELL':'cagen-dash-preview-',
-            'RULE_PREVIEW_DIGIT':'cagen-dash-preview-digit-'
+            'RULE_PREVIEW_CELL':'cagen-generator-preview-',
+            'RULE_PREVIEW_DIGIT':'cagen-generator-preview-digit-'
         },
         'TABS':{
             'TAB_PREFIX':'cagen-tab-'

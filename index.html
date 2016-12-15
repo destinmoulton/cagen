@@ -47,47 +47,49 @@
   </ul>
   <div id='cagen-container'></div>
 </body>
-<script type='text/template' id='tmpl-cagen-dashboard'>
-	<div id='cagen-dash-container' class="well">
-      <div class='cagen-dash-box'>
+
+<!-- Generator Mustache Template -->
+<script type='text/template' id='tmpl-cagen-generator'>
+	<div id='cagen-generator-container' class="well">
+      <div class='cagen-generator-box'>
         <div class="form-inline" >
-        Rule&nbsp;<select id='cagen-dash-select-input'
+        Rule&nbsp;<select id='cagen-generator-select-input'
                           class='form-control input-sm'></select>
-        &nbsp;<button id='cagen-dash-generate-button'
+        &nbsp;<button id='cagen-generator-generate-button'
                       class='btn btn-default btn-sm'>Generate</button>
         </div>
       </div>
 
       <div id="cagen-rules-preview-container"></div>
-      <div class='cagen-dash-box' style='float:right;'>
+      <div class='cagen-generator-box' style='float:right;'>
         Current Rule:
       </div>
       <div id='cagen-generatemessage-container'>Generating Cellular Automata...</div>
     </div>
-    <div id="cagen-dashboard-content"></div>
+    <div id="cagen-generator-content"></div>
 	
 </script>
 
 <!-- Board Mustache Template -->
-<script type='text/template' id='tmpl-cagen-dash-board'>
+<script type='text/template' id='tmpl-cagen-generator-board'>
   <div id='cagen-board-container'>
 		<div id='cagen-board'></div>
   </div>
 </script>
 
 <!-- Generator Preview Mustache Template -->
-<script type='text/template' id='tmpl-cagen-dash-preview-cell'>
-  <div class="cagen-dash-preview-box" >
-	<div class='cagen-dash-preview-triple-cell-container'>
-	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-left {{#leftBitActive}}cagen-dash-preview-cell-active{{/leftBitActive}}'></div>
-	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-middle {{#middleBitActive}}cagen-dash-preview-cell-active{{/middleBitActive}}'></div>
-	  <div class='cagen-dash-preview-cell cagen-dash-preview-cell-right {{#rightBitActive}}cagen-dash-preview-cell-active{{/rightBitActive}}'></div>
+<script type='text/template' id='tmpl-cagen-generator-preview-cell'>
+  <div class="cagen-generator-preview-box" >
+	<div class='cagen-generator-preview-triple-cell-container'>
+	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-left {{#leftBitActive}}cagen-generator-preview-cell-active{{/leftBitActive}}'></div>
+	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-middle {{#middleBitActive}}cagen-generator-preview-cell-active{{/middleBitActive}}'></div>
+	  <div class='cagen-generator-preview-cell cagen-generator-preview-cell-right {{#rightBitActive}}cagen-generator-preview-cell-active{{/rightBitActive}}'></div>
 	</div>
-	<div class='cagen-dash-preview-result-cell-container'>
-	  <div id='cagen-dash-preview-{{previewIndex}}'
-		   class='cagen-dash-preview-cell cagen-dash-preview-cell-middle'></div>
-	  <div id='cagen-dash-preview-digit-{{previewIndex}}'
-		   class='cagen-dash-preview-digit'></div>
+	<div class='cagen-generator-preview-result-cell-container'>
+	  <div id='cagen-generator-preview-{{previewIndex}}'
+		   class='cagen-generator-preview-cell cagen-generator-preview-cell-middle'></div>
+	  <div id='cagen-generator-preview-digit-{{previewIndex}}'
+		   class='cagen-generator-preview-digit'></div>
 	</div>
   </div>
 </script>

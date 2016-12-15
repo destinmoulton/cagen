@@ -39,7 +39,7 @@ body{
 	background-color:black;
 }
 
-#cagen-dash-container{
+#cagen-generator-container{
 	position:relative;
     float:left;
 	top:0px;
@@ -48,13 +48,13 @@ body{
     margin-bottom:5px;
 }
 
-.cagen-dash-box{
+.cagen-generator-box{
     position:relative;
     float:left;
     padding:5px;
 }
 
-#cagen-dashboard-content{
+#cagen-generator-content{
     position:relative;
     float:left;
     left:15px;
@@ -70,43 +70,43 @@ body{
     padding:5px;
 }
 
-.cagen-dash-preview-cell{
+.cagen-generator-preview-cell{
 	position:absolute;
 	width:10px;
 	height:10px;
 	border:1px solid black;
 }
 
-.cagen-dash-preview-cell-left{
+.cagen-generator-preview-cell-left{
 	left:0px;
 }
-.cagen-dash-preview-cell-middle{
+.cagen-generator-preview-cell-middle{
 	left:10px;
 }
-.cagen-dash-preview-cell-right{
+.cagen-generator-preview-cell-right{
 	left:20px;
 }
-.cagen-dash-preview-digit{
+.cagen-generator-preview-digit{
 	position:absolute;
 	left:24px;
 	font-size:10px;
 }
-.cagen-dash-preview-cell-active{
+.cagen-generator-preview-cell-active{
 	background-color:black;
 }
-.cagen-dash-preview-box{
+.cagen-generator-preview-box{
 	position:relative;
     float:left;
 	width:40px;
 	height:30px;
 	
 }
-.cagen-dash-preview-triple-cell-container{
+.cagen-generator-preview-triple-cell-container{
 	position:relative;
 	width:30px;
 	height:10px;
 }
-.cagen-dash-preview-result-cell-container{
+.cagen-generator-preview-result-cell-container{
 	position:relative;
 	width:30px;
 	height:20px;
