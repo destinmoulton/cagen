@@ -24,7 +24,7 @@ class Generator
     # 
     constructor:(BUS) ->
         @BUS = BUS
-        
+
         @_currentRule = 0
         @_previewBoxWidth = 40
         @_noBoardColumns = 151
@@ -33,6 +33,8 @@ class Generator
         @_isColorPickerEnabled = false
 
         @_ruleList = []
+
+        @BUS.set('currentruledecimal', @_currentRule)
 
         @BUS.subscribe('generator.run',
             ()=>

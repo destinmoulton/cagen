@@ -69,7 +69,9 @@ class Board
     _setupColorEvents:()->
         @BUS.subscribe('change.cellstyle.activebackground',
             (hexColor)=>
+                console.log("In Board subscribe", hexColor)
                 @_changeCellActiveBackroundColor(hexColor)
+                return
         )
 
         @BUS.subscribe('change.cellstyle.bordercolor',
@@ -165,10 +167,11 @@ class Board
     # Change the color of the cells
     #
     _changeCellActiveBackroundColor: (hexColor)->
+        console.log("inside changeCellActiveBackgroundColor")
         @_colorCellActive = hexColor
 
         cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS'))
-
+        
         for cell in cellsElems
             cell.style.backgroundColor = @_colorCellActive
 
