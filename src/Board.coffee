@@ -17,7 +17,8 @@ class Board
     # Initialize the shared variables for the board.
     # 
     constructor: ()->
-
+        @_colorBorder = "#000000"
+        @_colorCellActive = "#000000"
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
         @_boardCellWidthPx = 5
@@ -65,6 +66,17 @@ class Board
             @_messageElem.style.display = "none"
             @_boardElem.style.display = "block"
         ,500)
+
+    _setupColorEvents:()->
+        radio('shared.set.cellcolor.activebackground').subscribe(
+            (hexColor)=>
+                @_changeCellActiveBackroundColor(hexColor)
+        )
+
+        radio('shared.set.cellcolor.border').subscribe(
+            (hexColor)=>
+                @_changeCellBorderColor(hexColor)
+        )
 
     #
     # Generate the rows in the board
@@ -142,9 +154,31 @@ class Board
 
         tmpClass = DOM.getClass('BOARD', 'CELL_BASE_CLASS')
         if active
+            tmpCell.style.backgroundColor = @_colorCellActive
             tmpClass += " #{ DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS') }"
 
         tmpCell.setAttribute('class', "#{tmpClass}")
         
+        tmpCell.style.borderColor = @_colorBorder
         @_boardElem.appendChild(tmpCell);
-        
+    
+    #
+    # Change the color of the cells
+    #
+    _changeCellActiveBackroundColor: (hexColor)->
+        @_colorCellActive = hexColor
+
+        cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS'))
+
+        for cell in cellsElems
+            cell.style.backgroundColor = @_colorCellActive
+
+    #
+    # Change the border color of the cells
+    #
+    _changeCellBorderColor: (hexColor)->
+        @_colorBorder = hexColor
+        cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_BASE_CLASS'))
+
+        for cell in cellsElems
+            cell.style.borderColor = @_colorBorder

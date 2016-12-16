@@ -39,6 +39,16 @@ body{
 	background-color:black;
 }
 
+#cagen-colorpicker-cell{
+    float:left;
+    width:200px;
+}
+
+#cagen-colorpicker-border{
+    float:left;
+    width:200px;
+}
+
 #cagen-generator-container{
 	position:relative;
     float:left;

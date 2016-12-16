@@ -29,6 +29,8 @@ class Generator
         @_noBoardColumns = 151
         @_noBoardRows = 75
 
+        @_isColorPickerEnabled = false
+
         @_ruleList = []
 
         radio('generator.run').subscribe(
@@ -50,10 +52,39 @@ class Generator
         
         @_setupRuleDropdown()
 
+
+        DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
+            ()=>
+                if @_isColorPickerEnabled
+                    @_disableColorPicker()
+                else
+                    @_enableColorPicker()
+        )
+
         # Final step is to build the board
         @_buildBoard()
 
         return true
+
+
+    _enableColorPicker:() ->
+        colorpickerTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_COLORPICKER').innerHTML
+        colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
+        colorPickerElem.innerHTML = Mustache.render(colorpickerTemplateHTML,{})
+
+        @_isColorPickerEnabled = true
+        ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_CELL'), 
+            (hex)=>
+                radio('shared.set.cellcolor.activebackground').broadcast(hex)
+        )
+        ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
+            (hex)=>
+                radio('shared.set.cellcolor.border').broadcast(hex)
+        )
+
+    _disableColorPicker:() ->
+        @_isColorPickerEnabled = false
+        DOM.elemById('GENERATOR','COLORPICKER_CONTAINER').innerHTML = ""
 
     #
     # Setup the rule selector dropdown

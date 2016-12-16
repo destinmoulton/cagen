@@ -24,6 +24,7 @@
 
   <!-- Flexi Color Color Picker -->
   <script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
 
   <!-- Main CAGEN js -->
   <script src="dist/cagen.js"></script>
@@ -63,6 +64,8 @@
                           class="form-control input-sm"></select>
         &nbsp;<button id="cagen-generator-generate-button"
                       class="btn btn-default btn-sm">Generate</button>
+        &nbsp;<button id="cagen-generator-colorpicker-button"
+                      class="btn btn-default btn-sm">Color</button>                      
         </div>
       </div>
 
@@ -71,6 +74,7 @@
         Current Rule:
       </div>
       <div id="cagen-generatemessage-container">Generating Cellular Automata...</div>
+      <div id="cagen-colorpicker" class="cp cp-small"></div>
     </div>
     <div id="cagen-generator-content"></div>
 	
@@ -98,6 +102,12 @@
 		   class="cagen-generator-preview-digit"></div>
 	</div>
   </div>
+</script>
+
+<!-- ColorPicker Mustache Template -->
+<script type="text/template" id="tmpl-cagen-generator-colorpicker">
+  <div id="cagen-colorpicker-cell"></div>
+  <div id="cagen-colorpicker-border"></div>
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->
