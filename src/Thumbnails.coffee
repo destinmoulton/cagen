@@ -20,8 +20,9 @@ class Thumbnails
     #
     # Setup the local variables
     # 
-    constructor: (VariablesInstance)->
-        radio('thumbnails.run').subscribe(
+    constructor: (BUS)->
+        @BUS = BUS
+        @BUS.subscribe('thumbnails.run',
             ()=>
                 @run()
                 return
@@ -55,6 +56,6 @@ class Thumbnails
         # Change the current rule
         radio('shared.set.currentruledecimal').broadcast(rule)
 
-        # Show the dashboard via radio pub/sub broadcast
-        radio('tabs.show.generator').broadcast();
+        # Load the generator
+        @BUS.broadcast('tabs.show.generator')
 

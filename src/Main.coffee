@@ -13,19 +13,22 @@ CAGEN features and starts the tabbed interface.
 ###
 
 window.onload = ->
+    # PUB/SUB and variable store for inter-class communication
+    BUS = new Bus()
+        
     new Shared()
 
     # Create an instance of the Tabs (visual sectional management)
-    tabs = new Tabs()
+    tabs = new Tabs(BUS)
 
     # Create instance of the Rule Thumbnails preview/selector
-    new Thumbnails()
+    new Thumbnails(BUS)
 
     # Create instance of the Top Row Editor
-    new TopRowEditor()
+    new TopRowEditor(BUS)
 
     # Create instance of the Dashboard
-    new Generator()
+    new Generator(BUS)
 
     # Start the tab interface
     tabs.start()

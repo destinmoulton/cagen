@@ -19,7 +19,8 @@ class Tabs
     # Setup the local shared variables
     # @constructor
     # 
-    constructor: (VariablesInstance)->
+    constructor: (BUS)->
+        @BUS = BUS
         @_tabsElems = []
 
     #
@@ -39,11 +40,13 @@ class Tabs
                 if tab.className is DOM.getClass('TABS', 'ACTIVE')
                     @_runTabModule(moduleName)
 
-                radio('tabs.show.' + moduleName).subscribe(()=>@_runTabModule(moduleName))
+                @BUS.subscribe('tabs.show.' + moduleName,
+                    ()=>@_runTabModule(moduleName)
+                )
 
                 tab.addEventListener('click',
-                    (event)->
-                        radio('tabs.show.' + moduleName).broadcast()
+                    (event)=>
+                        @BUS.broadcast('tabs.show.' + moduleName)
                         return
                 )
     #
@@ -65,5 +68,5 @@ class Tabs
         @_activateTab(tabName)
 
         # Run the tab
-        radio(tabName + '.run').broadcast()
+        @BUS.broadcast(tabName + '.run')
     

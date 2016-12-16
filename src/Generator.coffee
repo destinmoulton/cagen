@@ -22,8 +22,9 @@ class Generator
     # Initialize the IDs, local jQuery objects, and sizes
     # for the Generator.
     # 
-    constructor:() ->
-
+    constructor:(BUS) ->
+        @BUS = BUS
+        
         @_currentRule = 0
         @_previewBoxWidth = 40
         @_noBoardColumns = 151
@@ -33,7 +34,7 @@ class Generator
 
         @_ruleList = []
 
-        radio('generator.run').subscribe(
+        @BUS.subscribe('generator.run',
             ()=>
                 @run()
                 return

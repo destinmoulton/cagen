@@ -21,8 +21,9 @@ class TopRowEditor
     # Setup the locally shared variables
     # @constructor
     # 
-    constructor: (VariablesInstance)->
-
+    constructor: (BUS)->
+        @BUS = BUS
+        
         @_editorCellsElems = []
 
         @_aRowBinary = []
@@ -37,7 +38,7 @@ class TopRowEditor
 
         @_generateInitialBinary()
 
-        radio('toproweditor.run').subscribe(
+        @BUS.subscribe('toproweditor.run',
             ()=>
                 @run()
                 return
@@ -117,7 +118,7 @@ class TopRowEditor
         # The Generate click event
         DOM.elemById('TOPROWEDITOR', 'BUTTON_GENERATE').addEventListener('click',
             ()=>
-                radio('tabs.show.generator').broadcast()
+                @BUS.broadcast('tabs.show.generator')
                 return
         )
 

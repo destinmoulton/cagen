@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 
 var coffeeFiles = [
+    'src/Bus.coffee',
     'src/Shared.coffee',
     'src/DOM.coffee',
     'src/Board.coffee',
@@ -19,7 +20,7 @@ gulp.task('compile-coffee', function() {
     gulp.src(coffeeFiles)
         .pipe(sourcemaps.init())
         .pipe(coffee({bare:true}))
-        .pipe(sourcemaps.write())        
+        .pipe(sourcemaps.write())
         .pipe(concat('cagen.js'))
         .pipe(gulp.dest('dist/'));
 });
