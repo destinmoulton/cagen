@@ -16,7 +16,9 @@ class Board
     # Constructor for the Board class.
     # Initialize the shared variables for the board.
     # 
-    constructor: ()->
+    constructor: (BUS)->
+        @BUS = BUS
+
         @_colorBorder = "#000000"
         @_colorCellActive = "#000000"
         @_boardNoCellsWide = 0
@@ -28,7 +30,7 @@ class Board
         
         @_rootRowBinary = []
         @_currentCells = []
-        @_RuleMatcher = new RuleMatcher()
+        @_RuleMatcher = new RuleMatcher(BUS)
         
     #
     # Build the board.
@@ -42,10 +44,7 @@ class Board
         
         @_rootRowBinary = rootRowBinary
         
-        radio('shared.get.currentruledecimal').broadcast(
-            (currentRuleDecimal)=>
-                @_RuleMatcher.setCurrentRule(currentRuleDecimal)
-        )
+        @_RuleMatcher.setCurrentRule(@BUS.get('currentruledecimal')) 
 
         @_boardNoCellsWide = noCellsWide
         @_boardNoCellsHigh = noSectionsHigh
@@ -68,12 +67,12 @@ class Board
         ,500)
 
     _setupColorEvents:()->
-        radio('shared.set.cellcolor.activebackground').subscribe(
+        @BUS.subscribe('change.cellstyle.activebackground',
             (hexColor)=>
                 @_changeCellActiveBackroundColor(hexColor)
         )
 
-        radio('shared.set.cellcolor.border').subscribe(
+        @BUS.subscribe('change.cellstyle.bordercolor',
             (hexColor)=>
                 @_changeCellBorderColor(hexColor)
         )

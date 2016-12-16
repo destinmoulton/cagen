@@ -54,7 +54,7 @@ class Thumbnails
         rule = event.target.getAttribute('data-rule')
 
         # Change the current rule
-        radio('shared.set.currentruledecimal').broadcast(rule)
+        @BUS.set('currentruledecimal', rule)
 
         # Load the generator
         @BUS.broadcast('tabs.show.generator')

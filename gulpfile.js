@@ -5,7 +5,6 @@ var sourcemaps = require('gulp-sourcemaps');
 
 var coffeeFiles = [
     'src/Bus.coffee',
-    'src/Shared.coffee',
     'src/DOM.coffee',
     'src/Board.coffee',
     'src/Generator.coffee',

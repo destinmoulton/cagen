@@ -36,7 +36,8 @@ class RuleMatcher
     # Setup the local variables
     # @constructor
     # 
-    constructor: ()->
+    constructor: (BUS)->
+        @BUS = BUS
         @_binaryRule = ""
         @_patterns = [
             '111',
@@ -49,10 +50,7 @@ class RuleMatcher
             '000'
         ]
 
-        radio('rulematcher.get.rulebinarysting').subscribe(
-            (callback)=>
-                callback(@_binaryRule)
-        )
+        @BUS.set('rulebinarysting', @_binaryRule)
 
     #
     # Set the current rule from a decimal value

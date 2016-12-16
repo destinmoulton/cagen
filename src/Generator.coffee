@@ -49,7 +49,7 @@ class Generator
         cagenMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
 
         # Build a new Board
-        @_Board = new Board()
+        @_Board = new Board(@BUS)
         
         @_setupRuleDropdown()
 
@@ -76,11 +76,11 @@ class Generator
         @_isColorPickerEnabled = true
         ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_CELL'), 
             (hex)=>
-                radio('shared.set.cellcolor.activebackground').broadcast(hex)
+                @BUS.broadcast('change.cellstyle.activebackground', hex)
         )
         ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
             (hex)=>
-                radio('shared.set.cellcolor.border').broadcast(hex)
+                @BUS.broadcast('change.cellstyle.bordercolor', hex)
         )
 
     _disableColorPicker:() ->
@@ -101,15 +101,12 @@ class Generator
         dropdownElem.innerHTML = optionsHTML
 
         # Change the current rule from the dropdown
-        radio('shared.get.currentruledecimal').broadcast(
-            (currentRule)->
-                dropdownElem.value = currentRule
-        )
+        dropdownElem.value = @BUS.get('currentruledecimal')
 
         # Setup the change rule event
         dropdownElem.addEventListener('change', 
             (event)=>
-                radio('shared.set.currentruledecimal').broadcast(event.target.value)
+                @BUS.set('currentruledecimal', event.target.value)
         )
 
         # Setup the Generate button click event
@@ -127,11 +124,7 @@ class Generator
 
         @_rulesContainerElem = DOM.elemById('GENERATOR','RULE_PREVIEW_CONTAINER')
         
-        binary = []
-        radio('shared.get.toprowbinary').broadcast(
-            (currentRule)->
-                binary = currentRule
-        )
+        binary = @BUS.get('toprowbinary')
 
         @_Board.buildBoard(binary, @_noBoardColumns, @_noBoardRows)
         @_buildRulePreview()
@@ -141,11 +134,7 @@ class Generator
     # Build the Rule Preview
     # 
     _buildRulePreview: ->
-        currentRule = ""
-        radio('rulematcher.get.rulebinarysting').broadcast(
-            (binaryString)=>
-                currentRule = binaryString
-        )
+        currentRule = @BUS.get('rulebinarysting')
 
         # Use the template to generate the preview
         previewCellHtml = DOM.elemById('GENERATOR','TEMPLATE_RULE_PREVIEW_CELL').innerHTML

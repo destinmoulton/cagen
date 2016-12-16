@@ -237,8 +237,8 @@ class TopRowEditor
             sliderCellElem.classList.add(DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE'))
 
         # Set the new binary configuration for the generator
-        radio('shared.set.toprowbinary').broadcast(@_aRowBinary)
-        
+        @BUS.set('toprowbinary', @_aRowBinary)
+
 
     #
     # Setup the initial binary representation of the row
@@ -252,7 +252,7 @@ class TopRowEditor
                 @_aRowBinary[col] = 1
             else
                 @_aRowBinary[col] = 0
-        radio('shared.set.toprowbinary').broadcast(@_aRowBinary)
+        @BUS.set('toprowbinary', @_aRowBinary)
         
 
     #

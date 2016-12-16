@@ -16,8 +16,6 @@ window.onload = ->
     # PUB/SUB and variable store for inter-class communication
     BUS = new Bus()
         
-    new Shared()
-
     # Create an instance of the Tabs (visual sectional management)
     tabs = new Tabs(BUS)
 
