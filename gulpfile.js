@@ -12,7 +12,7 @@ var coffeeFiles = [
     'src/Thumbnails.coffee',
     'src/Tabs.coffee',
     'src/TopRowEditor.coffee',
-    'src/Main.coffee'
+    'src/CAGEN.coffee'
 ];
 
 gulp.task('compile-coffee', function() {

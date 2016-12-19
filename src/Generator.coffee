@@ -30,8 +30,6 @@ class Generator
         @_noBoardColumns = 151
         @_noBoardRows = 75
 
-        @_isColorPickerEnabled = false
-
         @_ruleList = []
 
         @BUS.set('currentruledecimal', @_currentRule)
@@ -55,7 +53,7 @@ class Generator
         
         @_setupRuleDropdown()
 
-
+        @_isColorPickerEnabled = false
         DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
             ()=>
                 if @_isColorPickerEnabled
@@ -74,20 +72,26 @@ class Generator
         colorpickerTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_COLORPICKER').innerHTML
         colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
         colorPickerElem.innerHTML = Mustache.render(colorpickerTemplateHTML,{})
+        colorPickerElem.style.display = "block"
 
         @_isColorPickerEnabled = true
-        ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_CELL'), 
+        cpCell = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_CELL'), 
             (hex)=>
-                @BUS.broadcast('change.cellstyle.activebackground', hex)
+                @BUS.broadcast('change.cell.style.activebackground', hex)
         )
-        ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
+        cpCell.setHex(@BUS.get('board.cell.style.activeBackgroundColor'))
+
+        cpBorder = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
             (hex)=>
-                @BUS.broadcast('change.cellstyle.bordercolor', hex)
+                @BUS.broadcast('change.cell.style.bordercolor', hex)
         )
+        cpBorder.setHex(@BUS.get('board.cell.style.borderColor'))
 
     _disableColorPicker:() ->
         @_isColorPickerEnabled = false
-        DOM.elemById('GENERATOR','COLORPICKER_CONTAINER').innerHTML = ""
+        containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')
+        containerElem.innerHTML = ""
+        containerElem.style.display = "none"
 
     #
     # Setup the rule selector dropdown

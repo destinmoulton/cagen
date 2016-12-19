@@ -29,6 +29,12 @@
   <!-- Main CAGEN js -->
   <script src="dist/cagen.js"></script>
 
+  <script type="text/javascript">
+    $(function(){
+      var cagen = new CAGEN();
+    });
+  </script>
+
   <!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -106,8 +112,12 @@
 
 <!-- ColorPicker Mustache Template -->
 <script type="text/template" id="tmpl-cagen-generator-colorpicker">
-  <div id="cagen-colorpicker-cell"></div>
-  <div id="cagen-colorpicker-border"></div>
+  <fieldset class="cagen-colorpicker-container"><legend>Active Cell Color</legend>
+    <span id="cagen-colorpicker-cell"></span>
+  </fieldset>
+  <fieldset  class="cagen-colorpicker-container"><legend>Border Color</legend>
+    <div id="cagen-colorpicker-border"></div>
+  </fieldset>
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->

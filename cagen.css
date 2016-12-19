@@ -39,14 +39,23 @@ body{
 	background-color:black;
 }
 
-#cagen-colorpicker-cell{
+#cagen-colorpicker{
+    display:none;
+}
+
+fieldset.cagen-colorpicker-container{
     float:left;
-    width:200px;
+    margin:5px;
+    border:1px solid black;
+    padding:15px;
+}
+
+#cagen-colorpicker-cell{
+    width:150px;
 }
 
 #cagen-colorpicker-border{
-    float:left;
-    width:200px;
+    width:150px;
 }
 
 #cagen-generator-container{

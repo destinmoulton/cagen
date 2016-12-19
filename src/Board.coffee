@@ -19,8 +19,6 @@ class Board
     constructor: (BUS)->
         @BUS = BUS
 
-        @_colorBorder = "#000000"
-        @_colorCellActive = "#000000"
         @_boardNoCellsWide = 0
         @_boardNoCellsHigh = 0
         @_boardCellWidthPx = 5
@@ -31,6 +29,8 @@ class Board
         @_rootRowBinary = []
         @_currentCells = []
         @_RuleMatcher = new RuleMatcher(BUS)
+
+        @_setupColorChangeEvents()
         
     #
     # Build the board.
@@ -66,19 +66,18 @@ class Board
             @_boardElem.style.display = "block"
         ,500)
 
-        @_setupColorChangeEvents()
 
     #
     # Set the change background/border color events
     #
     _setupColorChangeEvents:()->
-        @BUS.subscribe('change.cellstyle.activebackground',
+        @BUS.subscribe('change.cell.style.activebackground',
             (hexColor)=>
                 @_changeCellActiveBackroundColor(hexColor)
                 return
         )
 
-        @BUS.subscribe('change.cellstyle.bordercolor',
+        @BUS.subscribe('change.cell.style.bordercolor',
             (hexColor)=>
                 @_changeCellBorderColor(hexColor)
         )
@@ -159,31 +158,30 @@ class Board
 
         tmpClass = DOM.getClass('BOARD', 'CELL_BASE_CLASS')
         if active
-            tmpCell.style.backgroundColor = @_colorCellActive
+            tmpCell.style.backgroundColor = @BUS.get('board.cell.style.activeBackgroundColor')
             tmpClass += " #{ DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS') }"
 
         tmpCell.setAttribute('class', "#{tmpClass}")
         
-        tmpCell.style.borderColor = @_colorBorder
+        tmpCell.style.borderColor = @BUS.get('board.cell.style.borderColor')
         @_boardElem.appendChild(tmpCell);
     
     #
     # Change the color of the cells
     #
     _changeCellActiveBackroundColor: (hexColor)->
-        @_colorCellActive = hexColor
-
+        @BUS.set('board.cell.style.activeBackgroundColor', hexColor)
         cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS'))
         
         for cell in cellsElems
-            cell.style.backgroundColor = @_colorCellActive
+            cell.style.backgroundColor = hexColor
 
     #
     # Change the border color of the cells
     #
     _changeCellBorderColor: (hexColor)->
-        @_colorBorder = hexColor
+        @BUS.set('board.cell.style.borderColor', hexColor)
         cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_BASE_CLASS'))
 
         for cell in cellsElems
-            cell.style.borderColor = @_colorBorder
+            cell.style.borderColor = hexColor
