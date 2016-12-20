@@ -82,6 +82,11 @@ class Board
                 @_changeCellBorderColor(hexColor)
         )
 
+        @BUS.subscribe('change.cell.style.inactivebackground',
+            (hexColor)=>
+                @_changeCellInactiveBackgroundColor(hexColor)
+        )
+
     #
     # Generate the rows in the board
     # 
@@ -160,6 +165,8 @@ class Board
         if active
             tmpCell.style.backgroundColor = @BUS.get('board.cell.style.activeBackgroundColor')
             tmpClass += " #{ DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS') }"
+        else
+            tmpCell.style.backgroundColor = @BUS.get('board.cell.style.inactiveBackgroundColor')
 
         tmpCell.setAttribute('class', "#{tmpClass}")
         
@@ -185,3 +192,14 @@ class Board
 
         for cell in cellsElems
             cell.style.borderColor = hexColor
+
+    #
+    # Change the background color of the inactive cells
+    #
+    _changeCellInactiveBackgroundColor: (hexColor)->
+        @BUS.set('board.cell.style.inactiveBackgroundColor', hexColor)
+        cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_BASE_CLASS'))
+
+        for cell in cellsElems
+            if not cell.classList.contains(DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS'))
+                cell.style.backgroundColor = hexColor

@@ -68,6 +68,9 @@ class Generator
         return true
 
 
+    #
+    # Enable the color picker
+    # 
     _enableColorPicker:() ->
         colorpickerTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_COLORPICKER').innerHTML
         colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
@@ -75,11 +78,11 @@ class Generator
         colorPickerElem.style.display = "block"
 
         @_isColorPickerEnabled = true
-        cpCell = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_CELL'), 
+        cpActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_ACTIVE'), 
             (hex)=>
                 @BUS.broadcast('change.cell.style.activebackground', hex)
         )
-        cpCell.setHex(@BUS.get('board.cell.style.activeBackgroundColor'))
+        cpActive.setHex(@BUS.get('board.cell.style.activeBackgroundColor'))
 
         cpBorder = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
             (hex)=>
@@ -87,6 +90,16 @@ class Generator
         )
         cpBorder.setHex(@BUS.get('board.cell.style.borderColor'))
 
+        cpInActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_INACTIVE'), 
+            (hex)=>
+                @BUS.broadcast('change.cell.style.inactivebackground', hex)
+        )
+        cpInActive.setHex(@BUS.get('board.cell.style.inactiveBackgroundColor'))
+
+
+    #
+    # Disable the color picker
+    #
     _disableColorPicker:() ->
         @_isColorPickerEnabled = false
         containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')

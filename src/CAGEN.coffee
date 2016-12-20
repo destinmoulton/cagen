@@ -19,6 +19,7 @@ class CAGEN
         # Set the initial colors
         @BUS.set('board.cell.style.activeBackgroundColor', '#000000')
         @BUS.set('board.cell.style.borderColor', '#000000')
+        @BUS.set('board.cell.style.inactiveBackgroundColor', '#ffffff')
             
         # Create an instance of the Tabs (visual sectional management)
         tabs = new Tabs(@BUS)
