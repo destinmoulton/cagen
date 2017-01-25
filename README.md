@@ -1,28 +1,29 @@
-### What is cagen?
+### What is WolfCage?
 ***
-Cagen is a Cellular Automata GENerator based on the rules presented by Stephen Wolfram in his book "A New Kind of Science" [NKS]. In the book, Stephen uses a set of simple binary rules to generate the next row, or "cells" within a matrix.
+WolfCage is a Wolfram Cellular Automata Generator. WolfCage generates any of the 256 cellular automata developed by Stephen Wolfram. n his book "A New Kind of Science" [ANKOS]. In the book, Stephen uses a set of simple binary rules to generate the next row, or "cells" within a matrix.
 
-Cagen is written in CoffeeScript. Transpiled to javascript, the application should run in any modern browser. 
+WolfCage is written in CoffeeScript. Transpiled to javascript, the application should run in any modern browser. 
 
 
 ### Features
 ***
 - Select which of the NKS's 256 (0..255) rules you would like to generate.
-- Edit the top/seed row using a sliding navigator. This can sometimes substantially alter the generation of the cellular matrix.
+- Edit the top/seed row using a sliding navigator.
+- Alter the color of the active (1) and inactive (0) cells.
 
 
 ### Requirements
 ***
-Cagen has the following in browser requirements:
-- mustache.js - HTML template handling
-- radio.js  - Pub/Sub inter-class communication
-- jQuery - DOM manipulation
+WolfCage has the following in browser requirements:
+- mustache.js - HTML template rendering
 
-Node requirements for compilation are in the ever-changing package.json file.
+The requirements for the node CoffeeScript transpiler are located in the package.json file and can be installed via the 
 
-### Compiling the Coffee Source Files
+### Compiling the CoffeeScript Source Files
 ***
-gulpfile.js contains the gulp configuration.
+The transpilation is handled by the node CoffeeScript transpiler.
+
+gulpfile.js contains the gulp configuration that automates the transpilation and concatenation process.
 
 Watch and compile the src/*.coffee files and build the main dist/cagen.js file.
 ```
@@ -30,7 +31,6 @@ $ npm run-script build
 ```
 
 
-
 ### License
 ***
-CAGEN is released under the MIT license.
+WolfCage is released under the MIT license.
