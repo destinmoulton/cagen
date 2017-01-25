@@ -1,17 +1,16 @@
 ###
 
-Generate the Rule Thumbnails for CAGEN and the event
-handler for when a rule thumbnail is clicked.
+Generate the Rule Thumbnail List for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata GENerator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
-
-Each rule has a thumbnail. The user can click the thumbnail
-to generate the Automata for that rule.
+The thumbnail for each rule is presented. 
+Event handlers are added to each thumbnail for generating
+the automata cells for that rule.
 
 ###
 
@@ -39,7 +38,7 @@ class Thumbnails
         thumbnailHTML = DOM.elemById('THUMBNAILS', 'TEMPLATE_THUMBNAILS').innerHTML
         rendered = Mustache.render(thumbnailHTML, {ruleList:ruleList})
 
-        DOM.elemById('CAGEN', 'MAIN_CONTAINER').innerHTML = rendered
+        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = rendered
 
         thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
         

@@ -12,7 +12,7 @@ var coffeeFiles = [
     'src/Thumbnails.coffee',
     'src/Tabs.coffee',
     'src/TopRowEditor.coffee',
-    'src/CAGEN.coffee'
+    'src/WolfCage.coffee'
 ];
 
 gulp.task('compile-coffee', function() {
@@ -20,7 +20,7 @@ gulp.task('compile-coffee', function() {
         .pipe(sourcemaps.init())
         .pipe(coffee({bare:true}))
         .pipe(sourcemaps.write())
-        .pipe(concat('cagen.js'))
+        .pipe(concat('wolfcage.js'))
         .pipe(gulp.dest('dist/'));
 });
 

@@ -1,12 +1,12 @@
 ###
 
-The Generator for the Cellular Automata GENerator (CAGEN).
+The Cellular Automata Generator for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata Generator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 Functionality for building the generator for
 controlling the cellular automata generation.
@@ -45,8 +45,8 @@ class Generator
     # 
     run:() ->
         generatorTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_MAIN_CONTAINER').innerHTML
-        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
-        cagenMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
+        wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
+        wolfcageMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
 
         # Build a new Board
         @_Board = new Board(@BUS)

@@ -1,13 +1,14 @@
 ###
 
-A pub/sub and variable exchange for CAGEN
+A pub/sub system and shared variable exchange for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
 Subscribe and publish to a channel.
-Set and get global variables.
+
+Set and get shared variables.
 
 ###
 

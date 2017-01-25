@@ -1,15 +1,16 @@
 ###
-Initialize the CAGEN sections and setup the tabs.
+
+Initialize the various WolfCage classes.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata Generator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 ###
 
-class CAGEN
+class WolfCage
 
     constructor:() ->
 

@@ -1,12 +1,12 @@
 ###
 
-The DOM configuration for the Cellular Automata GENerator (CAGEN).
+The DOM configuration for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata Generator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 Contains the settings for the DOM objects.
 
@@ -15,33 +15,33 @@ Holds ids and classes of relevant DOM objects.
 class DOM
     @ids = {
         'BOARD':{
-            'CONTAINER':'cagen-board',
-            'MESSAGE_CONTAINER':'cagen-generatemessage-container'
+            'CONTAINER':'wolfcage-board',
+            'MESSAGE_CONTAINER':'wolfcage-generatemessage-container'
         },
-        'CAGEN':{
-            'MAIN_CONTAINER':'cagen-container'
+        'WOLFCAGE':{
+            'MAIN_CONTAINER':'wolfcage-container'
         },
         'GENERATOR':{
-            'CONTENT_CONTAINER':'cagen-generator-content',
-            'RULE_PREVIEW_CONTAINER':'cagen-rules-preview-container',
-            'RULE_DROPDOWN':'cagen-generator-select-input',
-            'RULE_GENERATE_BUTTON':'cagen-generator-generate-button',
-            'COLORPICKER_BUTTON':'cagen-generator-colorpicker-button',
-            'COLORPICKER_CONTAINER':'cagen-colorpicker',
-            'COLORPICKER_ACTIVE':'cagen-colorpicker-active',
-            'COLORPICKER_BORDER':'cagen-colorpicker-border',
-            'COLORPICKER_INACTIVE':'cagen-colorpicker-inactive',
-            'TEMPLATE_BOARD':'tmpl-cagen-generator-board',
-            'TEMPLATE_COLORPICKER':'tmpl-cagen-generator-colorpicker',
-            'TEMPLATE_MAIN_CONTAINER':'tmpl-cagen-generator',
-            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-cagen-generator-preview-cell',
+            'CONTENT_CONTAINER':'wolfcage-generator-content',
+            'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
+            'RULE_DROPDOWN':'wolfcage-generator-select-input',
+            'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
+            'COLORPICKER_BUTTON':'wolfcage-generator-colorpicker-button',
+            'COLORPICKER_CONTAINER':'wolfcage-colorpicker',
+            'COLORPICKER_ACTIVE':'wolfcage-colorpicker-active',
+            'COLORPICKER_BORDER':'wolfcage-colorpicker-border',
+            'COLORPICKER_INACTIVE':'wolfcage-colorpicker-inactive',
+            'TEMPLATE_BOARD':'tmpl-wolfcage-generator-board',
+            'TEMPLATE_COLORPICKER':'tmpl-wolfcage-generator-colorpicker',
+            'TEMPLATE_MAIN_CONTAINER':'tmpl-wolfcage-generator',
+            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-wolfcage-generator-preview-cell',
         },
         'TABS':{
-            'CONTAINER':'cagen-tab-container',
-            'TEMPLATE':'tmpl-cagen-tabs'
+            'CONTAINER':'wolfcage-tab-container',
+            'TEMPLATE':'tmpl-wolfcage-tabs'
         },
         'THUMBNAILS':{
-            'TEMPLATE_THUMBNAILS':'tmpl-cagen-thumbnails',
+            'TEMPLATE_THUMBNAILS':'tmpl-wolfcage-thumbnails',
         },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',
@@ -52,7 +52,7 @@ class DOM
             'SLIDER':'rowed-slider',
             'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
             'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right',
-            'TEMPLATE_TOPROWEDITOR': 'tmpl-cagen-toproweditor',
+            'TEMPLATE_TOPROWEDITOR': 'tmpl-wolfcage-toproweditor',
             'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
             'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
         },
@@ -60,22 +60,22 @@ class DOM
 
     @classes = {
         'BOARD':{
-            'CELL_ACTIVE_CLASS':'cagen-board-cell-active',
-            'CELL_BASE_CLASS':'cagen-board-cell',
+            'CELL_ACTIVE_CLASS':'wolfcage-board-cell-active',
+            'CELL_BASE_CLASS':'wolfcage-board-cell',
         },
         'GENERATOR':{
-            'RULE_PREVIEW_CELL_ACTIVE':'cagen-generator-preview-cell-active'
+            'RULE_PREVIEW_CELL_ACTIVE':'wolfcage-generator-preview-cell-active'
         },
         'TABS':{
             'ACTIVE':'active'
         },
         'THUMBNAILS':{
-            'THUMB_BOX':'cagen-rulethumb-box',
+            'THUMB_BOX':'wolfcage-rulethumb-box',
         },
         'TOPROWEDITOR':{
             'EDITOR_CELL':'rowed-editor-cell',
             'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
-            'SLIDER_CELL_ACTIVE':'cagen-board-cell-active'
+            'SLIDER_CELL_ACTIVE':'wolfcage-board-cell-active'
         },
     }
 
@@ -84,11 +84,11 @@ class DOM
             'CELL':'sb_'
         },
         'GENERATOR':{
-            'RULE_PREVIEW_CELL':'cagen-generator-preview-',
-            'RULE_PREVIEW_DIGIT':'cagen-generator-preview-digit-'
+            'RULE_PREVIEW_CELL':'wolfcage-generator-preview-',
+            'RULE_PREVIEW_DIGIT':'wolfcage-generator-preview-digit-'
         },
         'TABS':{
-            'TAB_PREFIX':'cagen-tab-'
+            'TAB_PREFIX':'wolfcage-tab-'
         },
         'TOPROWEDITOR':{
             'SLIDER_COL':'rowed-slider-col-'

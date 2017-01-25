@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <!-- CAGEN specific styles -->
-  <link rel="stylesheet" type="text/css" href="cagen.css">
+  <link rel="stylesheet" type="text/css" href="wolfcage.css">
 
   <!-- jQuery for DOM interaction -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -27,11 +27,11 @@
   <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
 
   <!-- Main CAGEN js -->
-  <script src="dist/cagen.js"></script>
+  <script src="dist/wolfcage.js"></script>
 
   <script type="text/javascript">
     $(function(){
-      var cagen = new CAGEN();
+      var wolfcage = new WolfCage();
     });
   </script>
 
@@ -43,102 +43,102 @@
 
 <body>
   <ul class="nav nav-tabs" 
-      id="cagen-tab-container"></ul>
-  <div id="cagen-container"></div>
+      id="wolfcage-tab-container"></ul>
+  <div id="wolfcage-container"></div>
 </body>
 
 <!-- Tabs Mustache Template -->
-<script type="text/template" id="tmpl-cagen-tabs">
+<script type="text/template" id="tmpl-wolfcage-tabs">
   <li role="presentation" 
       class="active" 
-      id="cagen-tab-thumbnails" 
+      id="wolfcage-tab-thumbnails" 
       data-tab-module="thumbnails"><a href="#">Thumbnails</a></li>
   <li role="presentation" 
-      id="cagen-tab-toproweditor" 
+      id="wolfcage-tab-toproweditor" 
       data-tab-module="toproweditor"><a href="#">Top Row Editor</a></li>
   <li role="presentation" 
-      id="cagen-tab-generator" 
+      id="wolfcage-tab-generator" 
       data-tab-module="generator"><a href="#">Generator</a></li>
 </scrip>
 
 <!-- Generator Mustache Template -->
-<script type="text/template" id="tmpl-cagen-generator">
-	<div id="cagen-generator-container" class="well">
-      <div class="cagen-generator-box">
+<script type="text/template" id="tmpl-wolfcage-generator">
+	<div id="wolfcage-generator-container" class="well">
+      <div class="wolfcage-generator-box">
         <div class="form-inline" >
-        Rule&nbsp;<select id="cagen-generator-select-input"
+        Rule&nbsp;<select id="wolfcage-generator-select-input"
                           class="form-control input-sm"></select>
-        &nbsp;<button id="cagen-generator-generate-button"
+        &nbsp;<button id="wolfcage-generator-generate-button"
                       class="btn btn-default btn-sm">Generate</button>
-        &nbsp;<button id="cagen-generator-colorpicker-button"
+        &nbsp;<button id="wolfcage-generator-colorpicker-button"
                       class="btn btn-default btn-sm">Color</button>                      
         </div>
       </div>
 
-      <div id="cagen-rules-preview-container"></div>
-      <div class="cagen-generator-box" style="float:right;">
+      <div id="wolfcage-rules-preview-container"></div>
+      <div class="wolfcage-generator-box" style="float:right;">
         Current Rule:
       </div>
-      <div id="cagen-generatemessage-container">Generating Cellular Automata...</div>
-      <div id="cagen-colorpicker" class="cp cp-small"></div>
+      <div id="wolfcage-generatemessage-container">Generating Cellular Automata...</div>
+      <div id="wolfcage-colorpicker" class="cp cp-small"></div>
     </div>
-    <div id="cagen-generator-content"></div>
+    <div id="wolfcage-generator-content"></div>
 	
 </script>
 
 <!-- Board Mustache Template -->
-<script type="text/template" id="tmpl-cagen-generator-board">
-  <div id="cagen-board-container">
-		<div id="cagen-board"></div>
+<script type="text/template" id="tmpl-wolfcage-generator-board">
+  <div id="wolfcage-board-container">
+		<div id="wolfcage-board"></div>
   </div>
 </script>
 
 <!-- Generator Preview Mustache Template -->
-<script type="text/template" id="tmpl-cagen-generator-preview-cell">
-  <div class="cagen-generator-preview-box" >
-	<div class="cagen-generator-preview-triple-cell-container">
-	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-left {{#leftBitActive}}cagen-generator-preview-cell-active{{/leftBitActive}}"></div>
-	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-middle {{#middleBitActive}}cagen-generator-preview-cell-active{{/middleBitActive}}"></div>
-	  <div class="cagen-generator-preview-cell cagen-generator-preview-cell-right {{#rightBitActive}}cagen-generator-preview-cell-active{{/rightBitActive}}"></div>
+<script type="text/template" id="tmpl-wolfcage-generator-preview-cell">
+  <div class="wolfcage-generator-preview-box" >
+	<div class="wolfcage-generator-preview-triple-cell-container">
+	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-left {{#leftBitActive}}wolfcage-generator-preview-cell-active{{/leftBitActive}}"></div>
+	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-middle {{#middleBitActive}}wolfcage-generator-preview-cell-active{{/middleBitActive}}"></div>
+	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-right {{#rightBitActive}}wolfcage-generator-preview-cell-active{{/rightBitActive}}"></div>
 	</div>
-	<div class="cagen-generator-preview-result-cell-container">
-	  <div id="cagen-generator-preview-{{previewIndex}}"
-		   class="cagen-generator-preview-cell cagen-generator-preview-cell-middle"></div>
-	  <div id="cagen-generator-preview-digit-{{previewIndex}}"
-		   class="cagen-generator-preview-digit"></div>
+	<div class="wolfcage-generator-preview-result-cell-container">
+	  <div id="wolfcage-generator-preview-{{previewIndex}}"
+		   class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-middle"></div>
+	  <div id="wolfcage-generator-preview-digit-{{previewIndex}}"
+		   class="wolfcage-generator-preview-digit"></div>
 	</div>
   </div>
 </script>
 
 <!-- ColorPicker Mustache Template -->
-<script type="text/template" id="tmpl-cagen-generator-colorpicker">
-  <fieldset class="cagen-colorpicker-container"><legend>Active Cell Color</legend>
-    <span id="cagen-colorpicker-active"></span>
+<script type="text/template" id="tmpl-wolfcage-generator-colorpicker">
+  <fieldset class="wolfcage-colorpicker-container"><legend>Active Cell Color</legend>
+    <span id="wolfcage-colorpicker-active"></span>
   </fieldset>
-  <fieldset  class="cagen-colorpicker-container"><legend>Border Color</legend>
-    <div id="cagen-colorpicker-border"></div>
+  <fieldset  class="wolfcage-colorpicker-container"><legend>Border Color</legend>
+    <div id="wolfcage-colorpicker-border"></div>
   </fieldset>
-  <fieldset  class="cagen-colorpicker-container"><legend>In-active Cell Color</legend>
-    <div id="cagen-colorpicker-inactive"></div>
+  <fieldset  class="wolfcage-colorpicker-container"><legend>In-active Cell Color</legend>
+    <div id="wolfcage-colorpicker-inactive"></div>
   </fieldset>
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->
-<script type="text/template" id="tmpl-cagen-thumbnails">
+<script type="text/template" id="tmpl-wolfcage-thumbnails">
 {{#ruleList}}
-<div class="cagen-rulethumb-box"
+<div class="wolfcage-rulethumb-box"
      data-rule="{{.}}">
   <img src="captures/thumbs/rule_{{.}}.png"
-       class="cagen-rulethumb-img"
+       class="wolfcage-rulethumb-img"
        data-rule="{{.}}"/>
-  <div class="cagen-rulethumb-rulenum">{{.}}</div>
+  <div class="wolfcage-rulethumb-rulenum">{{.}}</div>
 </div>
 {{/ruleList}}
 </script>
 
 
 <!-- Base Container for The Top Row Editor Mustache Template -->
-<script type="text/template" id="tmpl-cagen-toproweditor">
+<script type="text/template" id="tmpl-wolfcage-toproweditor">
     <div id="rowed-slider-container">
 		<div id="rowed-slider"
              data-toggle="tooltip"
@@ -171,7 +171,7 @@
 
 <!-- Top Row Editor - Cells that compose the upper small preview row -->
 <script type="text/template" id="tmpl-rowed-slider-cell">
-  <div id="{{ id }}" style="left:{{ left }}px;" class="cagen-board-cell {{ activeClass }}"></div>
+  <div id="{{ id }}" style="left:{{ left }}px;" class="wolfcage-board-cell {{ activeClass }}"></div>
 </script>
 
 </html>

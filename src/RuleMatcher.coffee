@@ -1,11 +1,12 @@
 ###
-RuleMatcher.coffee
+
+Rule Matcher for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata Generator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage).
 
 The rule is a binary string. Each 1 in the binary string
 represents a rule to-be-followed in the next row of

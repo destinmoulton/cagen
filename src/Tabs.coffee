@@ -3,13 +3,12 @@
 The tabbed interface handler.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata GENerator (CAGEN)
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
-
-Manage the tabs for the various CAGEN features.
+Manage the tabs for the various WolfCage feature panels.
 
 ###
 

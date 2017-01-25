@@ -1,8 +1,9 @@
 ###
-CAGEN: Cellular Automata GENerator
+
+The Cellular Board for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
 Generate a cellular automata board based on a passed rule.

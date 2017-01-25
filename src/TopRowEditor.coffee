@@ -1,17 +1,16 @@
 ###
 
-The top/root row editor for CAGEN.
+The top row editor for WolfCage.
 
 @author Destin Moulton
-@git https://github.com/destinmoulton/cagen
+@git https://github.com/destinmoulton/wolfcage
 @license MIT
 
-Component of Cellular Automata GENerator (CAGEN)
-
+Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 The user can edit the top/root row, allowing them to "seed"
 the generator to test configurations and create new variations
-on the standard NKS version.
+on the standard rules presented in A New Kind of Science.
 
 ###
 
@@ -74,8 +73,8 @@ class TopRowEditor
     #
     _setupContainerTemplate: ()->
         toproweditorHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML
-        cagenMainElem = DOM.elemById('CAGEN', 'MAIN_CONTAINER')
-        cagenMainElem.innerHTML = Mustache.render(toproweditorHTML,{})
+        wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
+        wolfcageMainElem.innerHTML = Mustache.render(toproweditorHTML,{})
 
     #
     # Setup the slider (zoomer)

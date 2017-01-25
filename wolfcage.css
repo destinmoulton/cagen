@@ -2,12 +2,12 @@ body{
 	background-color:white;
 }
 
-#cagen-container{
+#wolfcage-container{
     position:absolute;
     top:55px;
 }
 
-#cagen-generatemessage-container{
+#wolfcage-generatemessage-container{
     position:relative;
     float:left;
     top:0px;
@@ -15,19 +15,19 @@ body{
     display:none;
 }
 
-#cagen-board-container{
+#wolfcage-board-container{
 	position:relative;
     float:left;
 }
 
-#cagen-board{
+#wolfcage-board{
 	position:absolute;
     border-top:1px solid black;
 	border-left:1px solid black;
     /*display:none;*/
 }
 
-.cagen-board-cell{
+.wolfcage-board-cell{
 	position:absolute;
 	width:5px;
 	height:5px;
@@ -35,30 +35,30 @@ body{
 	border-bottom:1px solid black;
 }
 
-.cagen-board-cell-active{
+.wolfcage-board-cell-active{
 	background-color:black;
 }
 
-#cagen-colorpicker{
+#wolfcage-colorpicker{
     display:none;
 }
 
-fieldset.cagen-colorpicker-container{
+fieldset.wolfcage-colorpicker-container{
     float:left;
     margin:5px;
     border:1px solid black;
     padding:15px;
 }
 
-#cagen-colorpicker-cell{
+#wolfcage-colorpicker-cell{
     width:150px;
 }
 
-#cagen-colorpicker-border{
+#wolfcage-colorpicker-border{
     width:150px;
 }
 
-#cagen-generator-container{
+#wolfcage-generator-container{
 	position:relative;
     float:left;
 	top:0px;
@@ -67,13 +67,13 @@ fieldset.cagen-colorpicker-container{
     margin-bottom:5px;
 }
 
-.cagen-generator-box{
+.wolfcage-generator-box{
     position:relative;
     float:left;
     padding:5px;
 }
 
-#cagen-generator-content{
+#wolfcage-generator-content{
     position:relative;
     float:left;
     left:15px;
@@ -82,50 +82,50 @@ fieldset.cagen-colorpicker-container{
     height:100%;
 }
 
-#cagen-rules-preview-container{
+#wolfcage-rules-preview-container{
 	position:relative;
 	float:right;
 	height:40px;
     padding:5px;
 }
 
-.cagen-generator-preview-cell{
+.wolfcage-generator-preview-cell{
 	position:absolute;
 	width:10px;
 	height:10px;
 	border:1px solid black;
 }
 
-.cagen-generator-preview-cell-left{
+.wolfcage-generator-preview-cell-left{
 	left:0px;
 }
-.cagen-generator-preview-cell-middle{
+.wolfcage-generator-preview-cell-middle{
 	left:10px;
 }
-.cagen-generator-preview-cell-right{
+.wolfcage-generator-preview-cell-right{
 	left:20px;
 }
-.cagen-generator-preview-digit{
+.wolfcage-generator-preview-digit{
 	position:absolute;
 	left:24px;
 	font-size:10px;
 }
-.cagen-generator-preview-cell-active{
+.wolfcage-generator-preview-cell-active{
 	background-color:black;
 }
-.cagen-generator-preview-box{
+.wolfcage-generator-preview-box{
 	position:relative;
     float:left;
 	width:40px;
 	height:30px;
 	
 }
-.cagen-generator-preview-triple-cell-container{
+.wolfcage-generator-preview-triple-cell-container{
 	position:relative;
 	width:30px;
 	height:10px;
 }
-.cagen-generator-preview-result-cell-container{
+.wolfcage-generator-preview-result-cell-container{
 	position:relative;
 	width:30px;
 	height:20px;
@@ -134,7 +134,7 @@ fieldset.cagen-colorpicker-container{
 }
 
 
-.cagen-rulethumb-box{
+.wolfcage-rulethumb-box{
     position:relative;
     float:left;
     padding:0px 5px 5px 0px;
@@ -142,13 +142,13 @@ fieldset.cagen-colorpicker-container{
     cursor:pointer;
 }
 
-.cagen-rulethumb-img{
+.wolfcage-rulethumb-img{
     width:150px;
     padding:0 0;
     margin:0 0;
 }
 
-.cagen-rulethumb-rulenum{
+.wolfcage-rulethumb-rulenum{
     position:absolute;
     /*right:0px;
     bottom:0px;
