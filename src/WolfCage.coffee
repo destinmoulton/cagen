@@ -12,10 +12,12 @@ Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 class WolfCage
 
-    constructor:() ->
+    constructor:(options) ->
 
         # PUB/SUB and variable store for inter-class communication
         @BUS = new Bus()
+
+        @BUS.set('thumbnails.path', options.thumbnails_path);
 
         # Set the initial colors
         @BUS.set('board.cell.style.activeBackgroundColor', '#000000')

@@ -34,9 +34,14 @@ class Thumbnails
         # Setup the list of rules
         ruleList = [0..255]
 
+        template_options = {
+            ruleList:ruleList,
+            path:@BUS.get('thumbnails.path')
+        }
+
         # Clear the current thumbnails and populate it via Mustache template
         thumbnailHTML = DOM.elemById('THUMBNAILS', 'TEMPLATE_THUMBNAILS').innerHTML
-        rendered = Mustache.render(thumbnailHTML, {ruleList:ruleList})
+        rendered = Mustache.render(thumbnailHTML, template_options)
 
         DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = rendered
 

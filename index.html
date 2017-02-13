@@ -19,9 +19,6 @@
   <!-- Mustache.js for HTML templates -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
 
-  <!-- Radio for pub/sub event handling -->
-  <script src="vendors/radio.min.js"></script>
-
   <!-- Flexi Color Color Picker -->
   <script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
   <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
@@ -31,7 +28,10 @@
 
   <script type="text/javascript">
     $(function(){
-      var wolfcage = new WolfCage();
+      var options = {
+        thumbnails_path:'captures/thumbs/'
+      }
+      var wolfcage = new WolfCage(options);
     });
   </script>
 
@@ -127,8 +127,8 @@
 <script type="text/template" id="tmpl-wolfcage-thumbnails">
 {{#ruleList}}
 <div class="wolfcage-rulethumb-box"
-     data-rule="{{.}}">
-  <img src="captures/thumbs/rule_{{.}}.png"
+     data-rule="{{ . }}">
+  <img src="{{ path }}rule_{{ . }}.png"
        class="wolfcage-rulethumb-img"
        data-rule="{{.}}"/>
   <div class="wolfcage-rulethumb-rulenum">{{.}}</div>
