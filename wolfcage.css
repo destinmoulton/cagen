@@ -173,6 +173,11 @@ fieldset.wolfcage-colorpicker-container{
     border-radius:6px;
 }
 
+#rowed-container{
+    position:relative;
+    float:left;
+}
+
 #rowed-slider-container{
 	position:relative;
 	border:1px solid black;
