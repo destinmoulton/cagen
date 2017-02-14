@@ -31,7 +31,8 @@ body{
 	position:absolute;
     border-top:1px solid black;
 	border-left:1px solid black;
-    /*display:none;*/
+    width:756px;
+    height:376px;
 }
 
 .wolfcage-board-cell{
