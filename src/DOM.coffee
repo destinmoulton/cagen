@@ -23,6 +23,7 @@ class DOM
         },
         'GENERATOR':{
             'CONTENT_CONTAINER':'wolfcage-generator-board',
+            'BOARD':'wolfcage-board',
             'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',

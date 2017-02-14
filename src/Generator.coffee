@@ -154,8 +154,7 @@ class Generator
     # 
     _buildRulePreview: ->
         currentRule = @BUS.get('rulebinarysting')
-        console.log("_buildRulePreview")
-        console.log(currentRule)
+        
         # Use the template to generate the preview
         previewCellHtml = DOM.elemById('GENERATOR','TEMPLATE_RULE_PREVIEW_CELL').innerHTML
 

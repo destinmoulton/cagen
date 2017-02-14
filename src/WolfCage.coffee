@@ -20,6 +20,7 @@ class WolfCage
         @BUS.set('thumbnails.path', options.thumbnails_path);
 
         # Set the initial colors
+        @BUS.set('board.style.borderColor', '#000000')
         @BUS.set('board.cell.style.activeBackgroundColor', '#000000')
         @BUS.set('board.cell.style.borderColor', '#000000')
         @BUS.set('board.cell.style.inactiveBackgroundColor', '#ffffff')
