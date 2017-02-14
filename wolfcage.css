@@ -65,7 +65,7 @@ fieldset.wolfcage-colorpicker-container{
     width:150px;
 }
 
-#wolfcage-generator-container{
+#wolfcage-generator-options{
 	position:relative;
     float:left;
 	top:0px;
@@ -80,7 +80,7 @@ fieldset.wolfcage-colorpicker-container{
     padding:5px;
 }
 
-#wolfcage-generator-content{
+#wolfcage-generator-board{
     position:relative;
     float:left;
     left:15px;
