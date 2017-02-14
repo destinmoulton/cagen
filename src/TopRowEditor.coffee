@@ -109,6 +109,7 @@ class TopRowEditor
 
         # Get the initial slider position
         @_sliderInitialOffset = @_getOffsetPosition(@_sliderElem)
+
     
     #
     # Setup the Button events
@@ -147,21 +148,22 @@ class TopRowEditor
     _moveSlider: (ev)=>
 
         # Get the mouse position
-        xMousePos = ev.clientX
+        #xMousePos = ev.clientX
+        xMousePos = ev.pageX - @_sliderInitialOffset.left
         closestEdgePx = xMousePos - (xMousePos % @_colWidth)
 
         # Calculate the relative position of the slider
-        leftPos = closestEdgePx - @_sliderPxToMid
-        rightPos = closestEdgePx + @_sliderPxToMid+@_colWidth
-        fullWidth = @_totalWidth + @_colWidth
+        leftEdgeSlider = closestEdgePx - @_sliderPxToMid
+        if leftEdgeSlider < 0
+            leftEdgeSlider = 0
+        
+        rightEdgeSlider = closestEdgePx + @_sliderPxToMid+@_colWidth
+        widthOfContainer = @_totalWidth + @_colWidth
+        
+        if leftEdgeSlider >= 0 && rightEdgeSlider <=  widthOfContainer
+            @_sliderElem.style.left = leftEdgeSlider + "px"
 
-        # Adjust the calculation based on a fudged initial offset
-        adjustedLeft = leftPos+@_sliderInitialOffset.left
-
-        if adjustedLeft >= @_sliderInitialOffset.left && rightPos <=  fullWidth
-            @_sliderElem.style.left = adjustedLeft + "px"
-
-            leftCellNo = (leftPos / @_colWidth) + 1
+            leftCellNo = (leftEdgeSlider / @_colWidth) + 1
 
             @_updateEditorCells(leftCellNo)
 
@@ -198,10 +200,10 @@ class TopRowEditor
         cellHtml = ""
         for cell in [1..@_sliderCols]
             tmpId = "editor-cell-"+cell
-            leftPos = (cell-1)*@_editorCellWidth
+            leftEdgeSlider = (cell-1)*@_editorCellWidth
 
             # Create and append the editor cell via Mustache template
-            cellHtml += Mustache.render(cellTemplateHTML, {id:tmpId, left:leftPos})
+            cellHtml += Mustache.render(cellTemplateHTML, {id:tmpId, left:leftEdgeSlider})
             # Setup the click event when a user toggles a cell by clicking on it
 
         @_jEditorContainer.innerHTML = cellHtml
@@ -269,11 +271,11 @@ class TopRowEditor
             if @_aRowBinary[col] is 1
                 activeClass = DOM.getClass('TOPROWEDITOR', 'SLIDER_CELL_ACTIVE')
 
-            leftPos = ((col - 1) * @_colWidth)
+            leftEdgeSlider = ((col - 1) * @_colWidth)
             tmpId = sliderColPrefix + col
 
             # Create a rendering of the cell via Mustache template
-            rowHtml += Mustache.render(smallcellTemplateHTML, {id:tmpId, left:leftPos, activeClass:activeClass})
+            rowHtml += Mustache.render(smallcellTemplateHTML, {id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
 
         # Add the cells
         @_rowContainerElem.innerHTML = rowHtml
