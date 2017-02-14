@@ -91,6 +91,7 @@ fieldset.wolfcage-colorpicker-container{
     left:15px;
     top:0px;
     width:800px;
+    height:375px;
 }
 
 #wolfcage-rules-preview-container{
@@ -181,6 +182,7 @@ fieldset.wolfcage-colorpicker-container{
 #rowed-container{
     position:relative;
     float:left;
+    height:175px;
 }
 
 #rowed-slider-container{
