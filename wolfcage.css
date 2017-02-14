@@ -65,6 +65,11 @@ fieldset.wolfcage-colorpicker-container{
     width:150px;
 }
 
+#wolfcage-generator-container{
+    position:relative;
+    min-height:200px;
+}
+
 #wolfcage-generator-options{
 	position:relative;
     float:left;
