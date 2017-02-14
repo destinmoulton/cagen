@@ -22,7 +22,7 @@ class DOM
             'MAIN_CONTAINER':'wolfcage-container'
         },
         'GENERATOR':{
-            'CONTENT_CONTAINER':'wolfcage-generator-content',
+            'CONTENT_CONTAINER':'wolfcage-generator-board',
             'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
