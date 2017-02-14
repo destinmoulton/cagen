@@ -4,8 +4,12 @@ body{
 
 #wolfcage-container{
     position:relative;
-    top:10px;
     background-color:white;
+    padding:5px;
+    border-left:2px solid black;
+    border-right:2px solid black;
+    border-bottom:2px solid black;
+    width:790px;
 }
 
 #wolfcage-container:after{
@@ -17,6 +21,7 @@ body{
 #wolfcage-tab-container{
     font-weight:bold;
     border-bottom:2px solid black;
+    width:790px;
 }
 
 #wolfcage-tab-container > li > a{
@@ -218,7 +223,7 @@ fieldset.wolfcage-colorpicker-container{
 #rowed-container{
     position:relative;
     float:left;
-    height:175px;
+    height:195px;
 }
 
 #rowed-slider-container{
