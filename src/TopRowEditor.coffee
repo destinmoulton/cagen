@@ -33,8 +33,8 @@ class TopRowEditor
         @_sliderCols = 26
         @_sliderPxToMid = (@_sliderCols / 2) * @_colWidth
         @_editorCellWidth = 29
-        @_totalWidth = @_colWidth*@_noColumns
-
+        @_totalWidth = @_colWidth*@_noColumns+2
+        
         @_generateInitialBinary()
 
         @BUS.subscribe('toproweditor.run',
