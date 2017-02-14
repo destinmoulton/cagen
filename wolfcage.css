@@ -8,6 +8,12 @@ body{
     background-color:white;
 }
 
+#wolfcage-container:after{
+    clear: both;
+    content: "";
+    display: table;
+}
+
 #wolfcage-generatemessage-container{
     position:relative;
     float:left;
