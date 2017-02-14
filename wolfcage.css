@@ -5,6 +5,7 @@ body{
 #wolfcage-container{
     position:relative;
     top:10px;
+    background-color:white;
 }
 
 #wolfcage-generatemessage-container{
