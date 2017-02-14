@@ -3,8 +3,8 @@ body{
 }
 
 #wolfcage-container{
-    position:absolute;
-    top:55px;
+    position:relative;
+    top:10px;
 }
 
 #wolfcage-generatemessage-container{
@@ -79,7 +79,6 @@ fieldset.wolfcage-colorpicker-container{
     left:15px;
     top:0px;
     width:800px;
-    height:100%;
 }
 
 #wolfcage-rules-preview-container{
@@ -168,7 +167,7 @@ fieldset.wolfcage-colorpicker-container{
 }
 
 #rowed-slider-container{
-	position:absolute;
+	position:relative;
 	border:1px solid black;
 	height:100px;
 }
