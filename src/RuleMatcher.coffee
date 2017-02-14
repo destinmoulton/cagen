@@ -62,6 +62,8 @@ class RuleMatcher
         # next row.
         @_binaryRule = @_decToBinary(decimalRule)
 
+        @BUS.set('rulebinarysting', @_binaryRule)
+
     #
     # Match a pattern for the three bit positions
     # 
