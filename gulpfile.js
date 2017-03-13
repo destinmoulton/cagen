@@ -2,6 +2,8 @@ var gulp = require('gulp');
 var coffee = require('gulp-coffee');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
+var hoganCompiler = require('gulp-hogan-precompile');
+var declare = require('gulp-declare');
 
 var coffeeFiles = [
     'src/Bus.coffee',
@@ -31,7 +33,7 @@ gulp.task('compile-templates', function() {
         namespace: 'templates',
         noRedeclare: true
       }))
-      .pipe(concat('tetrjs.templates.js'))
+      .pipe(concat('wolfcage.templates.js'))
       .pipe(gulp.dest('.'));
 });
 
