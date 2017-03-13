@@ -37,7 +37,7 @@ gulp.task('compile-templates', function() {
       .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch-coffee', function() {
     gulp.start('compile-coffee');
     gulp.watch('src/*.coffee', ['compile-coffee']);
 });
