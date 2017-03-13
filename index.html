@@ -56,127 +56,48 @@
 
 <!-- Tabs Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-tabs">
-  <li role="presentation" 
-      class="active" 
-      id="wolfcage-tab-thumbnails" 
-      data-tab-module="thumbnails"><a href="#">Thumbnails</a></li>
-  <li role="presentation" 
-      id="wolfcage-tab-toproweditor" 
-      data-tab-module="toproweditor"><a href="#">Top Row Editor</a></li>
-  <li role="presentation" 
-      id="wolfcage-tab-generator" 
-      data-tab-module="generator"><a href="#">Generator</a></li>
+  
 </script>
 
 <!-- Generator Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-generator">
-  <div id="wolfcage-generator-container">
-    <div id="wolfcage-generator-options" class="well">
-      <div class="wolfcage-generator-box">
-        <div class="form-inline">
-          Rule&nbsp;<select id="wolfcage-generator-select-input" class="form-control input-sm"></select> &nbsp;
-          <button id="wolfcage-generator-generate-button" class="btn btn-default btn-sm">Generate</button> &nbsp;
-          <button id="wolfcage-generator-colorpicker-button" class="btn btn-default btn-sm">Color</button>
-        </div>
-      </div>
-
-      <div id="wolfcage-rules-preview-container"></div>
-      <div class="wolfcage-generator-box" style="float:right;"></div>
-      <div id="wolfcage-generatemessage-container">Generating Cellular Automata...</div>
-      <div id="wolfcage-colorpicker" class="cp cp-small"></div>
-    </div>
-    <div id="wolfcage-generator-board"></div>
-  </div>
+  
 </script>
 
 <!-- Board Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-generator-board">
-  <div id="wolfcage-board-container">
-		<div id="wolfcage-board"></div>
-  </div>
+  
 </script>
 
 <!-- Generator Preview Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-generator-preview-cell">
-  <div class="wolfcage-generator-preview-box" >
-	<div class="wolfcage-generator-preview-triple-cell-container">
-	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-left {{#leftBitActive}}wolfcage-generator-preview-cell-active{{/leftBitActive}}"></div>
-	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-middle {{#middleBitActive}}wolfcage-generator-preview-cell-active{{/middleBitActive}}"></div>
-	  <div class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-right {{#rightBitActive}}wolfcage-generator-preview-cell-active{{/rightBitActive}}"></div>
-	</div>
-	<div class="wolfcage-generator-preview-result-cell-container">
-	  <div id="wolfcage-generator-preview-{{previewIndex}}"
-		   class="wolfcage-generator-preview-cell wolfcage-generator-preview-cell-middle"></div>
-	  <div id="wolfcage-generator-preview-digit-{{previewIndex}}"
-		   class="wolfcage-generator-preview-digit"></div>
-	</div>
-  </div>
+  
 </script>
 
 <!-- ColorPicker Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-generator-colorpicker">
-  <fieldset class="wolfcage-colorpicker-container"><legend>Active Cell Color</legend>
-    <span id="wolfcage-colorpicker-active"></span>
-  </fieldset>
-  <fieldset  class="wolfcage-colorpicker-container"><legend>Border Color</legend>
-    <div id="wolfcage-colorpicker-border"></div>
-  </fieldset>
-  <fieldset  class="wolfcage-colorpicker-container"><legend>Inactive Cell Color</legend>
-    <div id="wolfcage-colorpicker-inactive"></div>
-  </fieldset>
+
 </script>
 
 <!-- Rule Thumbnails List Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-thumbnails">
-{{#ruleList}}
-<div class="wolfcage-rulethumb-box"
-     data-rule="{{ . }}">
-  <img src="{{ path }}rule_{{ . }}.png"
-       class="wolfcage-rulethumb-img"
-       data-rule="{{.}}"/>
-  <div class="wolfcage-rulethumb-rulenum">{{.}}</div>
-</div>
-{{/ruleList}}
+
 </script>
 
 
 <!-- Base Container for The Top Row Editor Mustache Template -->
 <script type="text/template" id="tmpl-wolfcage-toproweditor">
-  <div id="rowed-container">
-    <div id="rowed-slider-container">
-		<div id="rowed-slider"
-             data-toggle="tooltip"
-             data-placement="right"
-             title="Click to Start Dragging">
-          <div id="rowed-slider-arrow-left"
-               class="glyphicon glyphicon-chevron-left"
-               aria-hidden="true"></div>
-          <div id="rowed-slider-arrow-right"
-               class="glyphicon glyphicon-chevron-right"
-               aria-hidden="true"></div>
-        </div>
-        
-		<div id="rowed-slider-row-container"></div>
-	</div>
-	<div id="rowed-editor-container"></div>
-    <div id="rowed-button-container">
-      <button id="rowed-button-generate"
-              class="btn btn-default btn-sm">Generate</button>
-      &nbsp;&nbsp;&nbsp;
-      <button id="rowed-button-resetrow"
-              class="btn btn-default btn-sm">Reset Row</button>
-    </div>
-  </div>
+  
 </script>
 
-<!-- Top Row Editor - Cells that compose the lower, numbered, row -->
+
 <script type="text/template" id="tmpl-rowed-editor-cell">
-  <div id="{{ id }}" class="rowed-editor-cell" style="left:{{ left }}px;"></div>
+  
 </script>
 
-<!-- Top Row Editor - Cells that compose the upper small preview row -->
+
 <script type="text/template" id="tmpl-rowed-slider-cell">
-  <div id="{{ id }}" style="left:{{ left }}px;" class="wolfcage-board-cell {{ activeClass }}"></div>
+  
 </script>
 
 </html>
