@@ -20,14 +20,15 @@
   },
   "homepage": "https://github.com/destinmoulton/cagen#readme",
   "dependencies": {
+    
+  },
+  "devDependencies": {
+    "gulp-sourcemaps": "^1.9.1",
     "coffee-script": "^1.11.1",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.3",
     "gulp-concat": "^2.6.1",
     "gulp-declare": "^0.3.0",
     "gulp-hogan-precompile": "^0.1.1"
-  },
-  "devDependencies": {
-    "gulp-sourcemaps": "^1.9.1"
   }
 }
