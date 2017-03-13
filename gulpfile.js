@@ -24,6 +24,17 @@ gulp.task('compile-coffee', function() {
         .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('compile-templates', function() {
+  gulp.src('templates/**/*.mustache')
+      .pipe(hoganCompiler())
+      .pipe(declare({
+        namespace: 'templates',
+        noRedeclare: true
+      }))
+      .pipe(concat('tetrjs.templates.js'))
+      .pipe(gulp.dest('.'));
+});
+
 gulp.task('watch', function() {
     gulp.start('compile-coffee');
     gulp.watch('src/*.coffee', ['compile-coffee']);
