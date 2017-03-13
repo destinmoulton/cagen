@@ -34,7 +34,7 @@ gulp.task('compile-templates', function() {
         noRedeclare: true
       }))
       .pipe(concat('wolfcage.templates.js'))
-      .pipe(gulp.dest('.'));
+      .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('watch', function() {
