@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var hoganCompiler = require('gulp-hogan-precompile');
 var declare = require('gulp-declare');
+var uglify = require('gulp-uglify');
 
 var coffeeFiles = [
     'src/Bus.coffee',
@@ -40,4 +41,11 @@ gulp.task('compile-templates', function() {
 gulp.task('watch-coffee', function() {
     gulp.start('compile-coffee');
     gulp.watch('src/*.coffee', ['compile-coffee']);
+});
+
+gulp.task('minify-js', function(){
+    gulp.src(['dist/wolfcage.templates.js', 'dist/wolfcage.js'])
+        .pipe(concat('wolfcage.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./dist'));
 });

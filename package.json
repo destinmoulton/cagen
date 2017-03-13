@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp watch-coffee",
+    "minify": "gulp minify-js",
     "compile:coffee": "gulp compile-coffee",
     "compile:templates": "gulp compile-templates"
   },
@@ -19,16 +20,15 @@
     "url": "https://github.com/destinmoulton/cagen/issues"
   },
   "homepage": "https://github.com/destinmoulton/cagen#readme",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
-    "gulp-sourcemaps": "^1.9.1",
     "coffee-script": "^1.11.1",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.3",
     "gulp-concat": "^2.6.1",
     "gulp-declare": "^0.3.0",
-    "gulp-hogan-precompile": "^0.1.1"
+    "gulp-hogan-precompile": "^0.1.1",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.1.0"
   }
 }
