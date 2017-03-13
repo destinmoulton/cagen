@@ -40,10 +40,7 @@ class Thumbnails
         }
 
         # Clear the current thumbnails and populate it via Mustache template
-        thumbnailHTML = DOM.elemById('THUMBNAILS', 'TEMPLATE_THUMBNAILS').innerHTML
-        rendered = Mustache.render(thumbnailHTML, template_options)
-
-        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = rendered
+        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = templates['thumbnails'].render(template_options)
 
         thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
         

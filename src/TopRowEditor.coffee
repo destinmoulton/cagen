@@ -72,9 +72,8 @@ class TopRowEditor
     # Populate the main container with the template
     #
     _setupContainerTemplate: ()->
-        toproweditorHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_TOPROWEDITOR').innerHTML
         wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
-        wolfcageMainElem.innerHTML = Mustache.render(toproweditorHTML,{})
+        wolfcageMainElem.innerHTML = templates['toproweditor'].render({})
 
     #
     # Setup the slider (zoomer)
@@ -193,8 +192,6 @@ class TopRowEditor
     # Build the editor cells
     # 
     _buildEditorCells: ()->
-
-        cellTemplateHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_EDITOR_CELL').innerHTML
         
         @_jEditorContainer.style.width = (@_sliderCols * @_editorCellWidth) + "px"
         cellHtml = ""
@@ -203,7 +200,7 @@ class TopRowEditor
             leftEdgeSlider = (cell-1)*@_editorCellWidth
 
             # Create and append the editor cell via Mustache template
-            cellHtml += Mustache.render(cellTemplateHTML, {id:tmpId, left:leftEdgeSlider})
+            cellHtml += templates['rowed-editor-cell'].render({id:tmpId, left:leftEdgeSlider})
             # Setup the click event when a user toggles a cell by clicking on it
 
         @_jEditorContainer.innerHTML = cellHtml
@@ -262,7 +259,6 @@ class TopRowEditor
     _buildRow: ()->
         # Get the Mustache template html
 
-        smallcellTemplateHTML = DOM.elemById('TOPROWEDITOR', 'TEMPLATE_SLIDER_CELL').innerHTML
         sliderColPrefix = DOM.getPrefix('TOPROWEDITOR', 'SLIDER_COL')
         rowHtml = ""
         # Add cells to the row
@@ -275,7 +271,7 @@ class TopRowEditor
             tmpId = sliderColPrefix + col
 
             # Create a rendering of the cell via Mustache template
-            rowHtml += Mustache.render(smallcellTemplateHTML, {id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
+            rowHtml += templates['rowed-slider-cell'].render({id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
 
         # Add the cells
         @_rowContainerElem.innerHTML = rowHtml

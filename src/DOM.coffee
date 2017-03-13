@@ -31,18 +31,10 @@ class DOM
             'COLORPICKER_CONTAINER':'wolfcage-colorpicker',
             'COLORPICKER_ACTIVE':'wolfcage-colorpicker-active',
             'COLORPICKER_BORDER':'wolfcage-colorpicker-border',
-            'COLORPICKER_INACTIVE':'wolfcage-colorpicker-inactive',
-            'TEMPLATE_BOARD':'tmpl-wolfcage-generator-board',
-            'TEMPLATE_COLORPICKER':'tmpl-wolfcage-generator-colorpicker',
-            'TEMPLATE_MAIN_CONTAINER':'tmpl-wolfcage-generator',
-            'TEMPLATE_RULE_PREVIEW_CELL':'tmpl-wolfcage-generator-preview-cell',
+            'COLORPICKER_INACTIVE':'wolfcage-colorpicker-inactive'
         },
         'TABS':{
-            'CONTAINER':'wolfcage-tab-container',
-            'TEMPLATE':'tmpl-wolfcage-tabs'
-        },
-        'THUMBNAILS':{
-            'TEMPLATE_THUMBNAILS':'tmpl-wolfcage-thumbnails',
+            'CONTAINER':'wolfcage-tab-container'
         },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',
@@ -52,10 +44,7 @@ class DOM
             'SLIDER_CONTAINER': 'rowed-slider-container',
             'SLIDER':'rowed-slider',
             'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
-            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right',
-            'TEMPLATE_TOPROWEDITOR': 'tmpl-wolfcage-toproweditor',
-            'TEMPLATE_SLIDER_CELL':'tmpl-rowed-slider-cell',
-            'TEMPLATE_EDITOR_CELL':'tmpl-rowed-editor-cell'
+            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right'
         },
     }
 

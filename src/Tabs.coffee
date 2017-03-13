@@ -26,10 +26,9 @@ class Tabs
     # Start the tabbed interface
     # 
     start:()->
-        tabsTemplateHTML = DOM.elemById('TABS', 'TEMPLATE').innerHTML
 
         tabContainerElem = DOM.elemById('TABS','CONTAINER')
-        tabContainerElem.innerHTML = Mustache.render(tabsTemplateHTML, {})
+        tabContainerElem.innerHTML = templates['tabs'].render({})
         @_tabsElems = tabContainerElem.querySelectorAll('li')
 
         for tab in @_tabsElems

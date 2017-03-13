@@ -44,9 +44,8 @@ class Generator
     # Show the Generator
     # 
     run:() ->
-        generatorTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_MAIN_CONTAINER').innerHTML
         wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
-        wolfcageMainElem.innerHTML = Mustache.render(generatorTemplateHTML,{})
+        wolfcageMainElem.innerHTML = templates['generator'].render({})
 
         # Build a new Board
         @_Board = new Board(@BUS)
@@ -72,9 +71,8 @@ class Generator
     # Enable the color picker
     # 
     _enableColorPicker:() ->
-        colorpickerTemplateHTML = DOM.elemById('GENERATOR', 'TEMPLATE_COLORPICKER').innerHTML
         colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
-        colorPickerElem.innerHTML = Mustache.render(colorpickerTemplateHTML,{})
+        colorPickerElem.innerHTML = templates['generator-colorpicker'].render({})
         colorPickerElem.style.display = "block"
 
         @_isColorPickerEnabled = true
@@ -137,9 +135,8 @@ class Generator
     # Build the preview board from the template
     # 
     _buildBoard:() ->
-        cellBoardHtml = DOM.elemById('GENERATOR','TEMPLATE_BOARD').innerHTML
-        
-        DOM.elemById('GENERATOR','CONTENT_CONTAINER').innerHTML = Mustache.render(cellBoardHtml,{})
+
+        DOM.elemById('GENERATOR','CONTENT_CONTAINER').innerHTML = templates['generator-board'].render({})
 
         @_rulesContainerElem = DOM.elemById('GENERATOR','RULE_PREVIEW_CONTAINER')
         
@@ -154,9 +151,6 @@ class Generator
     # 
     _buildRulePreview: ->
         currentRule = @BUS.get('rulebinarysting')
-        
-        # Use the template to generate the preview
-        previewCellHtml = DOM.elemById('GENERATOR','TEMPLATE_RULE_PREVIEW_CELL').innerHTML
 
         activeClass = 
         @_rulesContainerElem.innerHTML = ""
@@ -195,8 +189,7 @@ class Generator
                 rightBitActive:rightBit
             }
             
-            rendered = Mustache.render(previewCellHtml, tmplOptions)
-            @_rulesContainerElem.innerHTML += rendered
+            @_rulesContainerElem.innerHTML += templates['generator-preview-cell'].render(tmplOptions)
             
             jTmpCell = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_CELL',index)
             jTmpDigit = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_DIGIT',index)
