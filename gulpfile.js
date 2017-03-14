@@ -5,6 +5,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var hoganCompiler = require('gulp-hogan-precompile');
 var declare = require('gulp-declare');
 var uglify = require('gulp-uglify');
+var header = require('gulp-header');
 
 var coffeeFiles = [
     'src/Bus.coffee',
@@ -43,9 +44,21 @@ gulp.task('watch-coffee', function() {
     gulp.watch('src/*.coffee', ['compile-coffee']);
 });
 
-gulp.task('minify-js', function(){
+
+var pkg = require('./package.json');
+var banner = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @author <%= pkg.author %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' * @license <%= pkg.license %>',
+  ' */',
+  ''].join('\n');
+
+gulp.task('uglify-js', function(){
     gulp.src(['dist/wolfcage.templates.js', 'dist/wolfcage.js'])
         .pipe(concat('wolfcage.min.js'))
         .pipe(uglify())
+        .pipe(header(banner, { pkg : pkg } ))
         .pipe(gulp.dest('./dist'));
 });
