@@ -79,7 +79,7 @@ To compile and watch the src/*.coffee files and build the main dist/wolfcage.js 
 $ npm run build
 ```
 
-To uglify/minify the JavaScript:
+To uglify the JavaScript into dist/wolfcage.min.js:
 ```sh
 $ npm run uglify
 ```
