@@ -9,7 +9,7 @@ WolfCage is written in CoffeeScript. Transpiled to javascript, the application s
 ### Features
 ***
 WolfCage has the following features:
-- Select which of Wolfram's 256 (0..255) rules you would like to generate.
+- Select from 256 thumbnails which Wolfram rule you would like to generate.
 - Edit the top/seed row using a sliding navigator.
 - Alter the color of the border, active (1), and inactive (0) cells.
 
@@ -19,6 +19,7 @@ WolfCage has the following in-browser requirements:
 - hogan.js - HTML template rendering
 - Bootstrap - Tabs and buttons
 - jQuery - Bootstrap requirement
+- flexicolorpicker - The color picker for the border, active, and inactive cells.
 
 The requirements for the node CoffeeScript transpiler are located in the package.json file and can be installed via npm.
 
