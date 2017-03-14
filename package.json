@@ -1,12 +1,12 @@
 {
   "name": "cagen",
-  "version": "0.5.0",
+  "version": "1.2.0",
   "description": "A Cellular Automata GENerator.",
   "main": "dist/cagen.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp watch-coffee",
-    "minify": "gulp minify-js",
+    "uglify": "gulp uglify-js",
     "compile:coffee": "gulp compile-coffee",
     "compile:templates": "gulp compile-templates"
   },
