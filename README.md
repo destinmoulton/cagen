@@ -18,8 +18,55 @@ WolfCage has the following features:
 WolfCage has the following in-browser requirements:
 - hogan.js - HTML template rendering
 - Bootstrap - Tabs and buttons
+- jQuery - Bootstrap requirement
 
 The requirements for the node CoffeeScript transpiler are located in the package.json file and can be installed via npm.
+
+### Embedding WolfCage in Your Site
+***
+
+Add CSS stylesheets to the header:
+```html
+<!-- Bootstrap for Basic CSS -->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- WolfCage specific styles -->
+<link rel="stylesheet" type="text/css" href="wolfcage.css">
+```
+
+Add the containers for the tabs and WolfCage app:
+```html
+<ul class="nav nav-tabs" id="wolfcage-tab-container"></ul>
+<div id="wolfcage-container"></div>
+```
+
+Add JavaScript to the header or footer:
+```html
+<!-- jQuery for DOM interaction -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<!-- Bootstrap js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Hogan form mustache template rendering -->
+<script src=https://cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.2/hogan.min.js></script>
+
+<!-- Flexi Color Color Picker -->
+<script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
+
+<!-- Main WolfCage js -->
+<script src="dist/wolfcage.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    var options = {
+        thumbnails_path:'captures/thumbs/'
+    }
+    var wolfcage = new WolfCage(options);
+});
+</script>
+```
 
 ### Compiling the CoffeeScript Source Files
 ***
