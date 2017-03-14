@@ -25,7 +25,7 @@ The transpilation is handled by the node CoffeeScript transpiler.
 
 gulpfile.js contains the gulp configuration that automates the transpilation and concatenation process.
 
-Watch and compile the src/*.coffee files and build the main dist/cagen.js file.
+Watch and compile the src/*.coffee files and build the main dist/wolfcage.js file.
 ```
 $ npm run-script build
 ```

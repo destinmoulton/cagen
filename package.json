@@ -1,8 +1,8 @@
 {
-  "name": "cagen",
+  "name": "WolfCage",
   "version": "1.2.0",
-  "description": "A Cellular Automata GENerator.",
-  "main": "dist/cagen.js",
+  "description": "A Wolfram Cellular Automata Generator.",
+  "main": "dist/wolfcage.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp watch-coffee",
@@ -12,15 +12,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/destinmoulton/cagen.git"
+    "url": "git+https://github.com/destinmoulton/wolfcage.git"
   },
   "author": "Destin Moulton",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/destinmoulton/cagen/issues"
+    "url": "https://github.com/destinmoulton/wolfcageissues"
   },
-  "homepage": "https://github.com/destinmoulton/cagen#readme",
-  "dependencies": {},
+  "homepage": "https://github.com/destinmoulton/wolfcage",
+  "dependencies": {
+    "gulp-header": "^1.8.8"
+  },
   "devDependencies": {
     "coffee-script": "^1.11.1",
     "gulp": "^3.9.1",
