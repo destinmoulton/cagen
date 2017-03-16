@@ -12,7 +12,7 @@ Add color pickers with color inputs.
 
 ###
 
-class ColorPicker
+class MultiColorPicker
 
     #
     # ColorPicker constructor
@@ -38,7 +38,6 @@ class ColorPicker
 
         @_setColorPickersHex()
 
-        @_isColorPickerEnabled = true
         cpActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_ACTIVE'), 
             (hex)=>
                 @BUS.broadcast('change.cell.style.activebackground', hex)
@@ -78,7 +77,6 @@ class ColorPicker
     # Disable the color picker
     #
     disableColorPicker:() ->
-        @_isColorPickerEnabled = false
         containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')
         containerElem.innerHTML = ""
         containerElem.style.display = "none"

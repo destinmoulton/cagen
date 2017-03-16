@@ -12,6 +12,7 @@ var coffeeFiles = [
     'src/DOM.coffee',
     'src/Board.coffee',
     'src/Generator.coffee',
+    'src/MultiColorPicker.coffee',
     'src/RuleMatcher.coffee',
     'src/Thumbnails.coffee',
     'src/Tabs.coffee',

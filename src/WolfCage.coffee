@@ -35,10 +35,10 @@ class WolfCage
         new TopRowEditor(@BUS)
 
         # Create instance of the Color Picker
-        colorPicker = new ColorPicker(@BUS)
+        multiColorPicker = new MultiColorPicker(@BUS)
 
         # Create instance of the Dashboard
-        new Generator(@BUS)
+        new Generator(@BUS, multiColorPicker)
 
         # Start the tab interface
         tabs.start()

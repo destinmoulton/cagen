@@ -22,9 +22,9 @@ class Generator
     # Initialize the IDs, local jQuery objects, and sizes
     # for the Generator.
     # 
-    constructor:(BUS, ColorPicker) ->
+    constructor:(BUS, multiColorPicker) ->
         @BUS = BUS
-        @ColorPicker = ColorPicker
+        @multiColorPicker = multiColorPicker
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -57,9 +57,11 @@ class Generator
         DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
             ()=>
                 if @_isColorPickerEnabled
-                    @ColorPicker.disableColorPicker()
+                    @_isColorPickerEnabled = false
+                    @multiColorPicker.disableColorPicker()
                 else
-                    @ColorPicker.enableColorPicker()
+                    @_isColorPickerEnabled = false
+                    @multiColorPicker.enableColorPicker()
         )
 
         # Final step is to build the board
