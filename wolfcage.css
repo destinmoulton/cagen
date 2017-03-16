@@ -91,6 +91,11 @@ body{
     display:none;
 }
 
+#wolfcage-colorpicker legend{
+    border-bottom:none;
+    margin-bottom:0px;
+}
+
 fieldset.wolfcage-colorpicker-container{
     float:left;
     margin:5px;
@@ -107,7 +112,7 @@ fieldset.wolfcage-colorpicker-container{
 }
 
 input.wolfcage-colorpicker-hexinput{
-    width:121px;
+    width:70px;
     margin-top:4px;
 }
 
