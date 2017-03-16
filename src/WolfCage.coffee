@@ -34,6 +34,9 @@ class WolfCage
         # Create instance of the Top Row Editor
         new TopRowEditor(@BUS)
 
+        # Create instance of the Color Picker
+        colorPicker = new ColorPicker(@BUS)
+
         # Create instance of the Dashboard
         new Generator(@BUS)
 
