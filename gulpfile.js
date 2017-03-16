@@ -44,6 +44,10 @@ gulp.task('watch-coffee', function() {
     gulp.watch('src/*.coffee', ['compile-coffee']);
 });
 
+gulp.task('watch-templates', function() {
+    gulp.start('compile-templates');
+    gulp.watch('templates/*.mustache', ['compile-templates']);
+});
 
 var pkg = require('./package.json');
 var banner = ['/**',
