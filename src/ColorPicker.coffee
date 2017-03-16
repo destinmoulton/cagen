@@ -24,7 +24,7 @@ class ColorPicker
     #
     # Enable the color picker
     # 
-    _enableColorPicker:() ->
+    enableColorPicker:() ->
         colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
         colorPickerElem.innerHTML = templates['generator-colorpicker'].render({})
         colorPickerElem.style.display = "block"
@@ -70,7 +70,7 @@ class ColorPicker
     #
     # Disable the color picker
     #
-    _disableColorPicker:() ->
+    disableColorPicker:() ->
         @_isColorPickerEnabled = false
         containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')
         containerElem.innerHTML = ""
