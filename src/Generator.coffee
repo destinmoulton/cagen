@@ -66,14 +66,20 @@ class Generator
 
         return true
 
+    _buildColorPickers:() ->
+        colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
+        tmplOptions = {
+            activeColorHex: @BUS.get('board.cell.style.activeBackgroundColor'),
+            borderColorHex: @BUS.get('board.cell.style.borderColor'),
+            inactiveColorHex: @BUS.get('board.cell.style.inactiveBackgroundColor')
+        };
+        colorPickerElem.innerHTML = templates['generator-colorpicker'].render(tmplOptions)
+        colorPickerElem.style.display = "block"
 
     #
     # Enable the color picker
     # 
     _enableColorPicker:() ->
-        colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
-        colorPickerElem.innerHTML = templates['generator-colorpicker'].render({})
-        colorPickerElem.style.display = "block"
 
         @_isColorPickerEnabled = true
         cpActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_ACTIVE'), 
