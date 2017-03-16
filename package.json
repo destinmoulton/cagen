@@ -5,10 +5,12 @@
   "main": "dist/wolfcage.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp watch-coffee",
     "uglify": "gulp uglify-js",
     "compile:coffee": "gulp compile-coffee",
-    "compile:templates": "gulp compile-templates"
+    "compile:templates": "gulp compile-templates",
+    "watch:templates": "gulp watch-templates",
+    "watch:coffee": "gulp watch-coffee",
+    "watch:both": "gulp watch-both"
   },
   "repository": {
     "type": "git",
