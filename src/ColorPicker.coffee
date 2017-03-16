@@ -12,7 +12,14 @@ Add color pickers with color inputs.
 
 ###
 
-class ColorPicker    
+class ColorPicker
+
+    #
+    # ColorPicker constructor
+    #
+    constructor:(BUS) ->
+        @BUS = BUS
+
     # 
     # Build the color picker boxes from the template
     #
