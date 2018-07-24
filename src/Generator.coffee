@@ -91,11 +91,7 @@ class Generator
         dropdownElem.addEventListener('change', 
             (event)=>
                 @BUS.set('currentruledecimal', event.target.value)
-        )
-
-        # Setup the Generate button click event
-        DOM.elemById('GENERATOR', 'RULE_GENERATE_BUTTON').addEventListener('click',
-            ()=>@_buildBoard()
+                @_buildBoard()
         )
 
     #
