@@ -54,15 +54,16 @@ class Generator
         @_setupRuleDropdown()
 
         @_isColorPickerEnabled = false
-        DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
-            ()=>
-                if @_isColorPickerEnabled
-                    @_isColorPickerEnabled = false
-                    @multiColorPicker.disableColorPicker()
-                else
-                    @_isColorPickerEnabled = false
-                    @multiColorPicker.enableColorPicker()
-        )
+        if typeof @multiColorPicker is "function"
+            DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
+                ()=>
+                    if @_isColorPickerEnabled
+                        @_isColorPickerEnabled = false
+                        @multiColorPicker.disableColorPicker()
+                    else
+                        @_isColorPickerEnabled = false
+                        @multiColorPicker.enableColorPicker()
+            )
 
         # Final step is to build the board
         @_buildBoard()

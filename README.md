@@ -49,10 +49,10 @@ Add JavaScript to the header or footer:
 <!-- Bootstrap js -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- Hogan form mustache template rendering -->
+<!-- Hogan for Mustache Template Rendering -->
 <script src=https://cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.2/hogan.min.js></script>
 
-<!-- Flexi Color Color Picker -->
+<!-- Flexi ColorPicker -->
 <script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
 
