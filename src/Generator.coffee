@@ -54,14 +54,15 @@ class Generator
         @_setupRuleDropdown()
 
         @_isColorPickerEnabled = false
-        if typeof @multiColorPicker is "function"
+
+        if typeof @multiColorPicker is "object"
             DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
                 ()=>
                     if @_isColorPickerEnabled
                         @_isColorPickerEnabled = false
                         @multiColorPicker.disableColorPicker()
                     else
-                        @_isColorPickerEnabled = false
+                        @_isColorPickerEnabled = true
                         @multiColorPicker.enableColorPicker()
             )
 
