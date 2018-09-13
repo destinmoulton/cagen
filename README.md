@@ -1,7 +1,5 @@
 ### What is WolfCage?
 
----
-
 WolfCage is a Wolfram Cellular Automata Generator. WolfCage generates any of the 256 cellular automata rules developed by Stephen Wolfram and presented in his book "A New Kind of Science" [ANKOS]. In the book, Stephen uses a set of simple binary rules to generate the next row, or "cells" within a 2-dimensional matrix.
 
 WolfCage is written in CoffeeScript. Transpiled to javascript, the application should run in any modern browser.
@@ -10,8 +8,6 @@ WolfCage is written in CoffeeScript. Transpiled to javascript, the application s
 
 ### Features
 
----
-
 WolfCage has the following features:
 
 -   Select from 256 thumbnails which Wolfram rule you would like to generate.
@@ -19,8 +15,6 @@ WolfCage has the following features:
 -   Alter the color of the border, active (1), and inactive (0) cells.
 
 ### Requirements
-
----
 
 WolfCage has the following in-browser requirements:
 
@@ -32,8 +26,6 @@ WolfCage has the following in-browser requirements:
 The requirements for the node CoffeeScript transpiler are located in the package.json file and can be installed via npm.
 
 ### Embedding WolfCage in Your Site
-
----
 
 Add CSS stylesheets to the header:
 
@@ -83,8 +75,6 @@ $(function(){
 
 ### Compiling the CoffeeScript Source Files
 
----
-
 The transpilation is handled by the node CoffeeScript transpiler.
 
 gulpfile.js contains the gulp configuration that automates the transpilation and concatenation process.
@@ -109,6 +99,4 @@ $ npm run uglify
 
 ### License
 
----
-
-WolfCage is released under the MIT license.
+MIT
