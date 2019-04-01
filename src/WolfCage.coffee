@@ -9,6 +9,12 @@ Initialize the various WolfCage classes.
 Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 ###
+Bus = require("./Bus.coffee")
+Generator = require("./Generator.coffee")
+MultiColorPicker = require("./MultiColorPicker.coffee")
+Tabs = require("./Tabs.coffee")
+Thumbnails = require("./Thumbnails.coffee")
+TopRowEditor = require("./TopRowEditor.coffee")
 
 class WolfCage
 
@@ -47,6 +53,6 @@ class WolfCage
         # Start the tab interface
         tabs.start()
 
-    
+window.WolfCage = WolfCage 
 
     

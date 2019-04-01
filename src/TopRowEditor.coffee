@@ -14,6 +14,8 @@ on the standard rules presented in A New Kind of Science.
 
 ###
 
+DOM = require("./DOM.coffee")
+
 class TopRowEditor
 
     #
@@ -275,3 +277,5 @@ class TopRowEditor
 
         # Add the cells
         @_rowContainerElem.innerHTML = rowHtml
+
+module.exports = TopRowEditor

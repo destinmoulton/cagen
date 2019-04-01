@@ -12,6 +12,8 @@ Manage the tabs for the various WolfCage feature panels.
 
 ###
 
+DOM = require("./DOM.coffee")
+
 class Tabs
     
     #
@@ -67,4 +69,5 @@ class Tabs
 
         # Run the tab
         @BUS.broadcast(tabName + '.run')
-    
+
+module.exports = Tabs    

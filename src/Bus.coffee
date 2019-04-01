@@ -37,3 +37,5 @@ class Bus
         if not @_vault.hasOwnProperty(name)
             console.log("Bus: Unable to find #{name} in variable vault.")
         else return @_vault[name]
+
+module.exports = Bus

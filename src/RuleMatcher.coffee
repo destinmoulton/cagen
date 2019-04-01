@@ -92,3 +92,5 @@ class RuleMatcher
                 binary = "0#{binary}"
                 
         return binary
+
+module.exports = RuleMatcher

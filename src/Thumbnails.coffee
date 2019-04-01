@@ -14,6 +14,8 @@ the automata cells for that rule.
 
 ###
 
+DOM = require("./DOM.coffee")
+
 class Thumbnails
 
     #
@@ -60,3 +62,4 @@ class Thumbnails
         # Load the generator
         @BUS.broadcast('tabs.show.generator')
 
+module.exports = Thumbnails

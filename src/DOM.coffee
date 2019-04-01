@@ -114,3 +114,5 @@ class DOM
     
     @getPrefix:(section, prefix)->
         return @prefixes[section][prefix]
+
+module.exports = DOM

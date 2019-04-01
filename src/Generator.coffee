@@ -15,6 +15,10 @@ controlling the cellular automata generation.
 - Display the generated board.
 
 ###
+
+Board = require("./Board.coffee")
+DOM = require("./DOM.coffee")
+
 class Generator
 
     #
@@ -162,3 +166,5 @@ class Generator
             if currentRule.substr(7-index,1) is "1"
                 jTmpCell.classList.add(DOM.getClass('GENERATOR', 'RULE_PREVIEW_CELL_ACTIVE'))
                 jTmpDigit.innerHTML = "1"
+
+module.exports = Generator

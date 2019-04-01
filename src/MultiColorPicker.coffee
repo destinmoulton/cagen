@@ -80,3 +80,5 @@ class MultiColorPicker
         containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')
         containerElem.innerHTML = ""
         containerElem.style.display = "none"
+
+module.exports = MultiColorPicker

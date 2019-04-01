@@ -10,6 +10,8 @@ Generate a cellular automata board based on a passed rule.
 
 ###
 
+RuleMatcher = require("./RuleMatcher.coffee")
+DOM = require("./DOM.coffee")
 
 class Board
 
@@ -208,3 +210,5 @@ class Board
         for cell in cellsElems
             if not cell.classList.contains(DOM.getClass('BOARD', 'CELL_ACTIVE_CLASS'))
                 cell.style.backgroundColor = hexColor
+
+module.exports = Board
