@@ -15,6 +15,7 @@ the automata cells for that rule.
 ###
 
 DOM = require("./DOM.coffee")
+Templates = require("./Templates.coffee")
 
 class Thumbnails
 
@@ -42,7 +43,7 @@ class Thumbnails
         }
 
         # Clear the current thumbnails and populate it via Mustache template
-        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = templates['thumbnails'].render(template_options)
+        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = Templates.thumbnails(template_options)
 
         thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
         

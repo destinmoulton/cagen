@@ -12,6 +12,9 @@ Add color pickers with color inputs.
 
 ###
 
+DOM = require("./DOM.coffee")
+Templates = require("./Templates.coffee")
+
 class MultiColorPicker
 
     #
@@ -33,7 +36,7 @@ class MultiColorPicker
     # 
     enableColorPicker:() ->
         colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
-        colorPickerElem.innerHTML = templates['generator-colorpicker'].render({})
+        colorPickerElem.innerHTML = Templates.generatorColorpicker
         colorPickerElem.style.display = "block"
 
         @_setColorPickersHex()

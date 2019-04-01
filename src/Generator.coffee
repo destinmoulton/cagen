@@ -18,6 +18,7 @@ controlling the cellular automata generation.
 
 Board = require("./Board.coffee")
 DOM = require("./DOM.coffee")
+Templates = require("./Templates.coffee")
 
 class Generator
 
@@ -50,7 +51,7 @@ class Generator
     # 
     run:() ->
         wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
-        wolfcageMainElem.innerHTML = templates['generator'].render({})
+        wolfcageMainElem.innerHTML = Templates.generator
 
         # Build a new Board
         @_Board = new Board(@BUS)
@@ -103,7 +104,7 @@ class Generator
     # 
     _buildBoard:() ->
 
-        DOM.elemById('GENERATOR','CONTENT_CONTAINER').innerHTML = templates['generator-board'].render({})
+        DOM.elemById('GENERATOR','CONTENT_CONTAINER').innerHTML = Templates.generatorBoard
 
         @_rulesContainerElem = DOM.elemById('GENERATOR','RULE_PREVIEW_CONTAINER')
         
@@ -156,7 +157,7 @@ class Generator
                 rightBitActive:rightBit
             }
             
-            @_rulesContainerElem.innerHTML += templates['generator-preview-cell'].render(tmplOptions)
+            @_rulesContainerElem.innerHTML += Templates.generatorPreviewCell(tmplOptions)
             
             jTmpCell = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_CELL',index)
             jTmpDigit = DOM.elemByPrefix('GENERATOR', 'RULE_PREVIEW_DIGIT',index)

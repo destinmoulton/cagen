@@ -1,58 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <!-- Bootstrap for Basic CSS -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- Bootstrap for Basic CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <!-- WolfCage specific styles -->
-  <link rel="stylesheet" type="text/css" href="wolfcage.css">
+    <!-- WolfCage specific styles -->
+    <link rel="stylesheet" type="text/css" href="wolfcage.css">
 
-  <!-- jQuery for DOM interaction -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- jQuery for DOM interaction -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-  <!-- Bootstrap js -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <!-- Hogan form mustache template rendering -->
-  <script src=https://cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.2/hogan.min.js></script>
+    <!-- Flexi Color Color Picker -->
+    <script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
 
-  <!-- Flexi Color Color Picker -->
-  <script src="vendors/flexicolorpicker/colorpicker.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="vendors/flexicolorpicker/themes.css">
+    <!-- Main WolfCage js -->
+    <script src="dist/wolfcage.js"></script>
 
-  <!-- WolfCage Templates -->
-  <script src="dist/wolfcage.templates.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        var options = {
+          thumbnails_path: 'captures/thumbs/'
+        }
+        var wolfcage = new WolfCage(options);
+      });
+    </script>
 
-  <!-- Main WolfCage js -->
-  <script src="dist/wolfcage.js"></script>
+    <!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 
-  <script type="text/javascript">
-    $(function(){
-      var options = {
-        thumbnails_path:'captures/thumbs/'
-      }
-      var wolfcage = new WolfCage(options);
-    });
-  </script>
+  </head>
 
-  <!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-  <div class="row">
-  <div class="col-md-1">
-  </div>
-  <div class="col-md-7">
-  <ul class="nav nav-tabs" id="wolfcage-tab-container"></ul>
-  <div id="wolfcage-container"></div>
-  </div>
-  </div>
-</body>
+  <body>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-7">
+        <ul class="nav nav-tabs" id="wolfcage-tab-container"></ul>
+        <div id="wolfcage-container"></div>
+      </div>
+    </div>
+  </body>
 
 </html>

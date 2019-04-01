@@ -13,6 +13,7 @@ Manage the tabs for the various WolfCage feature panels.
 ###
 
 DOM = require("./DOM.coffee")
+Templates = require("./Templates.coffee")
 
 class Tabs
     
@@ -30,7 +31,7 @@ class Tabs
     start:()->
 
         tabContainerElem = DOM.elemById('TABS','CONTAINER')
-        tabContainerElem.innerHTML = templates['tabs'].render({})
+        tabContainerElem.innerHTML = Templates.tabs
         @_tabsElems = tabContainerElem.querySelectorAll('li')
 
         for tab in @_tabsElems

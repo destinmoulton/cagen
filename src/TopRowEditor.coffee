@@ -15,6 +15,7 @@ on the standard rules presented in A New Kind of Science.
 ###
 
 DOM = require("./DOM.coffee")
+Templates = require("./Templates.coffee")
 
 class TopRowEditor
 
@@ -75,7 +76,7 @@ class TopRowEditor
     #
     _setupContainerTemplate: ()->
         wolfcageMainElem = DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER')
-        wolfcageMainElem.innerHTML = templates['toproweditor'].render({})
+        wolfcageMainElem.innerHTML = Templates.toproweditor
 
     #
     # Setup the slider (zoomer)
@@ -202,7 +203,7 @@ class TopRowEditor
             leftEdgeSlider = (cell-1)*@_editorCellWidth
 
             # Create and append the editor cell via Mustache template
-            cellHtml += templates['rowed-editor-cell'].render({id:tmpId, left:leftEdgeSlider})
+            cellHtml += Templates.rowEditorCell({id:tmpId, left:leftEdgeSlider})
             # Setup the click event when a user toggles a cell by clicking on it
 
         @_jEditorContainer.innerHTML = cellHtml
@@ -273,7 +274,7 @@ class TopRowEditor
             tmpId = sliderColPrefix + col
 
             # Create a rendering of the cell via Mustache template
-            rowHtml += templates['rowed-slider-cell'].render({id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
+            rowHtml += Templates.rowEditorSliderCell({id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
 
         # Add the cells
         @_rowContainerElem.innerHTML = rowHtml
