@@ -7,24 +7,30 @@ exports.generatorColorPicker = "
 <div class='wolfcage-colorpicker-container'>
     <div class='wolfcage-colorpicker-container-title'>Active Cell</div>
     <div id='wolfcage-colorpicker-active'></div>
-    <input type='text' class='wolfcage-colorpicker-hexinput' id='wolfcage-colorpicker-active-hex' />
+    <input type='text' 
+            class='wolfcage-colorpicker-hexinput' 
+            id='wolfcage-colorpicker-active-hex' />
 </div>
 <div class='wolfcage-colorpicker-container'>
     <div class='wolfcage-colorpicker-container-title'>Cell Border</div>
     <div id='wolfcage-colorpicker-border'></div>
-    <input type='text' class='wolfcage-colorpicker-hexinput' id='wolfcage-colorpicker-border-hex' />
+    <input type='text' 
+            class='wolfcage-colorpicker-hexinput' 
+            id='wolfcage-colorpicker-border-hex' />
 </div>
 <div class='wolfcage-colorpicker-container'>
     <div class='wolfcage-colorpicker-container-title'>Inactive Cell</div>
     <div id='wolfcage-colorpicker-inactive'></div>
-    <input type='text' class='wolfcage-colorpicker-hexinput' id='wolfcage-colorpicker-inactive-hex' />
+    <input type='text' 
+            class='wolfcage-colorpicker-hexinput' 
+            id='wolfcage-colorpicker-inactive-hex' />
 </div>
 "
 
 exports.generatorPreviewCell = ({leftBitActive, middleBitActive, rightBitActive, previewIndex}) => 
-    leftBitClass = leftBitActive ? "wolfcage-generator-preview-cell-active" : ""
-    middleBitClass = middleBitActive ? "wolfcage-generator-preview-cell-active" : ""
-    rightBitClass = rightBitActive ? "wolfcage-generator-preview-cell-active" : ""
+    leftBitClass = if leftBitActive then "wolfcage-generator-preview-cell-active" else ""
+    middleBitClass = if middleBitActive then "wolfcage-generator-preview-cell-active" else ""
+    rightBitClass = if rightBitActive then "wolfcage-generator-preview-cell-active" else ""
     return "
         <div class='wolfcage-generator-preview-box' >
             <div class='wolfcage-generator-preview-triple-cell-container'>
@@ -51,12 +57,12 @@ exports.generator = "
     <div id='wolfcage-generator-container'>
     <div id='wolfcage-generator-options' class='well'>
         <div class='wolfcage-generator-box'>
-        <div class='form-inline'>
+        <div class=''>
             Rule&nbsp;
             <select id='wolfcage-generator-select-input' 
-                    class='form-control input-sm'></select> &nbsp;
+                    class=''></select> &nbsp;
             <button id='wolfcage-generator-colorpicker-button' 
-                    class='btn btn-default btn-sm'>Color Picker</button>
+                    class=''>Color Picker</button>
         </div>
         </div>
 
