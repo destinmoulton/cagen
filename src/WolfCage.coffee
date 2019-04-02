@@ -40,15 +40,8 @@ class WolfCage
         # Create instance of the Top Row Editor
         new TopRowEditor(@BUS)
 
-
-        multiColorPicker = null
-        if typeof ColorPicker is "function"
-            # Create instance of the Color Picker
-            multiColorPicker = new MultiColorPicker(@BUS)
-
-
         # Create instance of the Dashboard
-        new Generator(@BUS, multiColorPicker)
+        new Generator(@BUS)
 
         # Start the tab interface
         tabs.start()

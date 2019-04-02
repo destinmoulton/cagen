@@ -19,6 +19,7 @@ controlling the cellular automata generation.
 Board = require("./Board.coffee")
 DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
+MultiColorPicker = require("./MultiColorPicker.coffee")
 
 class Generator
 
@@ -27,9 +28,9 @@ class Generator
     # Initialize the IDs, local jQuery objects, and sizes
     # for the Generator.
     # 
-    constructor:(BUS, multiColorPicker) ->
+    constructor:(BUS) ->
         @BUS = BUS
-        @multiColorPicker = multiColorPicker
+        @multiColorPicker = new MultiColorPicker(BUS)
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -60,16 +61,15 @@ class Generator
 
         @_isColorPickerEnabled = false
 
-        if typeof @multiColorPicker is "object"
-            DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
-                ()=>
-                    if @_isColorPickerEnabled
-                        @_isColorPickerEnabled = false
-                        @multiColorPicker.disableColorPicker()
-                    else
-                        @_isColorPickerEnabled = true
-                        @multiColorPicker.enableColorPicker()
-            )
+        DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
+            ()=>
+                if @_isColorPickerEnabled
+                    @_isColorPickerEnabled = false
+                    @multiColorPicker.disableColorPicker()
+                else
+                    @_isColorPickerEnabled = true
+                    @multiColorPicker.enableColorPicker()
+        )
 
         # Final step is to build the board
         @_buildBoard()
