@@ -3,29 +3,27 @@ exports.generatorBoard = "
     <div id='wolfcage-board'></div>
 </div>
 "
-exports.generatorColorPicker = "
-<div class='wolfcage-colorpicker-container'>
-    <div class='wolfcage-colorpicker-container-title'>Active Cell</div>
-    <div id='wolfcage-colorpicker-active'></div>
-    <input type='text' 
-            class='wolfcage-colorpicker-hexinput' 
-            id='wolfcage-colorpicker-active-hex' />
-</div>
-<div class='wolfcage-colorpicker-container'>
-    <div class='wolfcage-colorpicker-container-title'>Cell Border</div>
-    <div id='wolfcage-colorpicker-border'></div>
-    <input type='text' 
-            class='wolfcage-colorpicker-hexinput' 
-            id='wolfcage-colorpicker-border-hex' />
-</div>
-<div class='wolfcage-colorpicker-container'>
-    <div class='wolfcage-colorpicker-container-title'>Inactive Cell</div>
-    <div id='wolfcage-colorpicker-inactive'></div>
-    <input type='text' 
-            class='wolfcage-colorpicker-hexinput' 
-            id='wolfcage-colorpicker-inactive-hex' />
+exports.colorPickers = "
+<div class='wolfcage-colorpicker-wrapper'>
+    <div class='wolfcage-colorpicker-container'>
+        <div class='wolfcage-colorpicker-container-title'>Active Cell</div>
+        <select id='wolfcage-colorpicker-active-hex' ></select>
+    </div>
+    <div class='wolfcage-colorpicker-container'>
+        <div class='wolfcage-colorpicker-container-title'>Cell Border</div>
+        <select id='wolfcage-colorpicker-border-hex'  ></select>
+    </div>
+    <div class='wolfcage-colorpicker-container'>
+        <div class='wolfcage-colorpicker-container-title'>Inactive Cell</div>
+        <select id='wolfcage-colorpicker-inactive-hex'  ></select>
+    </div>
 </div>
 "
+
+exports.colorPickerOption = (color)=>
+    return "<option value='#{color.hex}' style='background-color:#{color.hex}'> 
+                   #{color.name}
+            </option>"
 
 exports.generatorPreviewCell = ({leftBitActive, middleBitActive, rightBitActive, previewIndex}) => 
     leftBitClass = if leftBitActive then "wolfcage-generator-preview-cell-active" else ""
