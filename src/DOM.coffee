@@ -31,9 +31,9 @@ class DOM
         },
         'COLORPICKER':{
             'CONTAINER':'wolfcage-colorpicker',
-            'ACTIVE_HEX':'wolfcage-colorpicker-active-hex',
-            'BORDER_HEX':'wolfcage-colorpicker-border-hex',
-            'INACTIVE_HEX':'wolfcage-colorpicker-inactive-hex'
+            'ACTIVE_HEX':'wolfcage-colorpicker-select-active-hex',
+            'BORDER_HEX':'wolfcage-colorpicker-select-border-hex',
+            'INACTIVE_HEX':'wolfcage-colorpicker-select-inactive-hex'
         },
         'TABS':{
             'CONTAINER':'wolfcage-tab-container'
