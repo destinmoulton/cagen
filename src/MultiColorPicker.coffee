@@ -14,6 +14,7 @@ Add color pickers with color inputs.
 
 DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
+colors = require("./lib/colors.coffee")
 
 class MultiColorPicker
 
@@ -27,61 +28,52 @@ class MultiColorPicker
     # Build the color picker boxes from the template
     #
     _setColorPickersHex:() ->
-        DOM.elemById('GENERATOR', 'COLORPICKER_ACTIVE_HEX').value = @BUS.get('board.cell.style.activeBackgroundColor')
-        DOM.elemById('GENERATOR', 'COLORPICKER_BORDER_HEX').value = @BUS.get('board.cell.style.borderColor')
-        DOM.elemById('GENERATOR', 'COLORPICKER_INACTIVE_HEX').value = @BUS.get('board.cell.style.inactiveBackgroundColor')
+        @elCPActive.value = @BUS.get('board.cell.style.activeBackgroundColor')
+        @elCPBorder.value = @BUS.get('board.cell.style.borderColor')
+        @elCPInactive.value = @BUS.get('board.cell.style.inactiveBackgroundColor')
+
+    _buildColorSelectOptions:() ->
+        options = ""
+        for color in colors
+            options += Templates.colorPickerOption(color) 
+        return options
 
     #
     # Enable the color picker
     # 
     enableColorPicker:() ->
-        colorPickerElem = DOM.elemById('GENERATOR', 'COLORPICKER_CONTAINER')
-        colorPickerElem.innerHTML = Templates.generatorColorpicker
-        colorPickerElem.style.display = "block"
+        @elContainer = DOM.elemById('COLORPICKER', 'CONTAINER')
+        @elContainer.innerHTML = Templates.colorPickers
+        @elContainer.style.display = "block"
+
+        @elCPActive = DOM.elemById('COLORPICKER', 'ACTIVE_HEX')
+        @elCPBorder = DOM.elemById('COLORPICKER', 'BORDER_HEX')
+        @elCPInactive = DOM.elemById('COLORPICKER', 'INACTIVE_HEX')
+
+        @elCPActive.innerHTML = @_buildColorSelectOptions()
+        @elCPBorder.innerHTML = @_buildColorSelectOptions()
+        @elCPInactive.innerHTML = @_buildColorSelectOptions()
 
         @_setColorPickersHex()
 
-        cpActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_ACTIVE'), 
-            (hex)=>
-                @BUS.broadcast('change.cell.style.activebackground', hex)
-                @_setColorPickersHex()
-        )
-        cpActive.setHex(@BUS.get('board.cell.style.activeBackgroundColor'))
-
-        cpBorder = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_BORDER'), 
-            (hex)=>
-                @BUS.broadcast('change.cell.style.bordercolor', hex)
-                @_setColorPickersHex()
-        )
-        cpBorder.setHex(@BUS.get('board.cell.style.borderColor'))
-
-        cpInActive = ColorPicker(DOM.elemById('GENERATOR','COLORPICKER_INACTIVE'), 
-            (hex)=>
-                @BUS.broadcast('change.cell.style.inactivebackground', hex)
-                @_setColorPickersHex()
-        )
-        cpInActive.setHex(@BUS.get('board.cell.style.inactiveBackgroundColor'))
-
-
-        DOM.elemById('GENERATOR', 'COLORPICKER_ACTIVE_HEX').addEventListener('input', (e)=>
+        @elCPActive.addEventListener('change', (e)=>
             @BUS.broadcast('change.cell.style.activebackground', e.target.value)
-            cpActive.setHex(e.target.value)
+            @_setColorPickersHex()
         )
-        DOM.elemById('GENERATOR', 'COLORPICKER_BORDER_HEX').addEventListener('input', (e)=>
+        @elCPBorder.addEventListener('change', (e)=>
             @BUS.broadcast('change.cell.style.bordercolor', e.target.value)
-            cpBorder.setHex(e.target.value)
+            @_setColorPickersHex()
         )
-        DOM.elemById('GENERATOR', 'COLORPICKER_INACTIVE_HEX').addEventListener('input', (e)=>
+        @elCPInactive.addEventListener('change', (e)=>
             @BUS.broadcast('change.cell.style.inactivebackground', e.target.value)
-            cpInActive.setHex(e.target.value)
+            @_setColorPickersHex()
         )
 
     #
     # Disable the color picker
     #
     disableColorPicker:() ->
-        containerElem = DOM.elemById('GENERATOR','COLORPICKER_CONTAINER')
-        containerElem.innerHTML = ""
-        containerElem.style.display = "none"
+        @elContainer.innerhtml = ""
+        @elContainer.style.display = "none"
 
 module.exports = MultiColorPicker
