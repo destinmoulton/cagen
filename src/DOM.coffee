@@ -28,13 +28,12 @@ class DOM
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
             'COLORPICKER_BUTTON':'wolfcage-generator-colorpicker-button',
-            'COLORPICKER_CONTAINER':'wolfcage-colorpicker',
-            'COLORPICKER_ACTIVE':'wolfcage-colorpicker-active',
-            'COLORPICKER_BORDER':'wolfcage-colorpicker-border',
-            'COLORPICKER_INACTIVE':'wolfcage-colorpicker-inactive',
-            'COLORPICKER_ACTIVE_HEX':'wolfcage-colorpicker-active-hex',
-            'COLORPICKER_BORDER_HEX':'wolfcage-colorpicker-border-hex',
-            'COLORPICKER_INACTIVE_HEX':'wolfcage-colorpicker-inactive-hex'
+        },
+        'COLORPICKER':{
+            'CONTAINER':'wolfcage-colorpicker',
+            'ACTIVE_HEX':'wolfcage-colorpicker-active-hex',
+            'BORDER_HEX':'wolfcage-colorpicker-border-hex',
+            'INACTIVE_HEX':'wolfcage-colorpicker-inactive-hex'
         },
         'TABS':{
             'CONTAINER':'wolfcage-tab-container'
