@@ -15,6 +15,7 @@ the automata cells for that rule.
 ###
 
 DOM = require("./DOM.coffee")
+Modal = require("./Modal.coffee")
 Templates = require("./Templates.coffee")
 
 class Thumbnails
@@ -24,26 +25,19 @@ class Thumbnails
     # 
     constructor: (BUS)->
         @BUS = BUS
-        @BUS.subscribe('thumbnails.run',
-            ()=>
-                @run()
-                return
-        )
+        @modal = new Modal()
 
     #
     # Show the rule thumbnails
     # 
-    run: ()->
+    open: ()->
+        @modal.open(Templates.thumbMontage)
+
         # Setup the list of rules
         ruleList = [0..255]
 
-        template_options = {
-            ruleList:ruleList,
-            path:@BUS.get('thumbnails.path')
-        }
-
-        # Clear the current thumbnails and populate it via Mustache template
-        DOM.elemById('WOLFCAGE', 'MAIN_CONTAINER').innerHTML = Templates.thumbnails(template_options)
+        el = DOM.elemById("THUMBMONTAGE", "CONTAINER")
+        el.innerHTML = Templates.thumbnails(ruleList)
 
         thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
         
@@ -60,7 +54,6 @@ class Thumbnails
         # Change the current rule
         @BUS.set('currentruledecimal', rule)
 
-        # Load the generator
-        @BUS.broadcast('tabs.show.generator')
+        @modal.close()
 
 module.exports = Thumbnails
