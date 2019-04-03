@@ -1,8 +1,10 @@
-body {
-    background-color: white;
-}
+$width: 790px;
 
-#wolfcage-wrapper {}
+#wolfcage-wrapper {
+    background-color: #fff;
+    width: $width;
+    height: 500px;
+}
 
 #wolfcage-container {
     position: relative;
@@ -11,13 +13,15 @@ body {
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
+    box-sizing: border-box;
     width: 790px;
-}
+    z-index: 1;
 
-#wolfcage-container:after {
-    clear: both;
-    content: "";
-    display: table;
+    &:after {
+        clear: both;
+        content: "";
+        display: table;
+    }
 }
 
 ul#wolfcage-tab-container {
@@ -44,6 +48,33 @@ ul#wolfcage-tab-container {
         border-bottom: 2px solid white;
         color: black;
     }
+}
+
+// Veil and Modal
+#wolfcage-veil {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0.8;
+    background-color: #000;
+    z-index: 10;
+}
+
+#wolfcage-modal {
+    position: absolute;
+    display: none;
+    opacity: 1;
+    z-index: 11;
+    background-color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 380px;
+    max-width: 600px;
+    top: 40px;
+    overflow-y: scroll;
 }
 
 #wolfcage-generatemessage-container {
@@ -202,28 +233,27 @@ input.wolfcage-colorpicker-hexinput {
     padding-bottom: 5px;
 }
 
-.wolfcage-rulethumb-box {
+#wolfcage-thumbmontage-container {
+    width: 616px;
+    height: 5056px;
+    background-image: url("thumbs.png");
+}
+
+.wolfcage-thumbmontage-rulethumb-box {
     position: relative;
     float: left;
-    padding: 0px 5px 5px 0px;
+    width: 154px;
+    height: 79px;
     margin: 0 0;
     cursor: pointer;
 }
 
-.wolfcage-rulethumb-img {
-    width: 150px;
-    padding: 0 0;
-    margin: 0 0;
-}
-
 .wolfcage-rulethumb-rulenum {
     position: absolute;
-    /*right:0px;
-    bottom:0px;
-    */
     width: 28px;
     left: 5px;
     top: 5px;
+    line-height: 20px;
     height: 20px;
     background-color: #fdf9f3;
     margin: 0px 10px 10px 0px;
@@ -231,7 +261,7 @@ input.wolfcage-colorpicker-hexinput {
     padding-bottom: 2px;
     text-align: center;
     font-family: sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 6px;
 }
 
