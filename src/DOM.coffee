@@ -28,7 +28,8 @@ class DOM
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
             'COLORPICKER_BUTTON':'wolfcage-generator-colorpicker-button',
-            'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button'
+            'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button',
+            'RULEPREVIEW_MASK':'wolfcage-rulepreview-mask '
         },
         'COLORPICKER':{
             'CONTAINER':'wolfcage-colorpicker',
