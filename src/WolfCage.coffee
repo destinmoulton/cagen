@@ -13,18 +13,19 @@ Bus = require("./Bus.coffee")
 Generator = require("./Generator.coffee")
 MultiColorPicker = require("./MultiColorPicker.coffee")
 Tabs = require("./Tabs.coffee")
+Templates = require("./Templates.coffee")
 Thumbnails = require("./Thumbnails.coffee")
 TopRowEditor = require("./TopRowEditor.coffee")
 
 class WolfCage
 
-    constructor:(options) ->
+    constructor:(id = "wolfcage") ->
+        el = document.getElementById(id);
+        el.innerHTML = Templates.body
 
         # PUB/SUB and variable store for inter-class communication
         @BUS = new Bus()
-
-        @BUS.set('thumbnails.path', options.thumbnails_path);
-
+        
         # Set the initial colors
         @BUS.set('board.style.borderColor', '#000000')
         @BUS.set('board.cell.style.activeBackgroundColor', '#000000')
@@ -33,9 +34,6 @@ class WolfCage
             
         # Create an instance of the Tabs (visual sectional management)
         tabs = new Tabs(@BUS)
-
-        # Create instance of the Rule Thumbnails preview/selector
-        new Thumbnails(@BUS)
 
         # Create instance of the Top Row Editor
         new TopRowEditor(@BUS)
