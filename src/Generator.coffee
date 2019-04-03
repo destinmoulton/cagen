@@ -20,6 +20,7 @@ Board = require("./Board.coffee")
 DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
 MultiColorPicker = require("./MultiColorPicker.coffee")
+Thumbnails = require("./Thumbnails.coffee")
 
 class Generator
 
@@ -31,6 +32,7 @@ class Generator
     constructor:(BUS) ->
         @BUS = BUS
         @multiColorPicker = new MultiColorPicker(BUS)
+        @thumbnails = new Thumbnails(BUS)
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -69,6 +71,11 @@ class Generator
                 else
                     @_isColorPickerEnabled = true
                     @multiColorPicker.enableColorPicker()
+        )
+
+        DOM.elemById('GENERATOR','THUMBMONTAGE_BUTTON').addEventListener('click',
+            ()=>
+                @thumbnails.open()
         )
 
         # Final step is to build the board
