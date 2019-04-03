@@ -31,7 +31,6 @@ class Tabs
     start:()->
 
         tabContainerElem = DOM.elemById('TABS','CONTAINER')
-        tabContainerElem.innerHTML = Templates.tabs
         @_tabsElems = tabContainerElem.querySelectorAll('li')
 
         for tab in @_tabsElems
