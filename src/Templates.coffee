@@ -1,28 +1,48 @@
+exports.body = "
+<div id='wolfcage-wrapper'>
+    <ul id='wolfcage-tab-container'>
+        <li id='wolfcage-tab-generator' 
+            data-tab-module='generator'>
+            Generator
+        </li>
+        <li id='wolfcage-tab-toproweditor' 
+            data-tab-module='toproweditor'>
+            Top Row Editor
+        </li>
+    </ul>
+    <div id='wolfcage-container'></div>
+    <div id='wolfcage-veil'></div>
+    <div id='wolfcage-modal'></div>
+</div>
+"
+
 exports.generatorBoard = "
 <div id='wolfcage-board-container'>
     <div id='wolfcage-board'></div>
 </div>
 "
+
+
 exports.colorPickers = "
 <div class='wolfcage-colorpicker-wrapper'>
     <div class='wolfcage-colorpicker-container'>
         <div class='wolfcage-colorpicker-container-title'>Active Cell</div>
-        <select id='wolfcage-colorpicker-active-hex' ></select>
+        <select id='wolfcage-colorpicker-select-active-hex' ></select>
     </div>
     <div class='wolfcage-colorpicker-container'>
         <div class='wolfcage-colorpicker-container-title'>Cell Border</div>
-        <select id='wolfcage-colorpicker-border-hex'  ></select>
+        <select id='wolfcage-colorpicker-select-border-hex'  ></select>
     </div>
     <div class='wolfcage-colorpicker-container'>
         <div class='wolfcage-colorpicker-container-title'>Inactive Cell</div>
-        <select id='wolfcage-colorpicker-inactive-hex'  ></select>
+        <select id='wolfcage-colorpicker-select-inactive-hex'  ></select>
     </div>
 </div>
 "
 
 exports.colorPickerOption = (color)=>
     return "<option value='#{color.hex}' style='background-color:#{color.hex}'> 
-                   #{color.name}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </option>"
 
 exports.generatorPreviewCell = ({leftBitActive, middleBitActive, rightBitActive, previewIndex}) => 
@@ -61,6 +81,8 @@ exports.generator = "
                     class=''></select> &nbsp;
             <button id='wolfcage-generator-colorpicker-button' 
                     class=''>Color Picker</button>
+            <button id='wolfcage-generator-thumbmontage-button' 
+                    class=''>Thumbs</button>
         </div>
         </div>
 
@@ -84,40 +106,22 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
         <div id='#{ id }' style='left:#{ left }px;' class='wolfcage-board-cell #{ activeClass }'></div>
     "
 
-exports.tabs = "
-<li role='presentation' 
-    class='active' 
-    id='wolfcage-tab-thumbnails' 
-    data-tab-module='thumbnails'>
-    <a href='#'>Thumbnails</a>
-</li>
-<li role='presentation' 
-    id='wolfcage-tab-generator' 
-    data-tab-module='generator'>
-    <a href='#'>Generator</a>
-</li>
-<li role='presentation' 
-    id='wolfcage-tab-toproweditor' 
-    data-tab-module='toproweditor'>
-    <a href='#'>Top Row Editor</a>
-</li>
+exports.thumbMontage = "
+<div id='wolfcage-thumbmontage-container'></div>
 "
 
-thumbnail = (path, rule)=>
+thumbnail = (rule)=>
     return "
-        <div class='wolfcage-rulethumb-box'
+        <div class='wolfcage-thumbmontage-rulethumb-box '
             data-rule='#{ rule }'>
-            <img src='#{path}rule_#{ rule }.png'
-                class='wolfcage-rulethumb-img'
-                data-rule='#{rule}'/>
             <div class='wolfcage-rulethumb-rulenum'>#{rule}</div>
         </div>
     "
 
-exports.thumbnails = ({path, ruleList}) =>
+exports.thumbnails = (ruleList) =>
     nails = ""
     for rule in ruleList
-        nails += thumbnail(path, rule)
+        nails += thumbnail(rule)
     return nails 
 
 
