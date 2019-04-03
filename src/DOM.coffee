@@ -29,7 +29,6 @@ class DOM
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
             'COLORPICKER_BUTTON':'wolfcage-generator-colorpicker-button',
             'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button',
-            'RULEPREVIEW_MASK':'wolfcage-rulepreview-mask '
         },
         'COLORPICKER':{
             'CONTAINER':'wolfcage-colorpicker',
@@ -37,10 +36,13 @@ class DOM
             'BORDER_HEX':'wolfcage-colorpicker-select-border-hex',
             'INACTIVE_HEX':'wolfcage-colorpicker-select-inactive-hex'
         },
+        'RULEPREVIEW': {
+            'MASK_BOX':'wolfcage-rulepreview-mask'
+        },
         'MODAL':{
             'VEIL': 'wolfcage-veil',
             'MODAL': 'wolfcage-modal'
-        }
+        },
         'TABS':{
             'CONTAINER':'wolfcage-tab-container'
         },
