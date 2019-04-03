@@ -13,10 +13,7 @@
 
     <script type="text/javascript">
       window.onload = function () {
-        var options = {
-          thumbnails_path: 'captures/thumbs/'
-        }
-        var wolfcage = new WolfCage(options);
+        var wolfcage = new WolfCage("wolfcage");
       }
     </script>
 
@@ -25,10 +22,7 @@
   </head>
 
   <body>
-    <div id="wolfcage-wrapper">
-      <ul id="wolfcage-tab-container"></ul>
-      <div id="wolfcage-container"></div>
-    </div>
+    <div id="wolfcage"></div>
   </body>
 
 </html>
