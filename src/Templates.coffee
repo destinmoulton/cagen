@@ -77,6 +77,7 @@ exports.generator = "
         <div class='wolfcage-generator-box'>
         <div class=''>
             Rule&nbsp;
+            <div id='wolfcage-rulepreview-mask'></div>
             <select id='wolfcage-generator-select-input' 
                     class=''></select> &nbsp;
             <button id='wolfcage-generator-colorpicker-button' 

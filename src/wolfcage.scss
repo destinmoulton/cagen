@@ -1,3 +1,4 @@
+$montagePath: url("thumbs.png");
 $width: 790px;
 
 #wolfcage-wrapper {
@@ -236,7 +237,7 @@ input.wolfcage-colorpicker-hexinput {
 #wolfcage-thumbmontage-container {
     width: 616px;
     height: 5056px;
-    background-image: url("thumbs.png");
+    background-image: $montagePath;
 }
 
 .wolfcage-thumbmontage-rulethumb-box {
@@ -263,6 +264,13 @@ input.wolfcage-colorpicker-hexinput {
     font-family: sans-serif;
     font-size: 14px;
     border-radius: 6px;
+}
+
+#wolfcage-rulepreview-mask {
+    background-image: $montagePath;
+    background-position: 0px 0px;
+    height: 79px;
+    width: 154px;
 }
 
 #rowed-container {
