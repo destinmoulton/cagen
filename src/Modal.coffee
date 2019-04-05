@@ -14,19 +14,33 @@ DOM = require("./DOM.coffee")
 
 class Modal
 
-    open: (html)->
+    open: (title, body)->
         elVeil = DOM.elemById("MODAL", "VEIL") 
         elModal = DOM.elemById("MODAL", "MODAL")  
-        elModal.innerHTML = html
-        elVeil.style.display = "block"
-        elModal.style.display = "block"
+        elTitle = DOM.elemById("MODAL", "TITLE")  
+        elClose = DOM.elemById("MODAL", "CLOSE")
+        elBody = DOM.elemById("MODAL", "BODY")
+
+        elTitle.innerHTML = title 
+        elBody.innerHTML = body
+        elClose.addEventListener("click",
+            ()=>
+                @close()
+        )
+        modalLeft = (elVeil.offsetWidth - elModal.offsetWidth)/2
+        elModal.style.left = "#{modalLeft}px" 
+        elVeil.style.visibility = "visible"
+        elModal.style.visibility = "visible"
         
     close: ()->
         elVeil = DOM.elemById("MODAL", "VEIL") 
         elModal = DOM.elemById("MODAL", "MODAL")  
+        elTitle = DOM.elemById("MODAL", "TITLE")  
+        elBody = DOM.elemById("MODAL", "BODY")
 
-        elVeil.style.display = "none"
-        elModal.style.display = "none"
-        elModal.innerHTML = ""
+        elModal.style.visibility = "hidden"
+        elVeil.style.visibility = "hidden"
+        elBody.innerHTML = ""
+        elTitle.innerHTML = ""
 
 module.exports = Modal
