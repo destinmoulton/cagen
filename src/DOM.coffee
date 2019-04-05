@@ -41,7 +41,10 @@ class DOM
         },
         'MODAL':{
             'VEIL': 'wolfcage-veil',
-            'MODAL': 'wolfcage-modal'
+            'MODAL': 'wolfcage-modal',
+            'TITLE': 'wolfcage-modal-title',
+            'CLOSE': 'wolfcage-modal-close',
+            'BODY': 'wolfcage-modal-body'
         },
         'TABS':{
             'CONTAINER':'wolfcage-tab-container'

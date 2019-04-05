@@ -12,7 +12,13 @@ exports.body = "
     </ul>
     <div id='wolfcage-container'></div>
     <div id='wolfcage-veil'></div>
-    <div id='wolfcage-modal'></div>
+    <div id='wolfcage-modal'>
+        <div id='wolfcage-modal-header'>
+            <div id='wolfcage-modal-title'></div>
+            <div id='wolfcage-modal-close'>X</div>
+        </div>
+        <div id='wolfcage-modal-body'></div>
+    </div>
 </div>
 "
 
@@ -73,26 +79,23 @@ exports.generatorPreviewCell = ({leftBitActive, middleBitActive, rightBitActive,
 
 exports.generator = "
     <div id='wolfcage-generator-container'>
-    <div id='wolfcage-generator-options' class='well'>
-        <div class='wolfcage-generator-box'>
-        <div class=''>
-            Rule&nbsp;
-            <div id='wolfcage-rulepreview-mask'></div>
-            <select id='wolfcage-generator-select-input' 
-                    class=''></select> &nbsp;
-            <button id='wolfcage-generator-colorpicker-button' 
-                    class=''>Color Picker</button>
-            <button id='wolfcage-generator-thumbmontage-button' 
-                    class=''>Thumbs</button>
+        <div id='wolfcage-generator-options' >
+            <div class='wolfcage-generator-box'>
+                Rule&nbsp;
+                <div id='wolfcage-rulepreview-mask'></div>
+                <select id='wolfcage-generator-select-input' 
+                        class=''></select> &nbsp;
+                <button id='wolfcage-generator-colorpicker-button' 
+                        class=''>Color Picker</button>
+                <button id='wolfcage-generator-thumbmontage-button' 
+                        class=''>Thumbs</button>
+            </div>
+            <div id='wolfcage-rules-preview-container'></div>
+            <div class='wolfcage-generator-box' style='float:right;'></div>
+            <div id='wolfcage-generatemessage-container'>Generating Cellular Automata...</div>
+            <div id='wolfcage-colorpicker' class='cp cp-small'></div>
         </div>
-        </div>
-
-        <div id='wolfcage-rules-preview-container'></div>
-        <div class='wolfcage-generator-box' style='float:right;'></div>
-        <div id='wolfcage-generatemessage-container'>Generating Cellular Automata...</div>
-        <div id='wolfcage-colorpicker' class='cp cp-small'></div>
-    </div>
-    <div id='wolfcage-generator-board'></div>
+        <div id='wolfcage-generator-board'></div>
     </div>
     "
 
