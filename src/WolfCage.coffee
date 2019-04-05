@@ -44,6 +44,9 @@ class WolfCage
         # Start the tab interface
         tabs.start()
 
+        # Generate the board
+        @BUS.broadcast('tabs.show.generator')
+
 window.WolfCage = WolfCage 
 
     
