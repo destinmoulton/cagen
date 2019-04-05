@@ -31,7 +31,7 @@ class Thumbnails
     # Show the rule thumbnails
     # 
     open: ()->
-        @modal.open(Templates.thumbMontage)
+        @modal.open("Choose a Thumbnail to Generate", Templates.thumbMontage)
 
         # Setup the list of rules
         ruleList = [0..255]
@@ -53,6 +53,7 @@ class Thumbnails
 
         # Change the current rule
         @BUS.set('currentruledecimal', rule)
+        @BUS.broadcast('generator.setrule')
 
         @modal.close()
 
