@@ -20,6 +20,7 @@ Board = require("./Board.coffee")
 DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
 MultiColorPicker = require("./MultiColorPicker.coffee")
+RulePreview = require("./RulePreview.coffee")
 Thumbnails = require("./Thumbnails.coffee")
 
 class Generator
@@ -49,6 +50,11 @@ class Generator
                 return
         )
 
+        @BUS.subscribe('generator.setrule',
+            () =>
+                @run()
+        )
+
     #
     # Show the Generator
     # 
@@ -58,7 +64,10 @@ class Generator
 
         # Build a new Board
         @_Board = new Board(@BUS)
-        
+
+        # Start the rule preview 
+        @rulepreview = new RulePreview(@BUS)
+
         @_setupRuleDropdown()
 
         @_isColorPickerEnabled = false
