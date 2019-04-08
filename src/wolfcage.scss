@@ -135,10 +135,15 @@ $modalHeaderHeight: 24px;
 
 .wolfcage-board-cell {
     position: absolute;
+    box-sizing: border-box;
     width: 5px;
     height: 5px;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-right-color: black;
+    border-bottom-color: black;
 }
 
 .wolfcage-board-cell-active {

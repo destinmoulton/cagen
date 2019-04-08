@@ -190,15 +190,16 @@ class Board
     # Change the border color of the cells
     #
     _changeCellBorderColor: (hexColor)->
+        console.log(hexColor)
         @BUS.set('board.style.borderColor', hexColor)
         @BUS.set('board.cell.style.borderColor', hexColor)
 
         DOM.elemById('GENERATOR','BOARD').style.borderColor = hexColor
 
-        cellsElems = document.querySelectorAll('.' + DOM.getClass('BOARD', 'CELL_BASE_CLASS'))
-
+        cellsElems = DOM.elemsByClass('BOARD', 'CELL_BASE_CLASS')
         for cell in cellsElems
-            cell.style.borderColor = hexColor
+            cell.style.borderRightColor = hexColor
+            cell.style.borderBottomColor = hexColor
 
     #
     # Change the background color of the inactive cells
