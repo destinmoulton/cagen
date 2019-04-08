@@ -33,7 +33,7 @@ class Generator
     constructor:(BUS) ->
         @BUS = BUS
         @multiColorPicker = new MultiColorPicker(BUS)
-        @thumbnails = new Thumbnails(BUS)
+        @thumbnailModal = new Thumbnails(BUS)
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -66,7 +66,7 @@ class Generator
         @_Board = new Board(@BUS)
 
         # Start the rule preview 
-        @rulepreview = new RulePreview(@BUS)
+        @rulepreview = new RulePreview(@BUS, @thumbnailModal)
 
         @_setupRuleDropdown()
 
@@ -84,7 +84,7 @@ class Generator
 
         DOM.elemById('GENERATOR','THUMBMONTAGE_BUTTON').addEventListener('click',
             ()=>
-                @thumbnails.open()
+                @thumbnailModal.open()
         )
 
         # Final step is to build the board

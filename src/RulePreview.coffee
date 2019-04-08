@@ -16,8 +16,10 @@ DOM = require("./DOM.coffee")
 
 class RulePreview
 
-    constructor:(BUS)->
+    constructor:(BUS, thumbnailModal)->
         @BUS = BUS
+        @thumbnailModal = thumbnailModal
+        @elRulePreviewMask = DOM.elemById('RULEPREVIEW', 'MASK_BOX')
 
         @_widthPx = 154
         @_heightPx = 79
@@ -26,15 +28,19 @@ class RulePreview
                 @snapToPreview()
                 return
         )
+
+        @elRulePreviewMask.addEventListener("click",
+            ()=>
+                @thumbnailModal.open()
+        )
         @snapToPreview()
 
     snapToPreview:()->
         rule = @BUS.get('currentruledecimal')
         [posX, posY] = @_calculatePosition(parseInt(rule))
 
-        box = DOM.elemById('RULEPREVIEW', 'MASK_BOX')
-        box.style.backgroundPositionX = "-#{posX}px"
-        box.style.backgroundPositionY = "-#{posY}px"
+        @elRulePreviewMask.style.backgroundPositionX = "-#{posX}px"
+        @elRulePreviewMask.style.backgroundPositionY = "-#{posY}px"
 
     _calculatePosition:(rule)->
         col = 0
