@@ -21,11 +21,19 @@ class ColorsModal
         @BUS = BUS
         @modal = new Modal()
 
-    open: ()->
+    open: (broadcastChannel)->
         @modal.open("Choose a Color", Templates.colorsmodalContainer)
     
         elContainer = DOM.elemById("COLORSMODAL", "CONTAINER")
         colorBlocks =  Templates.colorsmodalColorBlocks(colors)
         elContainer.innerHTML = colorBlocks
+
+        elBlocks = DOM.elemsByClass("COLORSMODAL", "BLOCK")
+        for block in elBlocks
+            block.addEventListener("click",
+                (e)=>
+                    @BUS.broadcast(broadcastChannel, e.target.value)
+                    @modal.close()
+            )
 
 module.exports = ColorsModal
