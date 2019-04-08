@@ -28,29 +28,6 @@ exports.generatorBoard = "
 </div>
 "
 
-
-exports.colorPickers = "
-<div class='wolfcage-colorpicker-wrapper'>
-    <div class='wolfcage-colorpicker-container'>
-        <div class='wolfcage-colorpicker-container-title'>Active Cell</div>
-        <select id='wolfcage-colorpicker-select-active-hex' ></select>
-    </div>
-    <div class='wolfcage-colorpicker-container'>
-        <div class='wolfcage-colorpicker-container-title'>Cell Border</div>
-        <select id='wolfcage-colorpicker-select-border-hex'  ></select>
-    </div>
-    <div class='wolfcage-colorpicker-container'>
-        <div class='wolfcage-colorpicker-container-title'>Inactive Cell</div>
-        <select id='wolfcage-colorpicker-select-inactive-hex'  ></select>
-    </div>
-</div>
-"
-
-exports.colorPickerOption = (color)=>
-    return "<option value='#{color.hex}' style='background-color:#{color.hex}'> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </option>"
-
 exports.generatorPreviewCell = ({leftBitActive, middleBitActive, rightBitActive, previewIndex}) => 
     leftBitClass = if leftBitActive then "wolfcage-generator-preview-cell-active" else ""
     middleBitClass = if middleBitActive then "wolfcage-generator-preview-cell-active" else ""
@@ -85,15 +62,14 @@ exports.generator = "
                 <div id='wolfcage-rulepreview-mask'></div>
                 <select id='wolfcage-generator-select-input' 
                         class=''></select> &nbsp;
-                <button id='wolfcage-generator-colorpicker-button' 
-                        class=''>Color Picker</button>
+                <button id='wolfcage-generator-bordercolor-button' 
+                        class=''>Border Color</button>
                 <button id='wolfcage-generator-thumbmontage-button' 
                         class=''>Thumbs</button>
             </div>
             <div id='wolfcage-rules-preview-container'></div>
             <div class='wolfcage-generator-box' style='float:right;'></div>
             <div id='wolfcage-generatemessage-container'>Generating Cellular Automata...</div>
-            <div id='wolfcage-colorpicker' class='cp cp-small'></div>
         </div>
         <div id='wolfcage-generator-board'></div>
     </div>
@@ -110,24 +86,35 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
         <div id='#{ id }' style='left:#{ left }px;' class='wolfcage-board-cell #{ activeClass }'></div>
     "
 
-exports.thumbnailsModal = "
+exports.thumbnailsmodalContainer = "
 <div id='wolfcage-thumbnailsmodal-montage-container'></div>
 "
 
 thumbnail = (rule)=>
     return "
-        <div class='wolfcage-thumbmontage-rulethumb-box '
+        <div class='wolfcage-thumbnailsmodal-rulethumb-box '
             data-rule='#{ rule }'>
-            <div class='wolfcage-rulethumb-rulenum'>#{rule}</div>
+            <div class='wolfcage-thumbnailsmodal-rulethumb-rulenum'>#{rule}</div>
         </div>
     "
 
-exports.thumbnails = (ruleList) =>
+exports.thumbnailsmodalThumbnails = (ruleList) =>
     nails = ""
     for rule in ruleList
         nails += thumbnail(rule)
     return nails 
 
+exports.colorsmodalContainer = "
+<div id='wolfcage-colorsmodal-blocks-container'></div>
+"
+exports.colorsmodalColorBlocks = (colors)->
+    html = ""
+    for color in colors
+        html += "
+            <div class='wolfcage-colorsmodal-block'
+                style='background-color: #{color.hex}'></div>
+        "
+    return html
 
 exports.toproweditor = "
 <div id='rowed-container'>
