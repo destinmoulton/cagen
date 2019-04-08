@@ -20,6 +20,7 @@ class RulePreview
         @BUS = BUS
         @thumbnailModal = thumbnailModal
         @elRulePreviewMask = DOM.elemById('RULEPREVIEW', 'MASK_BOX')
+        @elRuleNum = DOM.elemById('RULEPREVIEW', 'RULE_NUM')
 
         @_widthPx = 154
         @_heightPx = 79
@@ -37,6 +38,7 @@ class RulePreview
 
     snapToPreview:()->
         rule = @BUS.get('currentruledecimal')
+        @elRuleNum.innerText = "Rule #{rule.toString()}"
         [posX, posY] = @_calculatePosition(parseInt(rule))
 
         @elRulePreviewMask.style.backgroundPositionX = "-#{posX}px"

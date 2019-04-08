@@ -25,7 +25,6 @@ class DOM
             'CONTENT_CONTAINER':'wolfcage-generator-board',
             'BOARD':'wolfcage-board',
             'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
-            'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
             'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button',
         },
@@ -42,7 +41,8 @@ class DOM
             'CONTAINER':'wolfcage-colorsmodal-blocks-container'
         },
         'RULEPREVIEW': {
-            'MASK_BOX':'wolfcage-rulepreview-mask'
+            'MASK_BOX':'wolfcage-rulepreview-mask',
+            'RULE_NUM': 'wolfcage-rulepreview-rulenum'
         },
         'MODAL':{
             'VEIL': 'wolfcage-veil',

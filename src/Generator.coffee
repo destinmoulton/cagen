@@ -71,40 +71,10 @@ class Generator
         # Start the rule preview 
         @rulepreview = new RulePreview(@BUS, @thumbnailsModal)
 
-        @_setupRuleDropdown()
-
-        DOM.elemById('GENERATOR','THUMBMONTAGE_BUTTON').addEventListener('click',
-            ()=>
-                @thumbnailsModal.open()
-        )
-
         # Final step is to build the board
         @_buildBoard()
 
         return true
-
-    #
-    # Setup the rule selector dropdown
-    #
-    _setupRuleDropdown:() ->
-        dropdownElem = DOM.elemById('GENERATOR','RULE_DROPDOWN')
-        
-        # Generate the rule dropdown options
-        optionsHTML = ""
-        for rule in [0..255]
-            optionsHTML += "<option value='#{rule}'>#{rule}</option>"
-            
-        dropdownElem.innerHTML = optionsHTML
-
-        # Change the current rule from the dropdown
-        dropdownElem.value = @BUS.get('currentruledecimal')
-
-        # Setup the change rule event
-        dropdownElem.addEventListener('change', 
-            (event)=>
-                @BUS.set('currentruledecimal', event.target.value)
-                @_buildBoard()
-        )
 
     #
     # Build the preview board from the template

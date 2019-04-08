@@ -273,6 +273,22 @@ input.wolfcage-colorpicker-hexinput {
     padding-bottom: 5px;
 }
 
+#wolfcage-colorbuttons-container {
+    position: relative;
+    float: left;
+}
+
+.wolfcage-colorbuttons {
+    font-size: 12px;
+    line-height: 20px;
+    height: 24px;
+    vertical-align: middle;
+    padding: 0px 6px 0px 6px;
+    width: 140px;
+    text-align: left;
+    margin-top: 2px;
+}
+
 #wolfcage-colorsmodal-blocks-container {
     width: 576px;
     height: 576px;
@@ -324,6 +340,8 @@ input.wolfcage-colorpicker-hexinput {
 }
 
 #wolfcage-rulepreview-mask {
+    position: relative;
+    float: left;
     background-image: $montagePath;
     background-position-x: 0px;
     background-position-y: 0px;
@@ -331,6 +349,36 @@ input.wolfcage-colorpicker-hexinput {
     height: 79px;
     width: 154px;
     cursor: pointer;
+}
+
+#wolfcage-rulepreview-rulenum {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    line-height: 14px;
+    height: 14px;
+    background-color: #fdf9f3;
+    margin: 0px 10px 10px 0px;
+    padding: 2px 4px 2px 4px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#wolfcage-rulepreview-text {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    line-height: 14px;
+    height: 14px;
+    background-color: #fdf9f3;
+    padding: 2px 4px 2px 4px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 12px;
+    border-radius: 4px;
 }
 
 #rowed-container {

@@ -1,0 +1,401 @@
+/**
+ * WolfCage - A Wolfram Cellular Automata Generator.
+ * @author Destin Moulton
+ * @version v1.2.0
+ * @link https://github.com/destinmoulton/wolfcage
+ * @license MIT
+ */
+#wolfcage-wrapper {
+  position: absolute;
+  background-color: #fff;
+  width: 790px;
+  height: 642px; }
+
+#wolfcage-container {
+  position: relative;
+  background-color: white;
+  padding: 5px;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  width: 790px;
+  z-index: 1; }
+  #wolfcage-container:after {
+    clear: both;
+    content: "";
+    display: table; }
+
+ul#wolfcage-tab-container {
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  width: 780px;
+  list-style: none;
+  margin-bottom: 0px;
+  margin-top: 5px;
+  padding-left: 10px; }
+  ul#wolfcage-tab-container li {
+    display: inline;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 2px 4px 2px 4px;
+    line-height: 20px;
+    margin-right: 4px;
+    color: blue;
+    cursor: pointer; }
+  ul#wolfcage-tab-container li.active {
+    border-bottom: 2px solid white;
+    color: black; }
+
+#wolfcage-veil {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0.8;
+  background-color: #000;
+  z-index: 10; }
+
+#wolfcage-modal {
+  position: absolute;
+  visibility: hidden;
+  opacity: 1;
+  z-index: 11;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  height: 470px;
+  max-width: 700px;
+  top: 40px; }
+
+#wolfcage-modal-body {
+  overflow-y: scroll;
+  height: 446px; }
+
+#wolfcage-modal-header {
+  height: 24px;
+  line-height: 24px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Arial, Sans-Serif; }
+
+#wolfcage-modal-title {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding-left: 5px; }
+
+#wolfcage-modal-close {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  cursor: pointer;
+  padding-right: 5px; }
+
+#wolfcage-generatemessage-container {
+  position: relative;
+  float: left;
+  top: 0px;
+  width: 700px;
+  display: none; }
+
+#wolfcage-board-container {
+  position: relative;
+  float: left; }
+
+#wolfcage-board {
+  position: absolute;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  width: 755px;
+  height: 375px; }
+
+.wolfcage-board-cell {
+  position: absolute;
+  box-sizing: border-box;
+  width: 5px;
+  height: 5px;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-right-color: black;
+  border-bottom-color: black; }
+
+.wolfcage-board-cell-active {
+  background-color: black; }
+
+#wolfcage-colorpicker {
+  display: none;
+  margin-left: 100px; }
+
+#wolfcage-colorpicker legend {
+  border-bottom: none;
+  margin-bottom: 0px; }
+
+div.wolfcage-colorpicker-container {
+  position: relative;
+  float: left;
+  margin: 5px;
+  border: 1px solid black;
+  padding: 15px;
+  width: 153px;
+  text-align: center; }
+
+div.wolfcage-colorpicker-container-title {
+  font-weight: bold; }
+
+#wolfcage-colorpicker-cell {
+  width: 153px; }
+
+#wolfcage-colorpicker-border {
+  width: 153px; }
+
+input.wolfcage-colorpicker-hexinput {
+  width: 70px;
+  margin-top: 4px; }
+
+#wolfcage-generator-container {
+  position: relative;
+  min-height: 200px; }
+
+#wolfcage-generator-options {
+  position: relative;
+  float: left;
+  top: 0px;
+  left: 15px;
+  width: 755px;
+  margin-bottom: 5px; }
+
+.wolfcage-generator-box {
+  position: relative;
+  float: left;
+  padding: 5px; }
+
+#wolfcage-generator-board {
+  position: relative;
+  float: left;
+  left: 15px;
+  top: 0px;
+  width: 800px;
+  height: 375px; }
+
+#wolfcage-rules-preview-container {
+  position: relative;
+  float: right;
+  height: 40px;
+  padding: 5px; }
+
+.wolfcage-generator-preview-cell {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black; }
+
+.wolfcage-generator-preview-cell-left {
+  left: 0px; }
+
+.wolfcage-generator-preview-cell-middle {
+  left: 10px; }
+
+.wolfcage-generator-preview-cell-right {
+  left: 20px; }
+
+.wolfcage-generator-preview-digit {
+  position: absolute;
+  left: 24px;
+  font-size: 10px; }
+
+.wolfcage-generator-preview-cell-active {
+  background-color: black; }
+
+.wolfcage-generator-preview-box {
+  position: relative;
+  float: left;
+  width: 40px;
+  height: 30px; }
+
+.wolfcage-generator-preview-triple-cell-container {
+  position: relative;
+  width: 30px;
+  height: 10px; }
+
+.wolfcage-generator-preview-result-cell-container {
+  position: relative;
+  width: 30px;
+  height: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+#wolfcage-colorbuttons-container {
+  position: relative;
+  float: left; }
+
+.wolfcage-colorbuttons {
+  font-size: 12px;
+  line-height: 20px;
+  height: 24px;
+  vertical-align: middle;
+  padding: 0px 6px 0px 6px;
+  width: 140px;
+  text-align: left;
+  margin-top: 2px; }
+
+#wolfcage-colorsmodal-blocks-container {
+  width: 576px;
+  height: 576px;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000; }
+
+.wolfcage-colorsmodal-block {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000; }
+
+#wolfcage-thumbnailsmodal-montage-container {
+  width: 616px;
+  height: 5056px;
+  background-image: url("thumbs.png"); }
+
+.wolfcage-thumbnailsmodal-rulethumb-box {
+  position: relative;
+  float: left;
+  width: 154px;
+  height: 79px;
+  margin: 0 0;
+  cursor: pointer; }
+
+.wolfcage-thumbnailsmodal-rulethumb-rulenum {
+  position: absolute;
+  width: 28px;
+  left: 5px;
+  top: 5px;
+  line-height: 20px;
+  height: 20px;
+  background-color: #fdf9f3;
+  margin: 0px 10px 10px 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  border-radius: 6px; }
+
+#wolfcage-rulepreview-mask {
+  position: relative;
+  float: left;
+  background-image: url("thumbs.png");
+  background-position-x: 0px;
+  background-position-y: 0px;
+  background-size: 616px 5056px;
+  height: 79px;
+  width: 154px;
+  cursor: pointer; }
+
+#wolfcage-rulepreview-rulenum {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  line-height: 14px;
+  height: 14px;
+  background-color: #fdf9f3;
+  margin: 0px 10px 10px 0px;
+  padding: 2px 4px 2px 4px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px; }
+
+#wolfcage-rulepreview-text {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  line-height: 14px;
+  height: 14px;
+  background-color: #fdf9f3;
+  padding: 2px 4px 2px 4px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 12px;
+  border-radius: 4px; }
+
+#rowed-container {
+  position: relative;
+  float: left;
+  height: 195px; }
+
+#rowed-slider-container {
+  position: relative;
+  border: 1px solid black;
+  height: 100px; }
+
+#rowed-slider {
+  position: absolute;
+  background-color: #f7fde1;
+  height: 98px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 24px;
+  cursor: pointer; }
+
+#rowed-slider-arrow-left {
+  display: none;
+  position: relative;
+  float: left;
+  top: 62px;
+  left: 15px;
+  color: gray; }
+
+#rowed-slider-arrow-right {
+  display: none;
+  position: relative;
+  float: right;
+  top: 62px;
+  right: 15px;
+  color: gray; }
+
+#rowed-slider-row-container {
+  position: absolute;
+  top: 47px;
+  left: 0px;
+  border-top: 1px solid black;
+  border-left: 1px solid black; }
+
+#rowed-editor-container {
+  position: absolute;
+  top: 120px;
+  height: 40px; }
+
+#rowed-button-container {
+  position: absolute;
+  top: 162px;
+  left: 0px;
+  width: 755px;
+  text-align: center; }
+
+.rowed-editor-cell {
+  position: absolute;
+  width: 29px;
+  height: 29px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: small;
+  cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none; }
+
+.rowed-editor-cell-active {
+  background-color: black;
+  color: white; }

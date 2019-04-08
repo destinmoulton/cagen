@@ -58,12 +58,10 @@ exports.generator = "
     <div id='wolfcage-generator-container'>
         <div id='wolfcage-generator-options' >
             <div class='wolfcage-generator-box'>
-                Rule&nbsp;
-                <div id='wolfcage-rulepreview-mask'></div>
-                <select id='wolfcage-generator-select-input' 
-                        class=''></select> &nbsp;
-                <button id='wolfcage-generator-thumbmontage-button' 
-                        class=''>Thumbs</button>
+                <div id='wolfcage-rulepreview-mask'>
+                    <div id='wolfcage-rulepreview-rulenum'></div>
+                    <div id='wolfcage-rulepreview-text'>Select Rule</div>
+                </div>
                 <div id='wolfcage-colorbuttons-container'></div>
             </div>
             <div id='wolfcage-rules-preview-container'></div>
@@ -86,15 +84,22 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
     "
 
 exports.colorbuttons = "
-    <button id='wolfcage-colorbuttons-bordercolor-button' >
-        <span id='wolfcage-colorbuttons-bordercolor-button-preview'>▮</span>
-        Border Color</button>
-    <button id='wolfcage-colorbuttons-activecolor-button' >
+    <button 
+        id='wolfcage-colorbuttons-bordercolor-button' 
+        class='wolfcage-colorbuttons'>
+        <span id='wolfcage-colorbuttons-bordercolor-button-preview'>⬛</span>
+        &nbsp;&nbsp;Border Color
+    </button><br/>
+    <button id='wolfcage-colorbuttons-activecolor-button' 
+        class='wolfcage-colorbuttons'>
         <span id='wolfcage-colorbuttons-activecolor-button-preview'>⬛</span>
-        Active Color</button>
-    <button id='wolfcage-colorbuttons-inactivecolor-button' >
+        &nbsp;&nbsp;Active Cell Color
+    </button><br/>
+    <button id='wolfcage-colorbuttons-inactivecolor-button' 
+        class='wolfcage-colorbuttons'>
         <span id='wolfcage-colorbuttons-inactivecolor-button-preview'>⬛</span>
-        Inactive Color</button>
+        &nbsp;&nbsp;Inactive Cell Color
+    </button>
 "
 
 exports.thumbnailsmodalContainer = "
