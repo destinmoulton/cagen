@@ -31,12 +31,12 @@ class ThumbnailsModal
     # Show the rule thumbnails
     # 
     open: ()->
-        @modal.open("Choose a Thumbnail to Generate", Templates.thumbMontage)
+        @modal.open("Choose a Thumbnail to Generate", Templates.thumbnailsModal)
 
         # Setup the list of rules
         ruleList = [0..255]
 
-        el = DOM.elemById("THUMBMONTAGE", "CONTAINER")
+        el = DOM.elemById("THUMBNAILSMODAL", "CONTAINER")
         el.innerHTML = Templates.thumbnails(ruleList)
 
         thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))

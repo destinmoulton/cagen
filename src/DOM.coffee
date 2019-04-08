@@ -49,8 +49,8 @@ class DOM
         'TABS':{
             'CONTAINER':'wolfcage-tab-container'
         },
-        'THUMBMONTAGE': {
-            'CONTAINER':'wolfcage-thumbmontage-container'
+        'THUMBNAILSMODAL': {
+            'CONTAINER':'wolfcage-thumbnailsmodal-montage-container'
         },
         'TOPROWEDITOR':{
             'BUTTON_GENERATE': 'rowed-button-generate',

@@ -110,8 +110,8 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
         <div id='#{ id }' style='left:#{ left }px;' class='wolfcage-board-cell #{ activeClass }'></div>
     "
 
-exports.thumbMontage = "
-<div id='wolfcage-thumbmontage-container'></div>
+exports.thumbnailsModal = "
+<div id='wolfcage-thumbnailsmodal-montage-container'></div>
 "
 
 thumbnail = (rule)=>
