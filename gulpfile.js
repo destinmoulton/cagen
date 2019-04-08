@@ -49,7 +49,7 @@ gulp.task("watch", function() {
     );
 
     gulp.watch(
-        "src/*.coffee",
+        "src/**/*.coffee",
         { ignoreInitial: false },
         gulp.series(["compile:coffee"])
     );
