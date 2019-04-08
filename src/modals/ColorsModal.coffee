@@ -32,7 +32,7 @@ class ColorsModal
         for block in elBlocks
             block.addEventListener("click",
                 (e)=>
-                    @BUS.broadcast(broadcastChannel, e.target.value)
+                    @BUS.broadcast(broadcastChannel, e.target.getAttribute("data-color"))
                     @modal.close()
             )
 

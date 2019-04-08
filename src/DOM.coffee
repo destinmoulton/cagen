@@ -27,8 +27,13 @@ class DOM
             'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
-            'BORDERCOLOR_BUTTON':'wolfcage-generator-bordercolor-button',
             'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button',
+        },
+        'COLORBUTTONS':{
+            'CONTAINER':'wolfcage-colorbuttons-container'
+            'ACTIVECOLOR_BUTTON':'wolfcage-colorbuttons-activecolor-button',
+            'INACTIVECOLOR_BUTTON':'wolfcage-colorbuttons-inactivecolor-button',
+            'BORDERCOLOR_BUTTON':'wolfcage-colorbuttons-bordercolor-button',
         },
         'COLORSMODAL':{
             'CONTAINER':'wolfcage-colorsmodal-blocks-container'
@@ -65,6 +70,9 @@ class DOM
         'BOARD':{
             'CELL_ACTIVE_CLASS':'wolfcage-board-cell-active',
             'CELL_BASE_CLASS':'wolfcage-board-cell',
+        },
+        'COLORSMODAL':{
+            'BLOCK': 'wolfcage-colorsmodal-block'
         },
         'GENERATOR':{
             'RULE_PREVIEW_CELL_ACTIVE':'wolfcage-generator-preview-cell-active'
@@ -107,7 +115,19 @@ class DOM
     @elemByPrefix:(section, prefix, suffix) ->
         return document.getElementById(@getPrefix(section, prefix) + suffix)
 
+    @elemsByClass:(section, className) ->
+        return document.querySelectorAll(".#{@getClass(section, className)}")
+
     @getClass:(section, element) ->
+
+        if not @classes.hasOwnProperty(section)
+            console.log("DOM::getClasses() - Unable to find `"+section+"`")
+            return undefined
+
+        if not @classes[section].hasOwnProperty(element)
+            console.log("DOM::getClasses() - Unable to find `"+element+"`")
+            return undefined
+
         return @classes[section][element]
 
     @getID:(section, element) ->

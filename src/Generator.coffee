@@ -17,9 +17,9 @@ controlling the cellular automata generation.
 ###
 
 Board = require("./Board.coffee")
+ColorButtons = require("./ColorButtons.coffee")
 DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
-MultiColorPicker = require("./MultiColorPicker.coffee")
 RulePreview = require("./RulePreview.coffee")
 ThumbnailsModal = require("./modals/ThumbnailsModal.coffee")
 
@@ -28,11 +28,10 @@ class Generator
     #
     # Generator Constructor
     # Initialize the IDs, local jQuery objects, and sizes
-    # for the Generator.
+    # for the Generator
     # 
     constructor:(BUS) ->
         @BUS = BUS
-        @multiColorPicker = new MultiColorPicker(BUS)
         @thumbnailsModal = new ThumbnailsModal(BUS)
 
         @_currentRule = 0
@@ -65,22 +64,14 @@ class Generator
         # Build a new Board
         @_Board = new Board(@BUS)
 
+        # Build the color buttons
+        @colorbuttons = new ColorButtons(@BUS)
+        @colorbuttons.build()
+
         # Start the rule preview 
         @rulepreview = new RulePreview(@BUS, @thumbnailsModal)
 
         @_setupRuleDropdown()
-
-        @_isColorPickerEnabled = false
-
-        DOM.elemById('GENERATOR','COLORPICKER_BUTTON').addEventListener('click',
-            ()=>
-                if @_isColorPickerEnabled
-                    @_isColorPickerEnabled = false
-                    @multiColorPicker.disableColorPicker()
-                else
-                    @_isColorPickerEnabled = true
-                    @multiColorPicker.enableColorPicker()
-        )
 
         DOM.elemById('GENERATOR','THUMBMONTAGE_BUTTON').addEventListener('click',
             ()=>

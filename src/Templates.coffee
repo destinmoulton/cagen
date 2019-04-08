@@ -62,10 +62,9 @@ exports.generator = "
                 <div id='wolfcage-rulepreview-mask'></div>
                 <select id='wolfcage-generator-select-input' 
                         class=''></select> &nbsp;
-                <button id='wolfcage-generator-bordercolor-button' 
-                        class=''>Border Color</button>
                 <button id='wolfcage-generator-thumbmontage-button' 
                         class=''>Thumbs</button>
+                <div id='wolfcage-colorbuttons-container'></div>
             </div>
             <div id='wolfcage-rules-preview-container'></div>
             <div class='wolfcage-generator-box' style='float:right;'></div>
@@ -85,6 +84,15 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
     return "
         <div id='#{ id }' style='left:#{ left }px;' class='wolfcage-board-cell #{ activeClass }'></div>
     "
+
+exports.colorbuttons = "
+    <button id='wolfcage-colorbuttons-bordercolor-button' 
+            class=''>Border Color</button>
+    <button id='wolfcage-colorbuttons-activecolor-button' 
+            class=''>Active Color</button>
+    <button id='wolfcage-colorbuttons-inactivecolor-button' 
+            class=''>Inactive Color</button>
+"
 
 exports.thumbnailsmodalContainer = "
 <div id='wolfcage-thumbnailsmodal-montage-container'></div>
@@ -112,7 +120,8 @@ exports.colorsmodalColorBlocks = (colors)->
     for color in colors
         html += "
             <div class='wolfcage-colorsmodal-block'
-                style='background-color: #{color.hex}'></div>
+                 style='background-color: #{color.hex}'
+                 data-color='#{color.hex}'></div>
         "
     return html
 
