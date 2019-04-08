@@ -33,8 +33,8 @@ class RulePreview
         [posX, posY] = @_calculatePosition(parseInt(rule))
 
         box = DOM.elemById('RULEPREVIEW', 'MASK_BOX')
-        box.style.backgroundPositionX = "#{posX}px";
-        box.style.backgroundPositionY = "#{posY}px";
+        box.style.backgroundPositionX = "-#{posX}px"
+        box.style.backgroundPositionY = "-#{posY}px"
 
     _calculatePosition:(rule)->
         col = 0
@@ -49,7 +49,6 @@ class RulePreview
         posX = col * @_widthPx
         posY = row * @_heightPx
 
-        console.log("col=#{col} row=#{row} posX=#{posX} posY=#{posY}")
         [posX, posY]
 
 module.exports = RulePreview
