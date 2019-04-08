@@ -86,12 +86,15 @@ exports.rowEditorSliderCell = ({id, left, activeClass}) =>
     "
 
 exports.colorbuttons = "
-    <button id='wolfcage-colorbuttons-bordercolor-button' 
-            class=''>Border Color</button>
-    <button id='wolfcage-colorbuttons-activecolor-button' 
-            class=''>Active Color</button>
-    <button id='wolfcage-colorbuttons-inactivecolor-button' 
-            class=''>Inactive Color</button>
+    <button id='wolfcage-colorbuttons-bordercolor-button' >
+        <span id='wolfcage-colorbuttons-bordercolor-button-preview'>▮</span>
+        Border Color</button>
+    <button id='wolfcage-colorbuttons-activecolor-button' >
+        <span id='wolfcage-colorbuttons-activecolor-button-preview'>⬛</span>
+        Active Color</button>
+    <button id='wolfcage-colorbuttons-inactivecolor-button' >
+        <span id='wolfcage-colorbuttons-inactivecolor-button-preview'>⬛</span>
+        Inactive Color</button>
 "
 
 exports.thumbnailsmodalContainer = "

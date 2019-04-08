@@ -34,6 +34,9 @@ class DOM
             'ACTIVECOLOR_BUTTON':'wolfcage-colorbuttons-activecolor-button',
             'INACTIVECOLOR_BUTTON':'wolfcage-colorbuttons-inactivecolor-button',
             'BORDERCOLOR_BUTTON':'wolfcage-colorbuttons-bordercolor-button',
+            'ACTIVECOLOR_BUTTON_PREVIEW':'wolfcage-colorbuttons-activecolor-button-preview',
+            'INACTIVECOLOR_BUTTON_PREVIEW':'wolfcage-colorbuttons-inactivecolor-button-preview',
+            'BORDERCOLOR_BUTTON_PREVIEW':'wolfcage-colorbuttons-bordercolor-button-preview',
         },
         'COLORSMODAL':{
             'CONTAINER':'wolfcage-colorsmodal-blocks-container'
