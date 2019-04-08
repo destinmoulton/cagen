@@ -10,7 +10,7 @@ Component of the Wolfram Cellular Automata Generator (WolfCage)
 
 ###
 
-DOM = require("./DOM.coffee")
+DOM = require("../DOM.coffee")
 
 class Modal
     constructor:()->

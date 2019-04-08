@@ -21,7 +21,7 @@ DOM = require("./DOM.coffee")
 Templates = require("./Templates.coffee")
 MultiColorPicker = require("./MultiColorPicker.coffee")
 RulePreview = require("./RulePreview.coffee")
-Thumbnails = require("./Thumbnails.coffee")
+ThumbnailsModal = require("./modals/ThumbnailsModal.coffee")
 
 class Generator
 
@@ -33,7 +33,7 @@ class Generator
     constructor:(BUS) ->
         @BUS = BUS
         @multiColorPicker = new MultiColorPicker(BUS)
-        @thumbnailModal = new Thumbnails(BUS)
+        @thumbnailsModal = new ThumbnailsModal(BUS)
 
         @_currentRule = 0
         @_previewBoxWidth = 40
@@ -66,7 +66,7 @@ class Generator
         @_Board = new Board(@BUS)
 
         # Start the rule preview 
-        @rulepreview = new RulePreview(@BUS, @thumbnailModal)
+        @rulepreview = new RulePreview(@BUS, @thumbnailsModal)
 
         @_setupRuleDropdown()
 
@@ -84,7 +84,7 @@ class Generator
 
         DOM.elemById('GENERATOR','THUMBMONTAGE_BUTTON').addEventListener('click',
             ()=>
-                @thumbnailModal.open()
+                @thumbnailsModal.open()
         )
 
         # Final step is to build the board

@@ -14,7 +14,6 @@ Generator = require("./Generator.coffee")
 MultiColorPicker = require("./MultiColorPicker.coffee")
 Tabs = require("./Tabs.coffee")
 Templates = require("./Templates.coffee")
-Thumbnails = require("./Thumbnails.coffee")
 TopRowEditor = require("./TopRowEditor.coffee")
 
 class WolfCage

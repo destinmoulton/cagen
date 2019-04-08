@@ -14,11 +14,11 @@ the automata cells for that rule.
 
 ###
 
-DOM = require("./DOM.coffee")
+DOM = require("../DOM.coffee")
 Modal = require("./Modal.coffee")
-Templates = require("./Templates.coffee")
+Templates = require("../Templates.coffee")
 
-class Thumbnails
+class ThumbnailsModal
 
     #
     # Setup the local variables
@@ -57,4 +57,4 @@ class Thumbnails
 
         @modal.close()
 
-module.exports = Thumbnails
+module.exports = ThumbnailsModal
