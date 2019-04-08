@@ -31,15 +31,15 @@ class ThumbnailsModal
     # Show the rule thumbnails
     # 
     open: ()->
-        @modal.open("Choose a Thumbnail to Generate", Templates.thumbnailsModal)
+        @modal.open("Choose a Thumbnail to Generate", Templates.thumbnailsmodalContainer)
 
         # Setup the list of rules
         ruleList = [0..255]
 
         el = DOM.elemById("THUMBNAILSMODAL", "CONTAINER")
-        el.innerHTML = Templates.thumbnails(ruleList)
+        el.innerHTML = Templates.thumbnailsmodalThumbnails(ruleList)
 
-        thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILS', 'THUMB_BOX'))
+        thumbsElems = document.querySelectorAll('.' + DOM.getClass('THUMBNAILSMODAL', 'THUMB_BOX'))
         
         for i in [0..thumbsElems.length - 1]
             thumbsElems[i].addEventListener('click', (event)=>@_ruleThumbClicked(event))

@@ -27,14 +27,11 @@ class DOM
             'RULE_PREVIEW_CONTAINER':'wolfcage-rules-preview-container',
             'RULE_DROPDOWN':'wolfcage-generator-select-input',
             'RULE_GENERATE_BUTTON':'wolfcage-generator-generate-button',
-            'COLORPICKER_BUTTON':'wolfcage-generator-colorpicker-button',
+            'BORDERCOLOR_BUTTON':'wolfcage-generator-bordercolor-button',
             'THUMBMONTAGE_BUTTON':'wolfcage-generator-thumbmontage-button',
         },
-        'COLORPICKER':{
-            'CONTAINER':'wolfcage-colorpicker',
-            'ACTIVE_HEX':'wolfcage-colorpicker-select-active-hex',
-            'BORDER_HEX':'wolfcage-colorpicker-select-border-hex',
-            'INACTIVE_HEX':'wolfcage-colorpicker-select-inactive-hex'
+        'COLORSMODAL':{
+            'CONTAINER':'wolfcage-colorsmodal-blocks-container'
         },
         'RULEPREVIEW': {
             'MASK_BOX':'wolfcage-rulepreview-mask'
@@ -75,8 +72,8 @@ class DOM
         'TABS':{
             'ACTIVE':'active'
         },
-        'THUMBNAILS':{
-            'THUMB_BOX':'wolfcage-thumbmontage-rulethumb-box',
+        'THUMBNAILSMODAL':{
+            'THUMB_BOX':'wolfcage-thumbnailsmodal-rulethumb-box',
         },
         'TOPROWEDITOR':{
             'EDITOR_CELL':'rowed-editor-cell',

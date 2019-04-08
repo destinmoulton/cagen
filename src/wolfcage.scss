@@ -268,13 +268,31 @@ input.wolfcage-colorpicker-hexinput {
     padding-bottom: 5px;
 }
 
+#wolfcage-colorsmodal-blocks-container {
+    width: 576px;
+    height: 576px;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+}
+
+.wolfcage-colorsmodal-block {
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
 #wolfcage-thumbnailsmodal-montage-container {
     width: 616px;
     height: 5056px;
     background-image: $montagePath;
 }
 
-.wolfcage-thumbmontage-rulethumb-box {
+.wolfcage-thumbnailsmodal-rulethumb-box {
     position: relative;
     float: left;
     width: 154px;
@@ -283,7 +301,7 @@ input.wolfcage-colorpicker-hexinput {
     cursor: pointer;
 }
 
-.wolfcage-rulethumb-rulenum {
+.wolfcage-thumbnailsmodal-rulethumb-rulenum {
     position: absolute;
     width: 28px;
     left: 5px;
