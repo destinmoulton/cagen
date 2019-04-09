@@ -58,14 +58,13 @@ class DOM
             'CONTAINER':'wolfcage-thumbnailsmodal-montage-container'
         },
         'TOPROWEDITOR':{
-            'BUTTON_GENERATE': 'rowed-button-generate',
-            'BUTTON_RESET': 'rowed-button-resetrow',
-            'EDITOR_CONTAINER': 'rowed-editor-container',
-            'ROW_CONTAINER': 'rowed-slider-row-container',
-            'SLIDER_CONTAINER': 'rowed-slider-container',
-            'SLIDER':'rowed-slider',
-            'SLIDER_ARROW_LEFT':'rowed-slider-arrow-left',
-            'SLIDER_ARROW_RIGHT':'rowed-slider-arrow-right'
+            'BUTTON_GENERATE': 'wolfcage-rowed-button-generate',
+            'BUTTON_RESET': 'wolfcage-rowed-button-resetrow',
+            'EDITOR_CONTAINER': 'wolfcage-rowed-editor-container',
+            'ROW_CONTAINER': 'wolfcage-rowed-slider-row-container',
+            'SLIDER_CONTAINER': 'wolfcage-rowed-slider-container',
+            'SLIDER':'wolfcage-rowed-slider',
+            'SLIDER_TEXT':'wolfcage-rowed-slider-text',
         },
     }
 
@@ -87,8 +86,8 @@ class DOM
             'THUMB_BOX':'wolfcage-thumbnailsmodal-rulethumb-box',
         },
         'TOPROWEDITOR':{
-            'EDITOR_CELL':'rowed-editor-cell',
-            'EDITOR_CELL_ACTIVE':'rowed-editor-cell-active',
+            'EDITOR_CELL':'wolfcage-rowed-editor-cell',
+            'EDITOR_CELL_ACTIVE':'wolfcage-rowed-editor-cell-active',
             'SLIDER_CELL_ACTIVE':'wolfcage-board-cell-active'
         },
     }
@@ -105,7 +104,7 @@ class DOM
             'TAB_PREFIX':'wolfcage-tab-'
         },
         'TOPROWEDITOR':{
-            'SLIDER_COL':'rowed-slider-col-'
+            'SLIDER_COL':'wolfcage-rowed-slider-col-'
         },
     }
 
