@@ -14,10 +14,10 @@
 #wolfcage-container {
   position: relative;
   background-color: white;
-  padding: 5px;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  padding: 5px 5px 15px 0px;
+  border-left: 2px solid #3e3e3e;
+  border-right: 2px solid #3e3e3e;
+  border-bottom: 2px solid #3e3e3e;
   box-sizing: border-box;
   width: 790px;
   z-index: 1; }
@@ -28,7 +28,7 @@
 
 ul#wolfcage-tab-container {
   font-weight: bold;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #3e3e3e;
   width: 780px;
   list-style: none;
   margin-bottom: 0px;
@@ -36,16 +36,20 @@ ul#wolfcage-tab-container {
   padding-left: 10px; }
   ul#wolfcage-tab-container li {
     display: inline;
-    border-top: 2px solid black;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    padding: 2px 4px 2px 4px;
+    border-top: 2px solid #3e3e3e;
+    border-left: 2px solid #3e3e3e;
+    border-right: 2px solid #3e3e3e;
+    padding: 3px 6px 2px 6px;
     line-height: 20px;
     margin-right: 4px;
     color: blue;
-    cursor: pointer; }
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px; }
   ul#wolfcage-tab-container li.active {
-    border-bottom: 2px solid white;
+    border-bottom: 3px solid white;
     color: black; }
 
 #wolfcage-veil {
@@ -69,15 +73,16 @@ ul#wolfcage-tab-container {
   margin-right: auto;
   height: 470px;
   max-width: 700px;
-  top: 40px; }
+  top: 40px;
+  border-radius: 6px; }
 
 #wolfcage-modal-body {
   overflow-y: scroll;
-  height: 446px; }
+  height: 444px; }
 
 #wolfcage-modal-header {
-  height: 24px;
-  line-height: 24px;
+  height: 26px;
+  line-height: 26px;
   font-size: 18px;
   font-weight: bold;
   font-family: Arial, Sans-Serif; }
@@ -93,7 +98,7 @@ ul#wolfcage-tab-container {
   right: 0px;
   top: 0px;
   cursor: pointer;
-  padding-right: 5px; }
+  padding: 0px 8px 0px 0px; }
 
 #wolfcage-generatemessage-container {
   position: relative;
@@ -328,61 +333,62 @@ input.wolfcage-colorpicker-hexinput {
   font-size: 12px;
   border-radius: 4px; }
 
-#rowed-container {
+/** Row Editor -- rowed **/
+#wolfcage-rowed-container {
   position: relative;
   float: left;
-  height: 195px; }
+  height: 205px;
+  margin-left: 12px;
+  margin-top: 5px; }
 
-#rowed-slider-container {
+#wolfcage-rowed-slider-container {
   position: relative;
   border: 1px solid black;
   height: 100px; }
 
-#rowed-slider {
+#wolfcage-rowed-slider {
   position: absolute;
   background-color: #f7fde1;
-  height: 98px;
+  height: 100px;
   border-left: 1px solid black;
   border-right: 1px solid black;
   font-size: 24px;
   cursor: pointer; }
 
-#rowed-slider-arrow-left {
-  display: none;
+#wolfcage-rowed-slider-text {
   position: relative;
-  float: left;
-  top: 62px;
-  left: 15px;
-  color: gray; }
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 14px;
+  height: 14px;
+  background-color: #fdf9f3;
+  padding: 2px 4px 2px 4px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 12px;
+  user-select: none; }
 
-#rowed-slider-arrow-right {
-  display: none;
-  position: relative;
-  float: right;
-  top: 62px;
-  right: 15px;
-  color: gray; }
-
-#rowed-slider-row-container {
+#wolfcage-rowed-slider-row-container {
   position: absolute;
   top: 47px;
+  width: 755px;
   left: 0px;
   border-top: 1px solid black;
   border-left: 1px solid black; }
 
-#rowed-editor-container {
+#wolfcage-rowed-editor-container {
   position: absolute;
   top: 120px;
   height: 40px; }
 
-#rowed-button-container {
+#wolfcage-rowed-button-container {
   position: absolute;
   top: 162px;
   left: 0px;
   width: 755px;
   text-align: center; }
 
-.rowed-editor-cell {
+.wolfcage-rowed-editor-cell {
   position: absolute;
   width: 29px;
   height: 29px;
@@ -396,6 +402,13 @@ input.wolfcage-colorpicker-hexinput {
   user-select: none;
   -o-user-select: none; }
 
-.rowed-editor-cell-active {
+.wolfcage-rowed-editor-cell-active {
   background-color: black;
   color: white; }
+
+#wolfcage-rowed-help-container {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  top: 192px; }

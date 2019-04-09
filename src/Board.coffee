@@ -190,7 +190,6 @@ class Board
     # Change the border color of the cells
     #
     _changeCellBorderColor: (hexColor)->
-        console.log(hexColor)
         @BUS.set('board.style.borderColor', hexColor)
         @BUS.set('board.cell.style.borderColor', hexColor)
 

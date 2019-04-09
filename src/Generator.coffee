@@ -125,7 +125,6 @@ class Generator
 
             left = (7-index)*@_previewBoxWidth
 
-            # The template options for Mustache to render
             tmplOptions = {
                 left:left,
                 previewIndex:index,
