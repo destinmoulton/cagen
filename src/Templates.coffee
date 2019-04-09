@@ -147,11 +147,9 @@ exports.toproweditor = "
     </div>
     <div id='wolfcage-rowed-editor-container'></div>
     <div id='wolfcage-rowed-button-container'>
-        <button id='wolfcage-rowed-button-generate'
-                class='btn btn-default btn-sm'>Generate</button>
+        <button id='wolfcage-rowed-button-generate'>Generate</button>
         &nbsp;&nbsp;&nbsp;
-        <button id='wolfcage-rowed-button-resetrow'
-                class='btn btn-default btn-sm'>Reset Row</button>
+        <button id='wolfcage-rowed-button-resetrow'>Reset Row</button>
     </div>
     <div id='wolfcage-rowed-help-container'>
         Move the slider to the cells you want to edit. Click the numbered cells to toggle them. Click 'Generate' when ready.
