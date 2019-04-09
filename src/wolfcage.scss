@@ -2,6 +2,7 @@ $montagePath: url("thumbs.png");
 $width: 790px;
 $fontFamily: Arial,
 Sans-Serif;
+$borderColor: #3e3e3e;
 
 #wolfcage-wrapper {
     position: absolute;
@@ -13,10 +14,10 @@ Sans-Serif;
 #wolfcage-container {
     position: relative;
     background-color: white;
-    padding: 5px;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
+    padding: 5px 5px 15px 0px;
+    border-left: 2px solid $borderColor;
+    border-right: 2px solid $borderColor;
+    border-bottom: 2px solid $borderColor;
     box-sizing: border-box;
     width: 790px;
     z-index: 1;
@@ -30,7 +31,7 @@ Sans-Serif;
 
 ul#wolfcage-tab-container {
     font-weight: bold;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid $borderColor;
     width: 780px;
     list-style: none;
     margin-bottom: 0px;
@@ -39,18 +40,22 @@ ul#wolfcage-tab-container {
 
     li {
         display: inline;
-        border-top: 2px solid black;
-        border-left: 2px solid black;
-        border-right: 2px solid black;
-        padding: 2px 4px 2px 4px;
+        border-top: 2px solid $borderColor;
+        border-left: 2px solid $borderColor;
+        border-right: 2px solid $borderColor;
+        padding: 3px 6px 2px 6px;
         line-height: 20px;
         margin-right: 4px;
         color: blue;
         cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
     }
 
     li.active {
-        border-bottom: 2px solid white;
+        border-bottom: 3px solid white;
         color: black;
     }
 }
@@ -69,7 +74,7 @@ ul#wolfcage-tab-container {
 }
 
 $modalHeight: 470px;
-$modalHeaderHeight: 24px;
+$modalHeaderHeight: 26px;
 
 #wolfcage-modal {
     position: absolute;
@@ -82,6 +87,7 @@ $modalHeaderHeight: 24px;
     height: $modalHeight;
     max-width: 700px;
     top: 40px;
+    border-radius: 6px;
 }
 
 #wolfcage-modal-body {
@@ -109,7 +115,7 @@ $modalHeaderHeight: 24px;
     right: 0px;
     top: 0px;
     cursor: pointer;
-    padding-right: 5px;
+    padding: 0px 8px 0px 0px;
 }
 
 #wolfcage-generatemessage-container {
@@ -381,61 +387,67 @@ input.wolfcage-colorpicker-hexinput {
     border-radius: 4px;
 }
 
-#rowed-container {
+
+/** Row Editor -- rowed **/
+
+#wolfcage-rowed-container {
     position: relative;
     float: left;
-    height: 195px;
+    height: 205px;
+    margin-left: 12px;
+    margin-top: 5px;
 }
 
-#rowed-slider-container {
+
+$sliderHeight: 100px;
+
+#wolfcage-rowed-slider-container {
     position: relative;
     border: 1px solid black;
-    height: 100px;
+    height: $sliderHeight;
 }
 
-#rowed-slider {
+#wolfcage-rowed-slider {
     position: absolute;
     background-color: #f7fde1;
-    height: 98px;
+    height: $sliderHeight;
     border-left: 1px solid black;
     border-right: 1px solid black;
     font-size: 24px;
     cursor: pointer;
 }
 
-#rowed-slider-arrow-left {
-    display: none;
+#wolfcage-rowed-slider-text {
     position: relative;
-    float: left;
-    top: 62px;
-    left: 15px;
-    color: gray;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 14px;
+    height: 14px;
+    background-color: #fdf9f3;
+    padding: 2px 4px 2px 4px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 12px;
+    user-select: none;
 }
 
-#rowed-slider-arrow-right {
-    display: none;
-    position: relative;
-    float: right;
-    top: 62px;
-    right: 15px;
-    color: gray;
-}
 
-#rowed-slider-row-container {
+#wolfcage-rowed-slider-row-container {
     position: absolute;
     top: 47px;
+    width: 755px;
     left: 0px;
     border-top: 1px solid black;
     border-left: 1px solid black;
 }
 
-#rowed-editor-container {
+#wolfcage-rowed-editor-container {
     position: absolute;
     top: 120px;
     height: 40px;
 }
 
-#rowed-button-container {
+#wolfcage-rowed-button-container {
     position: absolute;
     top: 162px;
     left: 0px;
@@ -443,7 +455,7 @@ input.wolfcage-colorpicker-hexinput {
     text-align: center;
 }
 
-.rowed-editor-cell {
+.wolfcage-rowed-editor-cell {
     position: absolute;
     width: 29px;
     height: 29px;
@@ -458,7 +470,15 @@ input.wolfcage-colorpicker-hexinput {
     -o-user-select: none;
 }
 
-.rowed-editor-cell-active {
+.wolfcage-rowed-editor-cell-active {
     background-color: black;
     color: white;
+}
+
+#wolfcage-rowed-help-container {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    top: 192px;
 }
