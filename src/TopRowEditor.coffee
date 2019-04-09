@@ -36,7 +36,7 @@ class TopRowEditor
         @_sliderCols = 26
         @_sliderPxToMid = (@_sliderCols / 2) * @_colWidth
         @_editorCellWidth = 29
-        @_totalWidth = @_colWidth*@_noColumns+2
+        @_totalWidth = @_colWidth*@_noColumns
         
         @_generateInitialBinary()
 
@@ -87,20 +87,17 @@ class TopRowEditor
 
         @_sliderElem.style.width = (@_colWidth * @_sliderCols) + "px" 
 
-        sliderArrowLeftElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_LEFT')
-        sliderArrowRightElem = DOM.elemById('TOPROWEDITOR', 'SLIDER_ARROW_RIGHT')
+        sliderText = DOM.elemById('TOPROWEDITOR', 'SLIDER_TEXT')
         isSliderInDragMode = false
 
         # Event handler for when a click occurs while sliding the "zoom"
         @_sliderElem.addEventListener('click', =>
             if isSliderInDragMode
                 isSliderInDragMode = false
-                sliderArrowLeftElem.style.display = "none"
-                sliderArrowRightElem.style.display = "none"
+                sliderText.innerText = "Click to Slide"
             else
                 isSliderInDragMode = true
-                sliderArrowLeftElem.style.display = "block"
-                sliderArrowRightElem.style.display = "block"
+                sliderText.innerText = "Click to Lock"
         )
 
         # Event handler for when the mouse moves over the "zoom" slider
@@ -150,7 +147,6 @@ class TopRowEditor
     _moveSlider: (ev)=>
 
         # Get the mouse position
-        #xMousePos = ev.clientX
         xMousePos = ev.pageX - @_sliderInitialOffset.left
         closestEdgePx = xMousePos - (xMousePos % @_colWidth)
 
@@ -202,9 +198,7 @@ class TopRowEditor
             tmpId = "editor-cell-"+cell
             leftEdgeSlider = (cell-1)*@_editorCellWidth
 
-            # Create and append the editor cell via Mustache template
             cellHtml += Templates.rowEditorCell({id:tmpId, left:leftEdgeSlider})
-            # Setup the click event when a user toggles a cell by clicking on it
 
         @_jEditorContainer.innerHTML = cellHtml
 
@@ -260,7 +254,6 @@ class TopRowEditor
     # Build the row of cells
     # 
     _buildRow: ()->
-        # Get the Mustache template html
 
         sliderColPrefix = DOM.getPrefix('TOPROWEDITOR', 'SLIDER_COL')
         rowHtml = ""
@@ -273,7 +266,6 @@ class TopRowEditor
             leftEdgeSlider = ((col - 1) * @_colWidth)
             tmpId = sliderColPrefix + col
 
-            # Create a rendering of the cell via Mustache template
             rowHtml += Templates.rowEditorSliderCell({id:tmpId, left:leftEdgeSlider, activeClass:activeClass})
 
         # Add the cells

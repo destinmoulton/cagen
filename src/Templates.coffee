@@ -15,7 +15,7 @@ exports.body = "
     <div id='wolfcage-modal'>
         <div id='wolfcage-modal-header'>
             <div id='wolfcage-modal-title'></div>
-            <div id='wolfcage-modal-close'>X</div>
+            <div id='wolfcage-modal-close'>x</div>
         </div>
         <div id='wolfcage-modal-body'></div>
     </div>
@@ -75,7 +75,7 @@ exports.generator = "
 exports.rowEditorCell = ({id, left}) => 
     # Top Row Editor - Cells that compose the lower, numbered, row 
     return "
-        <div id='#{ id }' class='rowed-editor-cell' style='left:#{ left }px;'></div>
+        <div id='#{ id }' class='wolfcage-rowed-editor-cell' style='left:#{ left }px;'></div>
     "
 
 exports.rowEditorSliderCell = ({id, left, activeClass}) =>
@@ -134,29 +134,27 @@ exports.colorsmodalColorBlocks = (colors)->
     return html
 
 exports.toproweditor = "
-<div id='rowed-container'>
-    <div id='rowed-slider-container'>
-        <div id='rowed-slider'
+<div id='wolfcage-rowed-container'>
+    <div id='wolfcage-rowed-slider-container'>
+        <div id='wolfcage-rowed-slider'
                 data-toggle='tooltip'
                 data-placement='right'
                 title='Click to Start Dragging'>
-            <div id='rowed-slider-arrow-left'
-                class='glyphicon glyphicon-chevron-left'
-                aria-hidden='true'></div>
-            <div id='rowed-slider-arrow-right'
-                class='glyphicon glyphicon-chevron-right'
-                aria-hidden='true'></div>
+            <div id='wolfcage-rowed-slider-text' >Click to Slide</div>
         </div>
         
-        <div id='rowed-slider-row-container'></div>
+        <div id='wolfcage-rowed-slider-row-container'></div>
     </div>
-    <div id='rowed-editor-container'></div>
-    <div id='rowed-button-container'>
-        <button id='rowed-button-generate'
+    <div id='wolfcage-rowed-editor-container'></div>
+    <div id='wolfcage-rowed-button-container'>
+        <button id='wolfcage-rowed-button-generate'
                 class='btn btn-default btn-sm'>Generate</button>
         &nbsp;&nbsp;&nbsp;
-        <button id='rowed-button-resetrow'
+        <button id='wolfcage-rowed-button-resetrow'
                 class='btn btn-default btn-sm'>Reset Row</button>
+    </div>
+    <div id='wolfcage-rowed-help-container'>
+        Move the slider to the cells you want to edit. Click the numbered cells to toggle them. Click 'Generate' when ready.
     </div>
 </div>
 "
