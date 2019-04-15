@@ -268,7 +268,7 @@ input.wolfcage-colorpicker-hexinput {
 #wolfcage-thumbnailsmodal-montage-container {
   width: 616px;
   height: 5056px;
-  background-image: url("thumbs.png"); }
+  background-image: url("wolfcage.png"); }
 
 .wolfcage-thumbnailsmodal-rulethumb-box {
   position: relative;
@@ -297,7 +297,7 @@ input.wolfcage-colorpicker-hexinput {
 #wolfcage-rulepreview-mask {
   position: relative;
   float: left;
-  background-image: url("thumbs.png");
+  background-image: url("wolfcage.png");
   background-position-x: 0px;
   background-position-y: 0px;
   background-size: 616px 5056px;
