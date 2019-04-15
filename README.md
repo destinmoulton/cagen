@@ -46,16 +46,16 @@ The transpilation is handled by the node CoffeeScript transpiler.
 
 gulpfile.js contains the gulp configuration that automates the transpilation and concatenation process.
 
-To compile and watch the src/\*.coffee files and build the main dist/wolfcage.js file:
+To compile and watch the `src` `.scss` and `.coffee` files and build the main `dist/wolfcage.dev.js` file:
 
 ```sh
-$ npm run watch:coffee
+$ gulp watch
 ```
 
 To compile the transpiled coffee into es5 and build the minified(uglified) distributable:
 
 ```sh
-$ npm run uglify
+$ gulp uglify
 ```
 
 ### License
