@@ -1,6 +1,5 @@
 var gulp = require("gulp");
-var concat = require("gulp-concat");
-var declare = require("gulp-declare");
+const babel = require("gulp-babel");
 var uglify = require("gulp-uglify");
 var header = require("gulp-header");
 const rename = require("gulp-rename");
@@ -19,7 +18,7 @@ var banner = [
     ""
 ].join("\n");
 
-gulp.task("compile:coffee", function() {
+gulp.task("compile:dev", function() {
     return gulp
         .src("src/WolfCage.coffee", { read: false })
         .pipe(
@@ -29,7 +28,26 @@ gulp.task("compile:coffee", function() {
                 extensions: [".coffee"]
             })
         )
-        .pipe(rename("wolfcage.js"))
+        .pipe(rename("wolfcage.dev.js"))
+        .pipe(gulp.dest("dist/"));
+});
+
+gulp.task("compile:es5", function() {
+    return gulp
+        .src("src/WolfCage.coffee", { read: false })
+        .pipe(
+            browserify({
+                debug: false,
+                transform: ["coffeeify"],
+                extensions: [".coffee"]
+            })
+        )
+        .pipe(
+            babel({
+                presets: ["@babel/env"]
+            })
+        )
+        .pipe(rename("wolfcage.es5.js"))
         .pipe(gulp.dest("dist/"));
 });
 
@@ -51,14 +69,22 @@ gulp.task("watch", function() {
     gulp.watch(
         "src/**/*.coffee",
         { ignoreInitial: false },
-        gulp.series(["compile:coffee"])
+        gulp.series(["compile:dev"])
     );
 });
 
-gulp.task("uglify-js", function() {
-    gulp.src(["dist/wolfcage.templates.js", "dist/wolfcage.js"])
-        .pipe(concat("wolfcage.min.js"))
+gulp.task("uglify", function() {
+    return gulp
+        .src("dist/wolfcage.es5.js")
+        .pipe(
+            babel({
+                presets: ["@babel/env"]
+            })
+        )
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
+        .pipe(rename("wolfcage.min.js"))
         .pipe(gulp.dest("./dist"));
 });
+
+gulp.task("build", gulp.series(["compile:es5", "compile:sass", "uglify"]));
