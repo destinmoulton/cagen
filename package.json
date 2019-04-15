@@ -23,8 +23,11 @@
   },
   "homepage": "https://github.com/destinmoulton/wolfcage",
   "dependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "coffeeify": "^3.0.1",
     "coffeescript": "^2.4.0",
+    "gulp-babel": "^8.0.0",
     "gulp-browserify": "^0.5.1",
     "gulp-header": "^2.0.7",
     "gulp-rename": "^1.4.0",
