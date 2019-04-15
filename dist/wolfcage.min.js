@@ -1,7 +1,7 @@
 /**
  * WolfCage - A Wolfram Cellular Automata Generator.
  * @author Destin Moulton
- * @version v1.2.0
+ * @version v2.1.0
  * @link https://github.com/destinmoulton/wolfcage
  * @license MIT
  */
